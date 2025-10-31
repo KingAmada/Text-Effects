@@ -4,19 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Illusion Effect</title>
-    <!-- Load Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        #svg-text-mask-content {
-            font-size: 120px; /* This is the *maximum* size */
-            font-weight: 900;
-            font-family: 'Arial Black', 'Impact', sans-serif;
-            text-anchor: middle;
-            dominant-baseline: middle;
-        }
+        /* All font styling is now applied directly to the <text> element
+          in the HTML. This <style> block is now much simpler.
+        */
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
@@ -30,7 +25,6 @@
             Type a word below. The font will now resize to fit.
         </p>
 
-        <!-- Input Field -->
         <div class="mb-6">
             <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                 Enter your word:
@@ -42,45 +36,43 @@
                    oninput="updateText()">
         </div>
 
-        <!-- SVG container -->
         <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
             <svg id="illusion-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                 
                 <defs>
-                    <!-- Pattern 1: Background (/) lines -->
                     <pattern id="pattern-1" width="10" height="10" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
                         <rect width="10" height="10" fill="white"/>
                         <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
                     </pattern>
                     
-                    <!-- Pattern 2: Foreground (\) lines -->
                     <pattern id="pattern-2" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
                         <rect width="10" height="10" fill="white"/>
                         <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
                     </pattern>
 
-                    <text id="svg-text-mask-content" 
-                          x="50%" 
-                          y="50%">
-                        ILLUSION TEXT EFFECT
-                    </text>
-                    
                     <mask id="text-mask">
                         <rect width="800" height="400" fill="black" />
-                        <use href="#svg-text-mask-content" fill="white" />
+                        <text id="svg-text-mask-content" 
+                              x="50%" 
+                              y="50%"
+                              fill="white"
+                              font-size="120" 
+                              font-weight="900"
+                              font-family="'Arial Black', 'Impact', sans-serif"
+                              text-anchor="middle"
+                              dominant-baseline="middle">
+                            ILLUSION TEXT EFFECT
+                        </text>
                     </mask>
                 </defs>
 
-                <!-- Layer 1: The Background -->
                 <rect width="800" height="400" fill="white" />
                 <rect width="800" height="400" fill="url(#pattern-1)" />
 
-                <!-- Layer 2: The Foreground (masked) -->
                 <rect width="800" height="400" fill="url(#pattern-2)" mask="url(#text-mask)" />
             </svg>
         </div>
 
-        <!-- Download Button -->
         <div class="text-center">
             <button 
                 type="button"
@@ -97,7 +89,6 @@
     </div>
 
     <script>
-        // *** THIS SCRIPT IS UPDATED ***
         function updateText() {
             const input = document.getElementById('text-input');
             const svgText = document.getElementById('svg-text-mask-content');
@@ -106,16 +97,13 @@
                 const newText = input.value.toUpperCase() || ' ';
                 svgText.textContent = newText;
                 
-                const maxTextWidth = 780; // The max width (leaves 10px padding)
-                const baseFontSize = 120; // The default/max font size
+                const maxTextWidth = 780; 
+                const baseFontSize = 120; 
                 
-                // Reset font size to base
-                svgText.style.fontSize = baseFontSize + 'px';
+                // Reset font size attribute
+                svgText.setAttribute("font-size", baseFontSize + 'px');
 
-                // *** THIS IS THE FIX ***
-                // Wait for the browser to render the new text and font size
-                // *before* we try to measure its width.
-                // setTimeout(..., 0) defers this to the next render cycle.
+                // Wait for browser render before measuring
                 setTimeout(() => {
                     let currentWidth = 0;
                     try {
@@ -124,21 +112,20 @@
                         currentWidth = 0; 
                     }
 
-                    // Now we have the *correct* width, so we can scale
                     if (currentWidth > maxTextWidth) {
                         const ratio = maxTextWidth / currentWidth;
                         const newFontSize = baseFontSize * ratio;
-                        svgText.style.fontSize = newFontSize + 'px';
+                        // Set the attribute directly
+                        svgText.setAttribute("font-size", newFontSize + 'px');
                     }
-                }, 0); // The "0" is the important part!
+                }, 0); 
             }
         }
         
-        // --- Call updateText() on page load ---
         window.onload = updateText;
 
 
-        // This function handles the download (no changes needed)
+        // Download function - no changes needed
         function downloadPNG() {
             const svg = document.getElementById('illusion-svg');
             const button = document.getElementById('download-btn');
@@ -155,6 +142,10 @@
 
             const canvasWidth = 1600;
             const canvasHeight = 800;
+
+            // Note: I am now setting the font-size using setAttribute
+            // instead of .style.fontSize. This is more reliable for SVG.
+            // The updateText function above has been modified to reflect this.
 
             const svgData = new XMLSerializer().serializeToString(svg);
             const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
@@ -196,10 +187,7 @@
             
             img.src = url;
         }
-        
     </script>
 
 </body>
 </html>
-
-
