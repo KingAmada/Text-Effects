@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Illusion Effect</title>
-    <!-- Load Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Use the Inter font, which is loaded by Tailwind */
@@ -13,11 +12,11 @@
         }
         
         /* Style for the text inside the SVG.
-          The font-size acts as a "base" but the textLength attribute
-          will override it to make the text fit.
+         We set a large "base" font size (120px). 
+         The JavaScript will reduce this if the text is too wide.
         */
         #svg-text-mask-content {
-            font-size: 120px; /* This size is relative to the SVG viewBox */
+            font-size: 120px; /* This is now the *maximum* size */
             font-weight: 900;
             font-family: 'Arial Black', 'Impact', sans-serif; /* Use a very thick font */
             text-anchor: middle; /* Center the text horizontally */
@@ -33,79 +32,53 @@
             Line Illusion Text Effect
         </h1>
         <p class="text-center text-gray-600 mb-6">
-            Type a word below. The text will automatically fit the space.
+            Type a word below. The font will now resize to fit.
         </p>
 
-        <!-- Input Field -->
         <div class="mb-6">
             <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                 Enter your word:
             </label>
             <input type="text" 
                    id="text-input" 
-                   value="EFFECT" 
+                   value="ILLUSION TEXT EFFECT" 
                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg" 
                    oninput="updateText()">
         </div>
 
-        <!-- SVG container -->
         <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
-            <!-- 
-              The SVG viewBox creates a coordinate system of 800x400.
-              This makes it responsive while keeping internal units consistent.
-            -->
             <svg id="illusion-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                 
-                <!-- Definitions section for patterns and masks -->
                 <defs>
-                    <!-- Pattern 1: Background (/) lines -->
                     <pattern id="pattern-1" width="10" height="10" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
                         <rect width="10" height="10" fill="white"/>
                         <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
                     </pattern>
                     
-                    <!-- Pattern 2: Foreground (\) lines -->
                     <pattern id="pattern-2" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
                         <rect width="10" height="10" fill="white"/>
                         <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
                     </pattern>
 
-                    <!-- 
-                      This text element will be used by the mask.
-                      Added textLength="780" to force the text to fit
-                      within 780 units (out of 800), leaving a small margin.
-                    -->
                     <text id="svg-text-mask-content" 
                           x="50%" 
-                          y="50%" 
-                          textLength="780" 
-                          lengthAdjust="spacingAndGlyphs">
-                        EFFECT
+                          y="50%">
+                        ILLUSION TEXT EFFECT
                     </text>
                     
-                    <!-- 
-                      The mask. A mask defines opacity.
-                      - We fill it with black (0% opacity, fully transparent).
-                      - We then draw the text in white (100% opacity, fully opaque).
-                      - The result is a "stencil" of the text.
-                    -->
                     <mask id="text-mask">
                         <rect width="800" height="400" fill="black" />
                         <use href="#svg-text-mask-content" fill="white" />
                     </mask>
                 </defs>
 
-                <!-- Layer 1: The Background -->
-                <!-- Set background to white so it's not transparent in the PNG -->
                 <rect width="800" height="400" fill="white" />
                 <rect width="800" height="400" fill="url(#pattern-1)" />
 
-                <!-- Layer 2: The Foreground (masked) -->
                 <rect width="800" height="400" fill="url(#pattern-2)" mask="url(#text-mask)" />
             </svg>
         </div>
 
-        <!-- Download Button -->
         <div class="text-center">
             <button 
                 type="button"
@@ -113,7 +86,6 @@
                 onclick="downloadPNG()"
                 class="w-full md:w-auto inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
-                <!-- Simple SVG icon for download -->
                 <svg class="w-5 h-5 mr-3 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
@@ -123,24 +95,53 @@
     </div>
 
     <script>
-        // This function updates the text inside the SVG
+        // *** THIS SCRIPT IS UPDATED ***
+        // This function now dynamically scales the font size
         function updateText() {
             const input = document.getElementById('text-input');
             const svgText = document.getElementById('svg-text-mask-content');
             
             if (input && svgText) {
-                // Get the input value, convert to uppercase, or show a space if empty
-                // (an empty string can cause rendering issues)
-                svgText.textContent = input.value.toUpperCase() || ' ';
+                const newText = input.value.toUpperCase() || ' ';
+                svgText.textContent = newText;
+                
+                // --- New Dynamic Font Logic ---
+                const maxTextWidth = 780; // The max width we want (leaves 10px padding on each side)
+                const baseFontSize = 120; // The default/max font size
+                
+                // Reset font size to base to get an accurate width measurement
+                svgText.style.fontSize = baseFontSize + 'px';
+                
+                let currentWidth = 0;
+                try {
+                    // Get the actual rendered width of the text
+                    currentWidth = svgText.getBBox().width;
+                } catch (e) {
+                    currentWidth = 0; // Fails if text is empty
+                }
+
+                // If the text is wider than our maximum width, we need to scale it down
+                if (currentWidth > maxTextWidth) {
+                    // Calculate the scaling ratio
+                    const ratio = maxTextWidth / currentWidth;
+                    // Apply the new, smaller font size
+                    const newFontSize = baseFontSize * ratio;
+                    svgText.style.fontSize = newFontSize + 'px';
+                }
+                // If it's not too wide, it just stays at the base 120px size
             }
         }
+        
+        // --- Call updateText() on page load ---
+        // This ensures the default text ("ILLUSION TEXT EFFECT") is also scaled correctly
+        window.onload = updateText;
 
-        // This function handles the download
+
+        // This function handles the download (no changes needed here)
         function downloadPNG() {
             const svg = document.getElementById('illusion-svg');
             const button = document.getElementById('download-btn');
             
-            // --- Save original button text and show loading state
             const originalButtonText = button.innerHTML;
             button.innerHTML = `
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -151,60 +152,43 @@
             `;
             button.disabled = true;
 
-            // --- Set a high-quality resolution for the PNG
-            // Use the 2:1 aspect ratio from the viewBox (800x400)
             const canvasWidth = 1600;
             const canvasHeight = 800;
 
-            // --- 1. Serialize SVG to string
             const svgData = new XMLSerializer().serializeToString(svg);
-
-            // --- 2. Create a blob and URL
-            // We need to encode the SVG data to handle special characters
             const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(svgBlob);
 
-            // --- 3. Load SVG data into an Image object
             const img = new Image();
             img.onload = function() {
-                // --- 4. Create an in-memory canvas
                 const canvas = document.createElement('canvas');
                 canvas.width = canvasWidth;
                 canvas.height = canvasHeight;
                 const ctx = canvas.getContext('2d');
 
-                // --- 5. Draw the image (from SVG) onto the canvas
                 ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
 
-                // --- 6. Get the PNG data URL from the canvas
                 const pngDataUrl = canvas.toDataURL('image/png');
 
-                // --- 7. Create download link
                 const link = document.createElement('a');
                 link.href = pngDataUrl;
                 
-                // Set the download filename
                 const inputText = document.getElementById('text-input').value || 'illusion';
                 const filename = `${inputText.toLowerCase().replace(/\s+/g, '-')}.png`;
                 link.download = filename;
 
-                // --- 8. Trigger download and clean up
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
 
-                // --- 9. Clean up the object URL
                 URL.revokeObjectURL(url);
                 
-                // --- 10. Restore button
                 button.innerHTML = originalButtonText;
                 button.disabled = false;
             };
             
-            // Handle image loading errors
             img.onerror = function() {
                 console.error("Error loading SVG into image.");
-                // Restore button on error
                 button.innerHTML = originalButtonText;
                 button.disabled = false;
             }
@@ -216,5 +200,3 @@
 
 </body>
 </html>
-
-
