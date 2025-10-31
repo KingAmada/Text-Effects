@@ -4,23 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Illusion Effect</title>
+    <!-- Load Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Use the Inter font, which is loaded by Tailwind */
         body {
             font-family: 'Inter', sans-serif;
         }
-        
-        /* Style for the text inside the SVG.
-         We set a large "base" font size (120px). 
-         The JavaScript will reduce this if the text is too wide.
-        */
         #svg-text-mask-content {
-            font-size: 120px; /* This is now the *maximum* size */
+            font-size: 120px; /* This is the *maximum* size */
             font-weight: 900;
-            font-family: 'Arial Black', 'Impact', sans-serif; /* Use a very thick font */
-            text-anchor: middle; /* Center the text horizontally */
-            dominant-baseline: middle; /* Center the text vertically */
+            font-family: 'Arial Black', 'Impact', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: middle;
         }
     </style>
 </head>
@@ -35,6 +30,7 @@
             Type a word below. The font will now resize to fit.
         </p>
 
+        <!-- Input Field -->
         <div class="mb-6">
             <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                 Enter your word:
@@ -46,15 +42,18 @@
                    oninput="updateText()">
         </div>
 
+        <!-- SVG container -->
         <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
             <svg id="illusion-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                 
                 <defs>
+                    <!-- Pattern 1: Background (/) lines -->
                     <pattern id="pattern-1" width="10" height="10" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
                         <rect width="10" height="10" fill="white"/>
                         <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
                     </pattern>
                     
+                    <!-- Pattern 2: Foreground (\) lines -->
                     <pattern id="pattern-2" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
                         <rect width="10" height="10" fill="white"/>
                         <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
@@ -72,13 +71,16 @@
                     </mask>
                 </defs>
 
+                <!-- Layer 1: The Background -->
                 <rect width="800" height="400" fill="white" />
                 <rect width="800" height="400" fill="url(#pattern-1)" />
 
+                <!-- Layer 2: The Foreground (masked) -->
                 <rect width="800" height="400" fill="url(#pattern-2)" mask="url(#text-mask)" />
             </svg>
         </div>
 
+        <!-- Download Button -->
         <div class="text-center">
             <button 
                 type="button"
@@ -96,7 +98,6 @@
 
     <script>
         // *** THIS SCRIPT IS UPDATED ***
-        // This function now dynamically scales the font size
         function updateText() {
             const input = document.getElementById('text-input');
             const svgText = document.getElementById('svg-text-mask-content');
@@ -105,39 +106,39 @@
                 const newText = input.value.toUpperCase() || ' ';
                 svgText.textContent = newText;
                 
-                // --- New Dynamic Font Logic ---
-                const maxTextWidth = 780; // The max width we want (leaves 10px padding on each side)
+                const maxTextWidth = 780; // The max width (leaves 10px padding)
                 const baseFontSize = 120; // The default/max font size
                 
-                // Reset font size to base to get an accurate width measurement
+                // Reset font size to base
                 svgText.style.fontSize = baseFontSize + 'px';
-                
-                let currentWidth = 0;
-                try {
-                    // Get the actual rendered width of the text
-                    currentWidth = svgText.getBBox().width;
-                } catch (e) {
-                    currentWidth = 0; // Fails if text is empty
-                }
 
-                // If the text is wider than our maximum width, we need to scale it down
-                if (currentWidth > maxTextWidth) {
-                    // Calculate the scaling ratio
-                    const ratio = maxTextWidth / currentWidth;
-                    // Apply the new, smaller font size
-                    const newFontSize = baseFontSize * ratio;
-                    svgText.style.fontSize = newFontSize + 'px';
-                }
-                // If it's not too wide, it just stays at the base 120px size
+                // *** THIS IS THE FIX ***
+                // Wait for the browser to render the new text and font size
+                // *before* we try to measure its width.
+                // setTimeout(..., 0) defers this to the next render cycle.
+                setTimeout(() => {
+                    let currentWidth = 0;
+                    try {
+                        currentWidth = svgText.getBBox().width;
+                    } catch (e) {
+                        currentWidth = 0; 
+                    }
+
+                    // Now we have the *correct* width, so we can scale
+                    if (currentWidth > maxTextWidth) {
+                        const ratio = maxTextWidth / currentWidth;
+                        const newFontSize = baseFontSize * ratio;
+                        svgText.style.fontSize = newFontSize + 'px';
+                    }
+                }, 0); // The "0" is the important part!
             }
         }
         
         // --- Call updateText() on page load ---
-        // This ensures the default text ("ILLUSION TEXT EFFECT") is also scaled correctly
         window.onload = updateText;
 
 
-        // This function handles the download (no changes needed here)
+        // This function handles the download (no changes needed)
         function downloadPNG() {
             const svg = document.getElementById('illusion-svg');
             const button = document.getElementById('download-btn');
@@ -200,3 +201,5 @@
 
 </body>
 </html>
+
+
