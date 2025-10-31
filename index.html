@@ -72,7 +72,7 @@
 
                     <!-- 
                       This text element will be used by the mask.
-                      NEW: Added textLength="780" to force the text to fit
+                      Added textLength="780" to force the text to fit
                       within 780 units (out of 800), leaving a small margin.
                     -->
                     <text id="svg-text-mask-content" 
@@ -96,6 +96,8 @@
                 </defs>
 
                 <!-- Layer 1: The Background -->
+                <!-- Set background to white so it's not transparent in the PNG -->
+                <rect width="800" height="400" fill="white" />
                 <rect width="800" height="400" fill="url(#pattern-1)" />
 
                 <!-- Layer 2: The Foreground (masked) -->
@@ -107,14 +109,15 @@
         <div class="text-center">
             <button 
                 type="button"
-                onclick="downloadSVG()"
+                id="download-btn"
+                onclick="downloadPNG()"
                 class="w-full md:w-auto inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
                 <!-- Simple SVG icon for download -->
                 <svg class="w-5 h-5 mr-3 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
-                Download as .SVG
+                Download as .PNG
             </button>
         </div>
     </div>
@@ -132,30 +135,81 @@
             }
         }
 
-        // NEW: This function handles the download
-        function downloadSVG() {
+        // This function handles the download
+        function downloadPNG() {
             const svg = document.getElementById('illusion-svg');
+            const button = document.getElementById('download-btn');
+            
+            // --- Save original button text and show loading state
+            const originalButtonText = button.innerHTML;
+            button.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Generating...
+            `;
+            button.disabled = true;
+
+            // --- Set a high-quality resolution for the PNG
+            // Use the 2:1 aspect ratio from the viewBox (800x400)
+            const canvasWidth = 1600;
+            const canvasHeight = 800;
+
+            // --- 1. Serialize SVG to string
             const svgData = new XMLSerializer().serializeToString(svg);
+
+            // --- 2. Create a blob and URL
+            // We need to encode the SVG data to handle special characters
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+
+            // --- 3. Load SVG data into an Image object
+            const img = new Image();
+            img.onload = function() {
+                // --- 4. Create an in-memory canvas
+                const canvas = document.createElement('canvas');
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
+                const ctx = canvas.getContext('2d');
+
+                // --- 5. Draw the image (from SVG) onto the canvas
+                ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+
+                // --- 6. Get the PNG data URL from the canvas
+                const pngDataUrl = canvas.toDataURL('image/png');
+
+                // --- 7. Create download link
+                const link = document.createElement('a');
+                link.href = pngDataUrl;
+                
+                // Set the download filename
+                const inputText = document.getElementById('text-input').value || 'illusion';
+                const filename = `${inputText.toLowerCase().replace(/\s+/g, '-')}.png`;
+                link.download = filename;
+
+                // --- 8. Trigger download and clean up
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // --- 9. Clean up the object URL
+                URL.revokeObjectURL(url);
+                
+                // --- 10. Restore button
+                button.innerHTML = originalButtonText;
+                button.disabled = false;
+            };
             
-            // Create a blob
-            const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            // Handle image loading errors
+            img.onerror = function() {
+                console.error("Error loading SVG into image.");
+                // Restore button on error
+                button.innerHTML = originalButtonText;
+                button.disabled = false;
+            }
             
-            // Create a temporary link
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            
-            // Set the download filename
-            const inputText = document.getElementById('text-input').value || 'illusion';
-            const filename = `${inputText.toLowerCase().replace(/\s+/g, '-')}.svg`;
-            link.download = filename;
-            
-            // Append, click, and remove the link
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Clean up the object URL
-            URL.revokeObjectURL(link.href);
+            img.src = url;
         }
         
     </script>
