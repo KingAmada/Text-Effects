@@ -4,7 +4,6 @@
     <meta charset="UTF-R">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Illusion Gallery</title>
-    <!-- Load Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -12,6 +11,7 @@
         }
         /* Base styles for all text elements in SVGs */
         .svg-text-base {
+            /* Styles are now applied inline, but we keep the class for JS selection */
             font-size: 120px;
             font-weight: 900;
             font-family: 'Arial Black', 'Impact', sans-serif;
@@ -50,7 +50,6 @@
             Type in the box below to see your text rendered in 13 different illusion styles.
         </p>
 
-        <!-- Main Input Field (now controls 13 effects) -->
         <div class="mb-10 max-w-2xl mx-auto sticky top-4 z-10 bg-white/95 backdrop-blur-sm p-4 rounded-lg shadow-lg">
             <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                 Enter your word:
@@ -62,10 +61,8 @@
                    oninput="updateAllText()">
         </div>
 
-        <!-- --- Gallery Grid --- -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-            <!-- --- Effect 1: Line Illusion --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -79,8 +76,9 @@
                             </pattern>
                             <mask id="text-mask-1">
                                 <rect width="800" height="400" fill="black" />
-                                <!-- *** FIX: Changed x/y to 400/200 *** -->
-                                <text id="svg-text-1" class="svg-text-base" x="400" y="200" fill="white">SECURITY</text>
+                                <text id="svg-text-1" class="svg-text-base" x="400" y="200" fill="white" 
+                                      text-anchor="middle" dominant-baseline="middle" 
+                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -93,7 +91,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 2: Guilloché Security Pattern --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">2. Guilloché Security Pattern</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -109,8 +106,9 @@
                             </pattern>
                             <mask id="text-mask-2">
                                 <rect width="800" height="400" fill="black" />
-                                <!-- *** FIX: Changed x/y to 400/200 *** -->
-                                <text id="svg-text-2" class="svg-text-base" x="400" y="200" fill="white">SECURITY</text>
+                                <text id="svg-text-2" class="svg-text-base" x="400" y="200" fill="white" 
+                                      text-anchor="middle" dominant-baseline="middle" 
+                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -123,7 +121,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 3: Void (Negative Space) --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -134,8 +131,9 @@
                             </pattern>
                             <mask id="text-mask-3">
                                 <rect width="800" height="400" fill="white" />
-                                <!-- *** FIX: Changed x/y to 400/200 *** -->
-                                <text id="svg-text-3" class="svg-text-base" x="400" y="200" fill="black">SECURITY</text>
+                                <text id="svg-text-3" class="svg-text-base" x="400" y="200" fill="black" 
+                                      text-anchor="middle" dominant-baseline="middle" 
+                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -147,7 +145,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 4: Embossed (Watermark) --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">4. Embossed (Watermark)</h2>
                 <div class="w-full bg-gray-200 border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -159,8 +156,9 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="#E5E7EB" />
-                        <!-- *** FIX: Changed x/y to 400/200 *** -->
-                        <text id="svg-text-4" class="svg-text-base" x="400" y="200" fill="#E5E7EB" filter="url(#filter-emboss)">SECURITY</text>
+                        <text id="svg-text-4" class="svg-text-base" x="400" y="200" fill="#E5E7EB" filter="url(#filter-emboss)" 
+                              text-anchor="middle" dominant-baseline="middle" 
+                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -168,7 +166,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 5: 3D Anaglyph --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">5. 3D Anaglyph</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -187,8 +184,9 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <!-- *** FIX: Changed x/y to 400/200 *** -->
-                        <text id="svg-text-5" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-anaglyph)">SECURITY</text>
+                        <text id="svg-text-5" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-anaglyph)" 
+                              text-anchor="middle" dominant-baseline="middle" 
+                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -196,7 +194,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 6: Halftone (Dot Matrix) --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">6. Halftone (Dot Matrix)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -207,8 +204,9 @@
                             </pattern>
                             <mask id="text-mask-6">
                                 <rect width="800" height="400" fill="black" />
-                                <!-- *** FIX: Changed x/y to 400/200 *** -->
-                                <text id="svg-text-6" class="svg-text-base" x="400" y="200" fill="white">SECURITY</text>
+                                <text id="svg-text-6" class="svg-text-base" x="400" y="200" fill="white" 
+                                      text-anchor="middle" dominant-baseline="middle" 
+                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -220,7 +218,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 7: Noise Texture --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">7. Noise Texture</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -233,8 +230,9 @@
                                 </feDiffuseLighting>
                                 <feComposite in="lit" in2="SourceGraphic" operator="in" />
                             </filter>
-                            <!-- *** FIX: Changed x/y to 400/200 *** -->
-                            <text id="svg-text-7" class="svg-text-base" x="400" y="200" fill="black">SECURITY</text>
+                            <text id="svg-text-7" class="svg-text-base" x="400" y="200" fill="black" 
+                                  text-anchor="middle" dominant-baseline="middle" 
+                                  font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                         </defs>
                         <rect width="800" height="400" fill="white" />
                         <use href="#svg-text-7" filter="url(#filter-noise)" />
@@ -245,14 +243,14 @@
                 </div>
             </div>
 
-            <!-- --- Effect 8: Fragmented (Glitch) --- -->
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">8. Fragmented (Glitch)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-8" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <!-- *** FIX: Changed x/y to 400/200 *** -->
-                            <text id="svg-text-8" class="svg-text-base" x="400" y="200" fill="black">SECURITY</text>
+                            <text id="svg-text-8" class="svg-text-base" x="400" y="200" fill="black" 
+                                  text-anchor="middle" dominant-baseline="middle" 
+                                  font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                             <clipPath id="clip-slice-1"><rect x="0" y="0" width="800" height="100"/></clipPath>
                             <clipPath id="clip-slice-2"><rect x="0" y="100" width="800" height="100"/></clipPath>
                             <clipPath id="clip-slice-3"><rect x="0" y="200" width="800" height="100"/></clipPath>
@@ -270,7 +268,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 9: Microtext Pattern --- -->
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">9. Microtext Pattern (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -281,8 +278,9 @@
                             </pattern>
                             <mask id="text-mask-9">
                                 <rect width="800" height="400" fill="black" />
-                                <!-- *** FIX: Changed x/y to 400/200 *** -->
-                                <text id="svg-text-9" class="svg-text-base" x="400" y="200" fill="white">SECURITY</text>
+                                <text id="svg-text-9" class="svg-text-base" x="400" y="200" fill="white" 
+                                      text-anchor="middle" dominant-baseline="middle" 
+                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -294,7 +292,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 10: Engraved (Intaglio) --- -->
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">10. Engraved (Intaglio) (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -310,8 +307,9 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <!-- *** FIX: Changed x/y to 400/200 *** -->
-                        <text id="svg-text-10" class="svg-text-base" x="400" y="200" fill="#555" filter="url(#filter-engraved)">SECURITY</text>
+                        <text id="svg-text-10" class="svg-text-base" x="400" y="200" fill="#555" filter="url(#filter-engraved)" 
+                              text-anchor="middle" dominant-baseline="middle" 
+                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -319,7 +317,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 11: Wavy Path (Certificate) --- -->
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">11. Wavy Path (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -328,8 +325,8 @@
                             <path id="wavy-path" d="M 50,200 Q 250,150 400,200 T 750,200" fill="none" stroke="none" />
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <text class="svg-text-base" fill="black">
-                            <!-- This one uses textPath, so it doesn't need the x/y fix -->
+                        <text class="svg-text-base" fill="black" 
+                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">
                             <textPath id="svg-text-11" href="#wavy-path" startOffset="50%" text-anchor="middle" textLength="700" lengthAdjust="spacingAndGlyphs">SECURITY</textPath>
                         </text>
                     </svg>
@@ -339,7 +336,6 @@
                 </div>
             </div>
 
-            <!-- --- Effect 12: Distortion (Displacement) --- -->
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">12. Distortion (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -351,8 +347,9 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <!-- *** FIX: Changed x/y to 400/200 *** -->
-                        <text id="svg-text-12" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-displacement)">SECURITY</text>
+                        <text id="svg-text-12" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-displacement)" 
+                              text-anchor="middle" dominant-baseline="middle" 
+                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -360,7 +357,6 @@
                 </div>
             </div>
             
-            <!-- --- Effect 13: Warped Checkerboard --- -->
             <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
                 <h2 class="text-xl font-semibold text-green-800 mb-4">13. Warped Checkerboard</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -376,8 +372,9 @@
                             </pattern>
                             <mask id="text-mask-13">
                                 <rect width="800" height="400" fill="white" />
-                                <!-- *** FIX: Changed x/y to 400/200 *** -->
-                                <text id="svg-text-13" class="svg-text-base" x="400" y="200" fill="black">SECURITY</text>
+                                <text id="svg-text-13" class="svg-text-base" x="400" y="200" fill="black" 
+                                      text-anchor="middle" dominant-baseline="middle" 
+                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -389,7 +386,6 @@
                 </div>
             </div>
             
-            <!-- --- Effect 14: Combined Tilt-to-Read (NEW) --- -->
             <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
                 <h2 class="text-xl font-semibold text-green-800 mb-4">14. Combined Tilt-to-Read</h2>
                 <p class="text-sm text-gray-600 -mt-3 mb-4">(This effect has its own inputs)</p>
@@ -411,11 +407,8 @@
                 </div>
             </div>
 
-        </div> <!-- End Grid -->
+        </div> </div>
 
-    </div>
-
-    <!-- Reusable "Loading" button template -->
     <template id="loading-button-template">
         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -424,7 +417,6 @@
         Generating...
     </template>
     
-    <!-- Button Styles -->
     <style>
         .download-btn {
             display: inline-flex;
@@ -479,8 +471,9 @@
             }
             
             // Standard font-size scaling
+            // We read the base font size from the inline attribute
+            const baseFontSize = parseFloat(svgText.getAttribute("font-size")) || 120;
             const maxTextWidth = 780; 
-            const baseFontSize = 120; 
             
             svgText.setAttribute("font-size", baseFontSize + 'px');
 
@@ -664,5 +657,3 @@
 
 </body>
 </html>
-
-
