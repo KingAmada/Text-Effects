@@ -4,8 +4,7 @@
     <meta charset="UTF-R">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Illusion Gallery</title>
-    <!-- Load Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Tailwind CSS for styling --><script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -50,8 +49,7 @@
             Type in the box below to see your text rendered in 13 different illusion styles.
         </p>
 
-        <!-- Main Input Field (now controls 13 effects) -->
-        <div class="mb-10 max-w-2xl mx-auto sticky top-4 z-10 bg-white/95 backdrop-blur-sm p-4 rounded-lg shadow-lg">
+        <!-- Main Input Field (now controls 13 effects) --><div class="mb-10 max-w-2xl mx-auto sticky top-4 z-10 bg-white/95 backdrop-blur-sm p-4 rounded-lg shadow-lg">
             <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                 Enter your word:
             </label>
@@ -62,11 +60,9 @@
                    oninput="updateAllText()">
         </div>
 
-        <!-- --- Gallery Grid --- -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <!-- --- Gallery Grid --- --><div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-            <!-- --- Effect 1: Line Illusion --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 1: Line Illusion --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -92,8 +88,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 2: Guilloché Security Pattern --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 2: Guilloché Security Pattern --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">2. Guilloché Security Pattern</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-2" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -121,8 +116,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 3: Void (Negative Space) --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 3: Void (Negative Space) --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-3" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -144,8 +138,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 4: Embossed (Watermark) --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 4: Embossed (Watermark) --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">4. Embossed (Watermark)</h2>
                 <div class="w-full bg-gray-200 border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-4" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -164,8 +157,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 5: 3D Anaglyph --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 5: 3D Anaglyph --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">5. 3D Anaglyph</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-5" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -191,8 +183,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 6: Halftone (Dot Matrix) --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 6: Halftone (Dot Matrix) --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">6. Halftone (Dot Matrix)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-6" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -214,8 +205,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 7: Noise Texture --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 7: Noise Texture --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">7. Noise Texture</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-7" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -238,8 +228,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 8: Fragmented (Glitch) --- -->
-            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+            <!-- --- Effect 8: Fragmented (Glitch) --- --><div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">8. Fragmented (Glitch)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-8" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -262,8 +251,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 9: Microtext Pattern --- -->
-            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+            <!-- --- Effect 9: Microtext Pattern --- --><div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">9. Microtext Pattern (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-9" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -285,8 +273,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 10: Engraved (Intaglio) --- -->
-            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+            <!-- --- Effect 10: Engraved (Intaglio) --- --><div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">10. Engraved (Intaglio) (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-10" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -309,8 +296,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 11: Wavy Path (Certificate) --- -->
-            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+            <!-- --- Effect 11: Wavy Path (Certificate) --- --><div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">11. Wavy Path (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-11" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -328,8 +314,7 @@
                 </div>
             </div>
 
-            <!-- --- Effect 12: Distortion (Displacement) --- -->
-            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+            <!-- --- Effect 12: Distortion (Displacement) --- --><div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">12. Distortion (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-12" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -348,8 +333,7 @@
                 </div>
             </div>
             
-            <!-- --- Effect 13: Warped Checkerboard --- -->
-            <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
+            <!-- --- Effect 13: Warped Checkerboard --- --><div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
                 <h2 class="text-xl font-semibold text-green-800 mb-4">13. Warped Checkerboard</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-13" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -376,9 +360,8 @@
                 </div>
             </div>
             
-            <!-- --- Effect 14: Combined Tilt-to-Read (NEW) --- -->
-            <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
-                <h2 class="text-xl font-semibold text-green-800 mb-4">14. Combined Tilt-to-Read (New)</h2>
+            <!-- --- Effect 14: Combined Tilt-to-Read (NEW) --- --><div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
+                <h2 class="text-xl font-semibold text-green-800 mb-4">14. Combined Tilt-to-Read</h2>
                 <p class="text-sm text-gray-600 -mt-3 mb-4">(This effect has its own inputs)</p>
                 
                 <canvas id="tilt-canvas"></canvas>
@@ -398,12 +381,9 @@
                 </div>
             </div>
 
-        </div> <!-- End Grid -->
+        </div> <!-- End Grid --></div>
 
-    </div>
-
-    <!-- Reusable "Loading" button template -->
-    <template id="loading-button-template">
+    <!-- Reusable "Loading" button template --><template id="loading-button-template">
         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -411,8 +391,7 @@
         Generating...
     </template>
     
-    <!-- Button Styles -->
-    <style>
+    <!-- Button Styles --><style>
         .download-btn {
             display: inline-flex;
             align-items: center;
@@ -453,7 +432,7 @@
             }
         }
 
-        // --- Refactored text scaling function ---
+        // --- Refactored text scaling function for live preview ---
         function updateSVGText(textId, newText) {
             const svgText = document.getElementById(textId);
             if (!svgText) return;
@@ -586,60 +565,140 @@
         }
 
         // --- Refactored, reusable download function for SVGs ---
-        function downloadPNG(button, svgId, filenameBase) {
+        async function downloadPNG(button, svgId, filenameBase) {
             const svg = document.getElementById(svgId);
             if (!svg) return;
 
             const originalButtonHTML = button.innerHTML;
-            
-            // Set loading state
             const loadingTemplate = document.getElementById('loading-button-template');
             button.innerHTML = loadingTemplate.innerHTML;
             button.disabled = true;
 
-            const canvasWidth = 1600;
-            const canvasHeight = 800;
+            const downloadCanvasWidth = 1600; // Final PNG width
+            const downloadCanvasHeight = 800; // Final PNG height
 
-            const svgData = new XMLSerializer().serializeToString(svg);
+            // Create a temporary SVG to draw into, maintaining aspect ratio
+            const tempSvg = svg.cloneNode(true);
+            tempSvg.setAttribute('width', downloadCanvasWidth);
+            tempSvg.setAttribute('height', downloadCanvasHeight);
+            tempSvg.setAttribute('viewBox', `0 0 ${downloadCanvasWidth} ${downloadCanvasHeight}`);
+
+            // Find the text element within the cloned SVG
+            const svgTextElement = tempSvg.querySelector(`#${svgId.replace('illusion-svg-', 'svg-text-')}`);
+
+            if (svgTextElement && svgId !== 'illusion-svg-11') { // Exclude wavy path as it has its own fixed path
+                // To get accurate bounding box, the SVG needs to be in the DOM
+                // for a moment or use a more complex offscreen rendering technique.
+                // For simplicity, we'll try to calculate based on the download size
+                // or fall back to original attributes if getBBox is not available
+                // for a detached element.
+
+                // Reset centering attributes for precise calculation below
+                svgTextElement.removeAttribute('x');
+                svgTextElement.removeAttribute('y');
+                svgTextElement.removeAttribute('text-anchor');
+                svgTextElement.removeAttribute('dominant-baseline');
+                
+                // Set a temporary font size that will likely fit for measurement
+                svgTextElement.setAttribute("font-size", "150px"); // A good large default
+            }
+
+            // Convert tempSvg to string
+            const svgData = new XMLSerializer().serializeToString(tempSvg);
             const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(svgBlob);
 
             const img = new Image();
             img.onload = function() {
                 const canvas = document.createElement('canvas');
-                canvas.width = canvasWidth;
-                canvas.height = canvasHeight;
+                canvas.width = downloadCanvasWidth;
+                canvas.height = downloadCanvasHeight;
                 const ctx = canvas.getContext('2d');
 
-                ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+                // Draw the SVG to the canvas
+                ctx.drawImage(img, 0, 0, downloadCanvasWidth, downloadCanvasHeight);
 
-                const pngDataUrl = canvas.toDataURL('image/png');
+                // For effects that have a text mask, the text itself might be hidden in the final SVG output.
+                // We need to re-center the *visual* text if it's visible.
+                // This is a tricky part with masked/filtered elements as their 'actual' bounding box might not be reliable.
+                // The current approach draws the entire SVG. If the text itself is shifted,
+                // we might need to manipulate the text's position *before* serializing the SVG.
 
-                const link = document.createElement('a');
-                link.href = pngDataUrl;
-                
-                const inputText = document.getElementById('text-input').value || 'illusion';
-                const filename = `${filenameBase}-${inputText.toLowerCase().replace(/\s+/g, '-')}.png`;
-                link.download = filename;
+                // Let's retry by modifying the original SVG text's position BEFORE serialization
+                // for effects 1-10 and 12-13. Effect 11 (wavy path) is path-based.
+                // The issue seems to be how img.onload interprets text-anchor/dominant-baseline.
+                // Instead, we will force explicit coordinates.
 
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                if (svgTextElement && svgId !== 'illusion-svg-11') {
+                    // Temporarily add the SVG to the DOM to get accurate bounding box
+                    // This is a common workaround for getBBox on detached elements
+                    document.body.appendChild(tempSvg); 
+                    const bbox = svgTextElement.getBBox();
+                    document.body.removeChild(tempSvg); // Remove it immediately
 
-                URL.revokeObjectURL(url);
-                
-                // Restore button
-                button.innerHTML = originalButtonHTML;
-                button.disabled = false;
+                    const textWidth = bbox.width;
+                    const textHeight = bbox.height;
+
+                    const targetX = (downloadCanvasWidth - textWidth) / 2 - bbox.x;
+                    const targetY = (downloadCanvasHeight - textHeight) / 2 - bbox.y;
+
+                    // Now, modify the *cloned* SVG's text element (svgTextElement) before re-serializing for image draw
+                    svgTextElement.setAttribute('x', targetX);
+                    svgTextElement.setAttribute('y', targetY);
+                    svgTextElement.setAttribute('text-anchor', 'start'); // Set to start after explicit x
+                    svgTextElement.setAttribute('dominant-baseline', 'alphabetic'); // Set for explicit y (usually bottom of text)
+                    // If the original dominant-baseline was 'middle', you might need to adjust y by textHeight / 2
+
+                    // Reserialize with new positions
+                    const reSerializedSvgData = new XMLSerializer().serializeToString(tempSvg);
+                    const reSerializedSvgBlob = new Blob([reSerializedSvgData], { type: 'image/svg+xml;charset=utf-8' });
+                    const newUrl = URL.createObjectURL(reSerializedSvgBlob);
+
+                    const reImg = new Image();
+                    reImg.onload = function() {
+                        ctx.clearRect(0, 0, downloadCanvasWidth, downloadCanvasHeight); // Clear previous draw
+                        ctx.drawImage(reImg, 0, 0, downloadCanvasWidth, downloadCanvasHeight);
+                        finalizeDownload(canvas, button, filenameBase);
+                        URL.revokeObjectURL(newUrl);
+                    };
+                    reImg.onerror = function(err) {
+                        console.error("Error re-loading SVG into image after centering.", err);
+                        finalizeDownload(canvas, button, filenameBase); // Fallback
+                    };
+                    reImg.src = newUrl;
+
+                } else {
+                    // For effects like wavy path or if text element not found/reliable for bbox
+                    finalizeDownload(canvas, button, filenameBase);
+                }
             };
             
             img.onerror = function(err) {
                 console.error("Error loading SVG into image.", err);
+                // Restore button state even if there's an error
                 button.innerHTML = originalButtonHTML;
                 button.disabled = false;
             }
             
             img.src = url;
+        }
+
+        function finalizeDownload(canvas, button, filenameBase) {
+            const pngDataUrl = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = pngDataUrl;
+            
+            const inputText = document.getElementById('text-input').value || 'illusion';
+            const filename = `${filenameBase}-${inputText.toLowerCase().replace(/\s+/g, '-')}.png`;
+            link.download = filename;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Restore button
+            button.innerHTML = button.originalHTML; // Use stored original HTML
+            button.disabled = false;
         }
     </script>
 
