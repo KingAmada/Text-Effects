@@ -1,151 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-R">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Illusion Effect</title>
+    <title>Text Illusion Gallery</title>
+    <!-- Load Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* All font styling is now applied directly to the <text> element
-          in the HTML. This <style> block is now much simpler.
-        */
+        /* Base styles for all text elements in SVGs */
+        .svg-text-base {
+            font-size: 120px;
+            font-weight: 900;
+            font-family: 'Arial Black', 'Impact', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
 
-    <div class="w-full max-w-2xl bg-white rounded-lg shadow-xl p-6 md:p-8">
+    <div class="w-full max-w-7xl bg-white rounded-lg shadow-xl p-6 md:p-8">
         
-        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-4">
-            Line Illusion Text Effect
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
+            Printable Text Illusion Gallery
         </h1>
-        <p class="text-center text-gray-600 mb-6">
-            Type a word below. The font will now resize to fit.
+        <p class="text-center text-gray-600 mb-8">
+            Type in the box below to see your text rendered in 12 different illusion styles.
         </p>
 
-        <div class="mb-6">
+        <!-- Main Input Field -->
+        <div class="mb-10 max-w-2xl mx-auto sticky top-4 z-10 bg-white/95 backdrop-blur-sm p-4 rounded-lg shadow-lg">
             <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                 Enter your word:
             </label>
             <input type="text" 
                    id="text-input" 
-                   value="ILLUSION TEXT EFFECT" 
-                   class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg" 
-                   oninput="updateText()">
+                   value="SECURITY" 
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-2xl" 
+                   oninput="updateAllText()">
         </div>
 
-        <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
-            <svg id="illusion-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                
-                <defs>
-                    <pattern id="pattern-1" width="10" height="10" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
-                        <rect width="10" height="10" fill="white"/>
-                        <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
-                    </pattern>
-                    
-                    <pattern id="pattern-2" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                        <rect width="10" height="10" fill="white"/>
-                        <line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5" />
-                    </pattern>
+        <!-- --- Gallery Grid --- -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-                    <mask id="text-mask">
-                        <rect width="800" height="400" fill="black" />
-                        <text id="svg-text-mask-content" 
-                              x="50%" 
-                              y="50%"
-                              fill="white"
-                              font-size="120" 
-                              font-weight="900"
-                              font-family="'Arial Black', 'Impact', sans-serif"
-                              text-anchor="middle"
-                              dominant-baseline="middle">
-                            ILLUSION TEXT EFFECT
+            <!-- --- Effect 1: Line Illusion --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <pattern id="pattern-1" width="10" height="10" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+                                <rect width="10" height="10" fill="white"/><line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5"/>
+                            </pattern>
+                            <pattern id="pattern-2" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                                <rect width="10" height="10" fill="white"/><line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5"/>
+                            </pattern>
+                            <mask id="text-mask-1">
+                                <rect width="800" height="400" fill="black" />
+                                <text id="svg-text-1" class="svg-text-base" x="50%" y="50%" fill="white">SECURITY</text>
+                            </mask>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="url(#pattern-1)" />
+                        <rect width="800" height="400" fill="url(#pattern-2)" mask="url(#text-mask-1)" />
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-1', 'line-illusion')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 2: Guilloché Security Pattern --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">2. Guilloché Security Pattern</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-2" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <pattern id="pattern-guilloche-1" width="20" height="20" patternUnits="userSpaceOnUse">
+                                <path d="M -5 10 Q 5 0, 15 10 T 25 10" stroke="#aaa" stroke-width="1.5" fill="none"/>
+                                <path d="M -5 20 Q 5 10, 15 20 T 25 20" stroke="#aaa" stroke-width="1.5" fill="none"/>
+                            </pattern>
+                            <pattern id="pattern-guilloche-2" width="20" height="20" patternUnits="userSpaceOnUse">
+                                <path d="M 10 -5 Q 20 5, 10 15 T 10 25" stroke="black" stroke-width="1" fill="none"/>
+                                <path d="M 20 -5 Q 10 5, 20 15 T 20 25" stroke="black" stroke-width="1" fill="none"/>
+                            </pattern>
+                            <mask id="text-mask-2">
+                                <rect width="800" height="400" fill="black" />
+                                <text id="svg-text-2" class="svg-text-base" x="50%" y="50%" fill="white">SECURITY</text>
+                            </mask>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="url(#pattern-guilloche-1)" />
+                        <rect width="800" height="400" fill="url(#pattern-guilloche-2)" mask="url(#text-mask-2)" />
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-2', 'guilloche-security')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 3: Void (Negative Space) --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space)</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-3" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <pattern id="pattern-3" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                                <rect width="10" height="10" fill="white"/><line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5"/>
+                            </pattern>
+                            <mask id="text-mask-3">
+                                <rect width="800" height="400" fill="white" />
+                                <text id="svg-text-3" class="svg-text-base" x="50%" y="50%" fill="black">SECURITY</text>
+                            </mask>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="url(#pattern-3)" mask="url(#text-mask-3)" />
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-3', 'void-negative')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 4: Embossed (Watermark) --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">4. Embossed (Watermark)</h2>
+                <div class="w-full bg-gray-200 border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-4" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <filter id="filter-emboss">
+                                <feDropShadow dx="1.5" dy="1.5" stdDeviation="0.5" flood-color="#000" flood-opacity="0.3"/>
+                                <feDropShadow dx="-1.5" dy="-1.5" stdDeviation="0.5" flood-color="#FFF" flood-opacity="0.5"/>
+                            </filter>
+                        </defs>
+                        <rect width="800" height="400" fill="#E5E7EB" /> <!-- Match bg-gray-200 -->
+                        <text id="svg-text-4" class="svg-text-base" x="50%" y="50%" fill="#E5E7EB" filter="url(#filter-emboss)">SECURITY</text>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-4', 'embossed')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 5: 3D Anaglyph --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">5. 3D Anaglyph</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-5" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <filter id="filter-anaglyph">
+                                <feFlood flood-color="#FF0000" result="red" />
+                                <feComposite in="red" in2="SourceAlpha" operator="in" result="red-clip" />
+                                <feOffset in="red-clip" dx="-3" dy="0" result="red-offset" />
+                                <feFlood flood-color="#00FFFF" result="cyan" />
+                                <feComposite in="cyan" in2="SourceAlpha" operator="in" result="cyan-clip" />
+                                <feOffset in="cyan-clip" dx="3" dy="0" result="cyan-offset" />
+                                <feMerge>
+                                    <feMergeNode in="red-offset"/><feMergeNode in="cyan-offset"/><feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <text id="svg-text-5" class="svg-text-base" x="50%" y="50%" fill="black" filter="url(#filter-anaglyph)">SECURITY</text>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-5', 'anaglyph-3d')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 6: Halftone (Dot Matrix) --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">6. Halftone (Dot Matrix)</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-6" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <pattern id="pattern-dots" width="8" height="8" patternUnits="userSpaceOnUse">
+                                <circle cx="4" cy="4" r="3" fill="black" />
+                            </pattern>
+                            <mask id="text-mask-6">
+                                <rect width="800" height="400" fill="black" />
+                                <text id="svg-text-6" class="svg-text-base" x="50%" y="50%" fill="white">SECURITY</text>
+                            </mask>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="url(#pattern-dots)" mask="url(#text-mask-6)" />
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-6', 'halftone-dots')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 7: Noise Texture --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">7. Noise Texture</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-7" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <filter id="filter-noise">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="noise" />
+                                <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="2" result="lit">
+                                    <feDistantLight azimuth="45" elevation="60" />
+                                </feDiffuseLighting>
+                                <feComposite in="lit" in2="SourceGraphic" operator="in" />
+                            </filter>
+                            <text id="svg-text-7" class="svg-text-base" x="50%" y="50%" fill="black">SECURITY</text>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <use href="#svg-text-7" filter="url(#filter-noise)" />
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-7', 'noise-texture')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 8: Fragmented (Glitch) --- -->
+            <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">8. Fragmented (Glitch)</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-8" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <text id="svg-text-8" class="svg-text-base" x="50%" y="50%" fill="black">SECURITY</text>
+                            <clipPath id="clip-slice-1"><rect x="0" y="0" width="800" height="100"/></clipPath>
+                            <clipPath id="clip-slice-2"><rect x="0" y="100" width="800" height="100"/></clipPath>
+                            <clipPath id="clip-slice-3"><rect x="0" y="200" width="800" height="100"/></clipPath>
+                            <clipPath id="clip-slice-4"><rect x="0" y="300" width="800" height="100"/></clipPath>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <use href="#svg-text-8" clip-path="url(#clip-slice-1)" transform="translate(5, 0)"/>
+                        <use href="#svg-text-8" clip-path="url(#clip-slice-2)" transform="translate(-10, 0)"/>
+                        <use href="#svg-text-8" clip-path="url(#clip-slice-3)" transform="translate(10, 0)"/>
+                        <use href="#svg-text-8" clip-path="url(#clip-slice-4)" transform="translate(-5, 0)"/>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-8', 'fragmented-glitch')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 9: Microtext Pattern --- -->
+            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">9. Microtext Pattern (Advanced)</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-9" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <pattern id="pattern-microtext" width="100" height="18" patternUnits="userSpaceOnUse">
+                                <text x="0" y="15" font-family="Arial, sans-serif" font-weight="600" font-size="10" fill="#888">GENUINE</text>
+                            </pattern>
+                            <mask id="text-mask-9">
+                                <rect width="800" height="400" fill="black" />
+                                <text id="svg-text-9" class="svg-text-base" x="50%" y="50%" fill="white">SECURITY</text>
+                            </mask>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="url(#pattern-microtext)" mask="url(#text-mask-9)" />
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-9', 'microtext')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 10: Engraved (Intaglio) --- -->
+            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">10. Engraved (Intaglio) (Advanced)</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-10" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <filter id="filter-engraved">
+                                <feGaussianBlur stdDeviation="1" in="SourceAlpha" result="blur" />
+                                <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" specularExponent="20" lighting-color="#999" result="spec">
+                                    <feDistantLight azimuth="225" elevation="80" />
+                                </feSpecularLighting>
+                                <feComposite in="spec" in2="SourceGraphic" operator="in" result="engraved" />
+                                <feComposite in="SourceGraphic" in2="engraved" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+                            </filter>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <text id="svg-text-10" class="svg-text-base" x="50%" y="50%" fill="#555" filter="url(#filter-engraved)">SECURITY</text>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-10', 'engraved')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+
+            <!-- --- Effect 11: Wavy Path (Certificate) --- -->
+            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">11. Wavy Path (Advanced)</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-11" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <path id="wavy-path" d="M 50,200 Q 250,150 400,200 T 750,200" fill="none" stroke="none" />
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <text class="svg-text-base" fill="black">
+                            <!-- This text ID is special-cased in the JS -->
+                            <textPath id="svg-text-11" href="#wavy-path" startOffset="50%" text-anchor="middle" textLength="700" lengthAdjust="spacingAndGlyphs">SECURITY</textPath>
                         </text>
-                    </mask>
-                </defs>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-11', 'wavy-path')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
 
-                <rect width="800" height="400" fill="white" />
-                <rect width="800" height="400" fill="url(#pattern-1)" />
+            <!-- --- Effect 12: Distortion (Displacement) --- -->
+            <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">12. Distortion (Advanced)</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-12" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <filter id="filter-displacement">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="2" result="turbulence"/>
+                                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G"/>
+                            </filter>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <text id="svg-text-12" class="svg-text-base" x="50%" y="50%" fill="black" filter="url(#filter-displacement)">SECURITY</text>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-12', 'displacement')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
 
-                <rect width="800" height="400" fill="url(#pattern-2)" mask="url(#text-mask)" />
-            </svg>
-        </div>
+        </div> <!-- End Grid -->
 
-        <div class="text-center">
-            <button 
-                type="button"
-                id="download-btn"
-                onclick="downloadPNG()"
-                class="w-full md:w-auto inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-            >
-                <svg class="w-5 h-5 mr-3 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-                Download as .PNG
-            </button>
-        </div>
     </div>
 
+    <!-- Reusable "Loading" button template -->
+    <template id="loading-button-template">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Generating...
+    </template>
+    
+    <!-- Button Styles -->
+    <style>
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #D1D5DB; /* border-gray-300 */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+            font-size: 1rem; /* text-base */
+            font-weight: 500; /* font-medium */
+            border-radius: 0.5rem; /* rounded-lg */
+            color: #374151; /* text-gray-700 */
+            background-color: white;
+            transition: background-color 0.15s ease-in-out;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background-color: #F9FAFB; /* hover:bg-gray-50 */
+        }
+        .download-btn:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px #60A5FA, 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* focus rings */
+        }
+        .download-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    </style>
+
     <script>
-        function updateText() {
+        // --- Main controller function ---
+        function updateAllText() {
             const input = document.getElementById('text-input');
-            const svgText = document.getElementById('svg-text-mask-content');
+            const newText = input.value.toUpperCase() || ' ';
             
-            if (input && svgText) {
-                const newText = input.value.toUpperCase() || ' ';
-                svgText.textContent = newText;
-                
-                const maxTextWidth = 780; 
-                const baseFontSize = 120; 
-                
-                // Reset font size attribute
-                svgText.setAttribute("font-size", baseFontSize + 'px');
-
-                // Wait for browser render before measuring
-                setTimeout(() => {
-                    let currentWidth = 0;
-                    try {
-                        currentWidth = svgText.getBBox().width;
-                    } catch (e) {
-                        currentWidth = 0; 
-                    }
-
-                    if (currentWidth > maxTextWidth) {
-                        const ratio = maxTextWidth / currentWidth;
-                        const newFontSize = baseFontSize * ratio;
-                        // Set the attribute directly
-                        svgText.setAttribute("font-size", newFontSize + 'px');
-                    }
-                }, 0); 
+            // Update all 12 text elements
+            for (let i = 1; i <= 12; i++) {
+                updateSVGText(`svg-text-${i}`, newText);
             }
         }
-        
-        window.onload = updateText;
 
+        // --- Refactored text scaling function ---
+        function updateSVGText(textId, newText) {
+            const svgText = document.getElementById(textId);
+            if (!svgText) return;
 
-        // Download function - no changes needed
-        function downloadPNG() {
-            const svg = document.getElementById('illusion-svg');
-            const button = document.getElementById('download-btn');
+            svgText.textContent = newText;
+
+            // --- Special case for wavy text path (Effect 11) ---
+            if (textId === 'svg-text-11') {
+                // This element uses textLength, so it resizes automatically.
+                // We just need to set the content.
+                return; 
+            }
             
-            const originalButtonText = button.innerHTML;
-            button.innerHTML = `
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Generating...
-            `;
+            // --- Standard font-size scaling for all other effects ---
+            const maxTextWidth = 780; 
+            const baseFontSize = 120; 
+            
+            svgText.setAttribute("font-size", baseFontSize + 'px');
+
+            setTimeout(() => {
+                let currentWidth = 0;
+                try {
+                    currentWidth = svgText.getBBox().width;
+                } catch (e) { currentWidth = 0; }
+
+                if (currentWidth > maxTextWidth) {
+                    const ratio = maxTextWidth / currentWidth;
+                    const newFontSize = baseFontSize * ratio;
+                    svgText.setAttribute("font-size", newFontSize + 'px');
+                }
+            }, 0); 
+        }
+        
+        // --- Call update on page load ---
+        window.onload = updateAllText;
+
+
+        // --- Refactored, reusable download function ---
+        function downloadPNG(button, svgId, filenameBase) {
+            const svg = document.getElementById(svgId);
+            if (!svg) return;
+
+            const originalButtonHTML = button.innerHTML;
+            
+            // Set loading state
+            const loadingTemplate = document.getElementById('loading-button-template');
+            button.innerHTML = loadingTemplate.innerHTML;
             button.disabled = true;
 
             const canvasWidth = 1600;
             const canvasHeight = 800;
-
-            // Note: I am now setting the font-size using setAttribute
-            // instead of .style.fontSize. This is more reliable for SVG.
-            // The updateText function above has been modified to reflect this.
 
             const svgData = new XMLSerializer().serializeToString(svg);
             const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
@@ -156,7 +447,7 @@
                 const canvas = document.createElement('canvas');
                 canvas.width = canvasWidth;
                 canvas.height = canvasHeight;
-                const ctx = canvas.getContext('2d');
+                const ctx = canvas.getContext('d');
 
                 ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
 
@@ -166,7 +457,7 @@
                 link.href = pngDataUrl;
                 
                 const inputText = document.getElementById('text-input').value || 'illusion';
-                const filename = `${inputText.toLowerCase().replace(/\s+/g, '-')}.png`;
+                const filename = `${filenameBase}-${inputText.toLowerCase().replace(/\s+/g, '-')}.png`;
                 link.download = filename;
 
                 document.body.appendChild(link);
@@ -175,13 +466,14 @@
 
                 URL.revokeObjectURL(url);
                 
-                button.innerHTML = originalButtonText;
+                // Restore button
+                button.innerHTML = originalButtonHTML;
                 button.disabled = false;
             };
             
-            img.onerror = function() {
-                console.error("Error loading SVG into image.");
-                button.innerHTML = originalButtonText;
+            img.onerror = function(err) {
+                console.error("Error loading SVG into image.", err);
+                button.innerHTML = originalButtonHTML;
                 button.disabled = false;
             }
             
@@ -191,3 +483,5 @@
 
 </body>
 </html>
+
+
