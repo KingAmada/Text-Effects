@@ -18,6 +18,25 @@
             text-anchor: middle;
             dominant-baseline: middle;
         }
+        
+        /* Styles for the new Canvas effect (from your code) */
+        #tilt-canvas {
+            width: 100%;
+            min-width: 200px;
+            max-width: 500px;
+            border: 1px solid #e5e7eb; /* border-gray-200 */
+            border-radius: 0.5rem; /* rounded-lg */
+            margin: 0 auto; /* Center it */
+            display: block;
+        }
+        
+        .tilt-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #D1D5DB; /* border-gray-300 */
+            border-radius: 0.375rem; /* rounded-md */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
@@ -28,10 +47,10 @@
             Printable Text Illusion Gallery
         </h1>
         <p class="text-center text-gray-600 mb-8">
-            Type in the box below to see your text rendered in 12 different illusion styles.
+            Type in the box below to see your text rendered in 13 different illusion styles.
         </p>
 
-        <!-- Main Input Field -->
+        <!-- Main Input Field (now controls 13 effects) -->
         <div class="mb-10 max-w-2xl mx-auto sticky top-4 z-10 bg-white/95 backdrop-blur-sm p-4 rounded-lg shadow-lg">
             <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                 Enter your word:
@@ -136,7 +155,7 @@
                                 <feDropShadow dx="-1.5" dy="-1.5" stdDeviation="0.5" flood-color="#FFF" flood-opacity="0.5"/>
                             </filter>
                         </defs>
-                        <rect width="800" height="400" fill="#E5E7EB" /> <!-- Match bg-gray-200 -->
+                        <rect width="800" height="400" fill="#E5E7EB" />
                         <text id="svg-text-4" class="svg-text-base" x="50%" y="50%" fill="#E5E7EB" filter="url(#filter-emboss)">SECURITY</text>
                     </svg>
                 </div>
@@ -300,7 +319,6 @@
                         </defs>
                         <rect width="800" height="400" fill="white" />
                         <text class="svg-text-base" fill="black">
-                            <!-- This text ID is special-cased in the JS -->
                             <textPath id="svg-text-11" href="#wavy-path" startOffset="50%" text-anchor="middle" textLength="700" lengthAdjust="spacingAndGlyphs">SECURITY</textPath>
                         </text>
                     </svg>
@@ -327,6 +345,56 @@
                 </div>
                 <div class="text-center">
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-12', 'displacement')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+            
+            <!-- --- Effect 13: Warped Checkerboard --- -->
+            <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
+                <h2 class="text-xl font-semibold text-green-800 mb-4">13. Warped Checkerboard</h2>
+                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
+                    <svg id="illusion-svg-13" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <filter id="filter-warp">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise"/>
+                                <feDisplacementMap in="SourceGraphic" in2="noise" scale="50" />
+                            </filter>
+                            <pattern id="pattern-check" width="50" height="50" patternUnits="userSpaceOnUse">
+                                <rect width="25" height="25" fill="black"/>
+                                <rect x="25" y="25" width="25" height="25" fill="black"/>
+                            </pattern>
+                            <mask id="text-mask-13">
+                                <rect width="800" height="400" fill="white" />
+                                <text id="svg-text-13" class="svg-text-base" x="50%" y="50%" fill="black">SECURITY</text>
+                            </mask>
+                        </defs>
+                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="url(#pattern-check)" filter="url(#filter-warp)" mask="url(#text-mask-13)" />
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-13', 'warped-check')" class="download-btn">Download .PNG</button>
+                </div>
+            </div>
+            
+            <!-- --- Effect 14: Combined Tilt-to-Read (NEW) --- -->
+            <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
+                <h2 class="text-xl font-semibold text-green-800 mb-4">14. Combined Tilt-to-Read (New)</h2>
+                <p class="text-sm text-gray-600 -mt-3 mb-4">(This effect has its own inputs)</p>
+                
+                <canvas id="tilt-canvas"></canvas>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label for="hText" class="block text-sm font-medium text-gray-700 mb-1">Horizontal Text</label>
+                        <input type="text" placeholder="Type horizontal text..." id="hText" class="tilt-input" value="PRINTED BY" />
+                    </div>
+                    <div>
+                        <label for="vText" class="block text-sm font-medium text-gray-700 mb-1">Vertical Text</label>
+                        <input type="text" placeholder="Type vertical text..." id="vText" class="tilt-input" value="MICRO PRESS LTD" />
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button type="button" onclick="downloadTiltCanvas(this, 'tilt-canvas')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
 
@@ -379,8 +447,8 @@
             const input = document.getElementById('text-input');
             const newText = input.value.toUpperCase() || ' ';
             
-            // Update all 12 text elements
-            for (let i = 1; i <= 12; i++) {
+            // Update all 13 SVG text elements
+            for (let i = 1; i <= 13; i++) {
                 updateSVGText(`svg-text-${i}`, newText);
             }
         }
@@ -392,14 +460,12 @@
 
             svgText.textContent = newText;
 
-            // --- Special case for wavy text path (Effect 11) ---
+            // Special case for wavy text path
             if (textId === 'svg-text-11') {
-                // This element uses textLength, so it resizes automatically.
-                // We just need to set the content.
                 return; 
             }
             
-            // --- Standard font-size scaling for all other effects ---
+            // Standard font-size scaling
             const maxTextWidth = 780; 
             const baseFontSize = 120; 
             
@@ -420,10 +486,106 @@
         }
         
         // --- Call update on page load ---
-        window.onload = updateAllText;
+        window.onload = () => {
+            updateAllText();
+            initializeTiltCanvas(); // Initialize the new canvas effect
+        };
+        
+        
+        // --- NEW SCRIPT for Tilt-to-Read Canvas ---
+        
+        let tiltCanvas, tiltCtx, tiltScale, tiltText;
 
+        function initializeTiltCanvas() {
+            tiltCanvas = document.getElementById('tilt-canvas');
+            if (!tiltCanvas) return;
+            
+            tiltCtx = tiltCanvas.getContext('2d');
 
-        // --- Refactored, reusable download function ---
+            tiltCanvas.width = 500;
+            tiltCanvas.height = 500;
+            tiltCtx.font = '25px Arial';
+            tiltCtx.textAlign = 'center';
+            tiltCtx.textBaseline = 'middle';
+
+            tiltScale = {
+              h: tiltCanvas.height / 20,
+              v: tiltCanvas.width / 20
+            };
+            
+            tiltText = {
+              h: document.getElementById('hText').value.toUpperCase(),
+              v: document.getElementById('vText').value.toUpperCase()
+            };
+            
+            document.getElementById('hText').oninput = function() {
+              tiltText.h = this.value.toUpperCase();
+              updateTiltCanvas();
+            };
+            
+            document.getElementById('vText').oninput = function() {
+              tiltText.v = this.value.toUpperCase();
+              updateTiltCanvas();
+            };
+            
+            updateTiltCanvas();
+        }
+
+        function updateTiltCanvas() {
+            if (!tiltCtx) return;
+            
+            tiltCtx.fillStyle = "#fff";
+            tiltCtx.fillRect(0, 0, tiltCanvas.width, tiltCanvas.height);
+
+            tiltCtx.fillStyle = "#000";
+
+            // Draw horizontal text
+            tiltCtx.save();
+            tiltCtx.scale(1, tiltScale.h);
+            tiltCtx.fillText(tiltText.h, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.h / 2);
+            tiltCtx.restore();
+
+            // Draw vertical text
+            tiltCtx.save();
+            tiltCtx.translate(tiltCanvas.width / 2, tiltCanvas.height / 2);
+            tiltCtx.rotate(Math.PI / 2);
+            tiltCtx.translate(-tiltCanvas.width / 2, -tiltCanvas.width / 2); // Note: Should be -width/2, -height/2. Since w=h=500, this is ok.
+            tiltCtx.scale(1, tiltScale.v);
+            tiltCtx.fillText(tiltText.v, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.v / 2);
+            tiltCtx.restore();
+        }
+        
+        function downloadTiltCanvas(button, canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            const originalButtonHTML = button.innerHTML;
+            const loadingTemplate = document.getElementById('loading-button-template');
+            button.innerHTML = loadingTemplate.innerHTML;
+            button.disabled = true;
+
+            try {
+                const dataUrl = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                
+                const h = document.getElementById('hText').value || 'tilt-h';
+                const v = document.getElementById('vText').value || 'tilt-v';
+                const filename = `tilt-read-${h.toLowerCase().replace(/\s+/g, '-')}-${v.toLowerCase().replace(/\s+/g, '-')}.png`;
+                link.download = filename;
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (err) {
+                console.error("Error downloading canvas:", err);
+            }
+            
+            button.innerHTML = originalButtonHTML;
+            button.disabled = false;
+        }
+
+        // --- Refactored, reusable download function for SVGs ---
         function downloadPNG(button, svgId, filenameBase) {
             const svg = document.getElementById(svgId);
             if (!svg) return;
@@ -447,7 +609,7 @@
                 const canvas = document.createElement('canvas');
                 canvas.width = canvasWidth;
                 canvas.height = canvasHeight;
-                const ctx = canvas.getContext('d');
+                const ctx = canvas.getContext('2d');
 
                 ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
 
