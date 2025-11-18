@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-R">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Illusion Gallery</title>
+    <!-- Custom Fonts: Bold, unique options -->
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bangers&family=Monoton&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -11,12 +13,10 @@
         }
         /* Base styles for all text elements in SVGs */
         .svg-text-base {
-            /* Styles are now applied inline, but we keep the class for JS selection */
-            font-size: 120px;
             font-weight: 900;
-            font-family: 'Arial Black', 'Impact', sans-serif;
             text-anchor: middle;
             dominant-baseline: middle;
+            /* Font family will be set dynamically via JS */
         }
         
         /* Styles for the new Canvas effect (from your code) */
@@ -37,6 +37,62 @@
             border-radius: 0.375rem; /* rounded-md */
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
         }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #D1D5DB; /* border-gray-300 */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+            font-size: 1rem; /* text-base */
+            font-weight: 500; /* font-medium */
+            border-radius: 0.5rem; /* rounded-lg */
+            color: #374151; /* text-gray-700 */
+            background-color: white;
+            transition: background-color 0.15s ease-in-out;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background-color: #F9FAFB; /* hover:bg-gray-50 */
+        }
+        .download-btn:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px #60A5FA, 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* focus rings */
+        }
+        .download-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Styles for the new Star Stamp Generator */
+        .stamp-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            padding: 1rem;
+            min-height: 200px;
+            background-color: #F9FAFB;
+            border-radius: 0.5rem;
+        }
+        .stamp-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        .stamp-card canvas {
+            max-width: 150px;
+            max-height: 150px;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
@@ -47,38 +103,54 @@
             Printable Text Illusion Gallery
         </h1>
         <p class="text-center text-gray-600 mb-8">
-            Type in the box below to see your text rendered in 13 different illusion styles.
+            Type in the box below to see your text rendered in 14 different illusion styles.
         </p>
 
         <div class="mb-10 max-w-2xl mx-auto sticky top-4 z-10 bg-white/95 backdrop-blur-sm p-4 rounded-lg shadow-lg">
-            <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
-                Enter your word:
-            </label>
-            <input type="text" 
-                   id="text-input" 
-                   value="SECURITY" 
-                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-2xl" 
-                   oninput="updateAllText()">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
+                        Enter your text:
+                    </label>
+                    <input type="text" 
+                           id="text-input" 
+                           value="THIS DOCUMENT IS SECURE AND AUTHENTICATED" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-2xl" 
+                           oninput="updateAllText()">
+                </div>
+                <div>
+                    <label for="font-selector" class="block text-sm font-medium text-gray-700 mb-2">
+                        Select a Crazy Font:
+                    </label>
+                    <select id="font-selector" onchange="updateAllText(); renderStamps();"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-xl appearance-none bg-white">
+                        <option value="'Arial Black', Impact, sans-serif">Arial Black (Default)</option>
+                        <option value="'Bangers', cursive">Bangers (Cartoon)</option>
+                        <option value="'Abril Fatface', serif">Abril Fatface (Elegant)</option>
+                        <option value="'Monoton', cursive">Monoton (Retro Line)</option>
+                        <option value="'Press Start 2P', cursive">Press Start 2P (Pixel)</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion (High Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-1" width="10" height="10" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
-                                <rect width="10" height="10" fill="white"/><line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5"/>
+                            <pattern id="pattern-1" width="6" height="6" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+                                <rect width="6" height="6" fill="white"/><line x1="0" y1="3" x2="6" y2="3" stroke="black" stroke-width="1"/>
                             </pattern>
-                            <pattern id="pattern-2" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                                <rect width="10" height="10" fill="white"/><line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5"/>
+                            <pattern id="pattern-2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                                <rect width="6" height="6" fill="white"/><line x1="0" y1="3" x2="6" y2="3" stroke="black" stroke-width="1"/>
                             </pattern>
                             <mask id="text-mask-1">
                                 <rect width="800" height="400" fill="black" />
                                 <text id="svg-text-1" class="svg-text-base" x="400" y="200" fill="white" 
-                                      text-anchor="middle" dominant-baseline="middle" 
-                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                                      text-anchor="middle" dominant-baseline="middle">PLACEHOLDER TEXT</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -92,23 +164,21 @@
             </div>
 
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">2. Guilloché Security Pattern</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">2. Guilloché Security Pattern (Updated for Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-2" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-guilloche-1" width="20" height="20" patternUnits="userSpaceOnUse">
-                                <path d="M -5 10 Q 5 0, 15 10 T 25 10" stroke="#aaa" stroke-width="1.5" fill="none"/>
-                                <path d="M -5 20 Q 5 10, 15 20 T 25 20" stroke="#aaa" stroke-width="1.5" fill="none"/>
+                            <pattern id="pattern-guilloche-1" width="15" height="15" patternUnits="userSpaceOnUse">
+                                <path d="M -5 7.5 Q 2.5 0, 10 7.5 T 17.5 7.5" stroke="#aaa" stroke-width="1.2" fill="none"/>
+                                <path d="M -5 15 Q 2.5 7.5, 10 15 T 17.5 15" stroke="#aaa" stroke-width="1.2" fill="none"/>
                             </pattern>
-                            <pattern id="pattern-guilloche-2" width="20" height="20" patternUnits="userSpaceOnUse">
-                                <path d="M 10 -5 Q 20 5, 10 15 T 10 25" stroke="black" stroke-width="1" fill="none"/>
-                                <path d="M 20 -5 Q 10 5, 20 15 T 20 25" stroke="black" stroke-width="1" fill="none"/>
+                            <pattern id="pattern-guilloche-2" width="15" height="15" patternUnits="userSpaceOnUse">
+                                <path d="M 7.5 -5 Q 15 2.5, 7.5 10 T 7.5 17.5" stroke="black" stroke-width="1" fill="none"/>
+                                <path d="M 15 -5 Q 7.5 2.5, 15 10 T 15 17.5" stroke="black" stroke-width="1" fill="none"/>
                             </pattern>
                             <mask id="text-mask-2">
                                 <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-2" class="svg-text-base" x="400" y="200" fill="white" 
-                                      text-anchor="middle" dominant-baseline="middle" 
-                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                                <text id="svg-text-2" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -122,18 +192,16 @@
             </div>
 
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space)</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space) (High Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-3" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-3" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                                <rect width="10" height="10" fill="white"/><line x1="0" y1="5" x2="10" y2="5" stroke="black" stroke-width="5"/>
+                            <pattern id="pattern-3" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                                <rect width="6" height="6" fill="white"/><line x1="0" y1="3" x2="6" y2="3" stroke="black" stroke-width="1"/>
                             </pattern>
                             <mask id="text-mask-3">
                                 <rect width="800" height="400" fill="white" />
-                                <text id="svg-text-3" class="svg-text-base" x="400" y="200" fill="black" 
-                                      text-anchor="middle" dominant-baseline="middle" 
-                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                                <text id="svg-text-3" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -156,9 +224,7 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="#E5E7EB" />
-                        <text id="svg-text-4" class="svg-text-base" x="400" y="200" fill="#E5E7EB" filter="url(#filter-emboss)" 
-                              text-anchor="middle" dominant-baseline="middle" 
-                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                        <text id="svg-text-4" class="svg-text-base" x="400" y="200" fill="#E5E7EB" filter="url(#filter-emboss)">PLACEHOLDER TEXT</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -184,9 +250,7 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <text id="svg-text-5" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-anaglyph)" 
-                              text-anchor="middle" dominant-baseline="middle" 
-                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                        <text id="svg-text-5" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-anaglyph)">PLACEHOLDER TEXT</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -204,9 +268,7 @@
                             </pattern>
                             <mask id="text-mask-6">
                                 <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-6" class="svg-text-base" x="400" y="200" fill="white" 
-                                      text-anchor="middle" dominant-baseline="middle" 
-                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                                <text id="svg-text-6" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -230,9 +292,7 @@
                                 </feDiffuseLighting>
                                 <feComposite in="lit" in2="SourceGraphic" operator="in" />
                             </filter>
-                            <text id="svg-text-7" class="svg-text-base" x="400" y="200" fill="black" 
-                                  text-anchor="middle" dominant-baseline="middle" 
-                                  font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                            <text id="svg-text-7" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
                         </defs>
                         <rect width="800" height="400" fill="white" />
                         <use href="#svg-text-7" filter="url(#filter-noise)" />
@@ -248,9 +308,7 @@
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-8" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <text id="svg-text-8" class="svg-text-base" x="400" y="200" fill="black" 
-                                  text-anchor="middle" dominant-baseline="middle" 
-                                  font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                            <text id="svg-text-8" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
                             <clipPath id="clip-slice-1"><rect x="0" y="0" width="800" height="100"/></clipPath>
                             <clipPath id="clip-slice-2"><rect x="0" y="100" width="800" height="100"/></clipPath>
                             <clipPath id="clip-slice-3"><rect x="0" y="200" width="800" height="100"/></clipPath>
@@ -278,9 +336,7 @@
                             </pattern>
                             <mask id="text-mask-9">
                                 <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-9" class="svg-text-base" x="400" y="200" fill="white" 
-                                      text-anchor="middle" dominant-baseline="middle" 
-                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                                <text id="svg-text-9" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -307,9 +363,7 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <text id="svg-text-10" class="svg-text-base" x="400" y="200" fill="#555" filter="url(#filter-engraved)" 
-                              text-anchor="middle" dominant-baseline="middle" 
-                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                        <text id="svg-text-10" class="svg-text-base" x="400" y="200" fill="#555" filter="url(#filter-engraved)">PLACEHOLDER TEXT</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -325,9 +379,8 @@
                             <path id="wavy-path" d="M 50,200 Q 250,150 400,200 T 750,200" fill="none" stroke="none" />
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <text class="svg-text-base" fill="black" 
-                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">
-                            <textPath id="svg-text-11" href="#wavy-path" startOffset="50%" text-anchor="middle" textLength="700" lengthAdjust="spacingAndGlyphs">SECURITY</textPath>
+                        <text class="svg-text-base" fill="black">
+                            <textPath id="svg-text-11" href="#wavy-path" startOffset="50%" text-anchor="middle" textLength="700" lengthAdjust="spacingAndGlyphs">PLACEHOLDER TEXT</textPath>
                         </text>
                     </svg>
                 </div>
@@ -347,9 +400,7 @@
                             </filter>
                         </defs>
                         <rect width="800" height="400" fill="white" />
-                        <text id="svg-text-12" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-displacement)" 
-                              text-anchor="middle" dominant-baseline="middle" 
-                              font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                        <text id="svg-text-12" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-displacement)">PLACEHOLDER TEXT</text>
                     </svg>
                 </div>
                 <div class="text-center">
@@ -372,9 +423,7 @@
                             </pattern>
                             <mask id="text-mask-13">
                                 <rect width="800" height="400" fill="white" />
-                                <text id="svg-text-13" class="svg-text-base" x="400" y="200" fill="black" 
-                                      text-anchor="middle" dominant-baseline="middle" 
-                                      font-size="120px" font-weight="900" font-family="'Arial Black', 'Impact', sans-serif">SECURITY</text>
+                                <text id="svg-text-13" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
                             </mask>
                         </defs>
                         <rect width="800" height="400" fill="white" />
@@ -407,7 +456,57 @@
                 </div>
             </div>
 
-        </div> </div>
+        </div> 
+        
+        <!-- NEW FEATURE: Custom Security Stamp Generator -->
+        <div class="mt-12 pt-6 border-t border-gray-300">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+                Custom Security Stamp Generator
+            </h2>
+            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+                Upload an image, enter a sequence of single-digit numbers (0-9). The tool will generate a stamp for each digit, cropping the image into a unique shape based on the digit (circle for 0, 3-point star for 1 & 2, N-point star for 3-9), and punching the digit out of the center.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
+                <div class="md:col-span-1">
+                    <label for="image-upload" class="block text-sm font-medium text-gray-700 mb-2">
+                        1. Upload Base Image
+                    </label>
+                    <input type="file" 
+                           id="image-upload" 
+                           accept="image/*"
+                           onchange="handleImageUpload(event)"
+                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                </div>
+                <div class="md:col-span-1">
+                    <label for="number-sequence" class="block text-sm font-medium text-gray-700 mb-2">
+                        2. Enter Number Sequence (e.g., 5014)
+                    </label>
+                    <input type="text" 
+                           id="number-sequence" 
+                           placeholder="Enter digits (0-9)" 
+                           value="5014" 
+                           pattern="[0-9]+"
+                           class="tilt-input text-xl" 
+                           oninput="renderStamps()">
+                </div>
+                <div class="md:col-span-1 flex items-end">
+                    <button type="button" 
+                            onclick="renderStamps()" 
+                            id="generate-stamps-btn"
+                            class="download-btn w-full justify-center bg-blue-500 text-white hover:bg-blue-600 border-blue-500 hover:border-blue-600">
+                        Generate Stamps
+                    </button>
+                </div>
+            </div>
+
+            <div id="stamp-output-container" class="stamp-container">
+                <p id="stamp-placeholder" class="text-gray-500 self-center text-center">Upload an image and enter digits (0-9) to generate security stamps.</p>
+            </div>
+        </div>
+
+
+    </div>
 
     <template id="loading-button-template">
         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-currentColor" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -416,90 +515,72 @@
         </svg>
         Generating...
     </template>
-    
-    <style>
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.75rem 1.5rem;
-            border: 1px solid #D1D5DB; /* border-gray-300 */
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
-            font-size: 1rem; /* text-base */
-            font-weight: 500; /* font-medium */
-            border-radius: 0.5rem; /* rounded-lg */
-            color: #374151; /* text-gray-700 */
-            background-color: white;
-            transition: background-color 0.15s ease-in-out;
-            cursor: pointer;
-        }
-        .download-btn:hover {
-            background-color: #F9FAFB; /* hover:bg-gray-50 */
-        }
-        .download-btn:focus {
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-            box-shadow: 0 0 0 2px #60A5FA, 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* focus rings */
-        }
-        .download-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-    </style>
 
     <script>
-        // --- Main controller function ---
-        function updateAllText() {
-            const input = document.getElementById('text-input');
-            const newText = input.value.toUpperCase() || ' ';
-            
-            // Update all 13 SVG text elements
-            for (let i = 1; i <= 13; i++) {
-                updateSVGText(`svg-text-${i}`, newText);
-            }
+        const BASE_FONT_SIZE = 250; 
+        
+        let uploadedImage = null;
+
+        // --- Core SVG Illusions Functions ---
+
+        function getSelectedFont() {
+            return document.getElementById('font-selector').value;
         }
 
-        // --- Refactored text scaling function for live preview ---
-        function updateSVGText(textId, newText) {
+        function updateAllText() {
+            const input = document.getElementById('text-input');
+            const newText = (input.value.toUpperCase() || ' ').trim(); 
+            const font = getSelectedFont();
+
+            // 1. Update all SVG elements
+            for (let i = 1; i <= 13; i++) {
+                updateSVGText(`svg-text-${i}`, newText, font);
+            }
+            
+            // 2. Update Tilt Canvas (it uses a separate canvas drawing function)
+            initializeTiltCanvas(); 
+        }
+
+        function updateSVGText(textId, newText, font) {
             const svgText = document.getElementById(textId);
             if (!svgText) return;
-
+            
             svgText.textContent = newText;
+            svgText.setAttribute("font-family", font);
 
-            // Special case for wavy text path
+            // Special case for wavy text path (Illusion 11)
             if (textId === 'svg-text-11') {
+                const textPath = svgText;
+                textPath.setAttribute('textLength', '700'); 
+                textPath.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+                textPath.setAttribute('font-size', '120px'); 
                 return; 
             }
             
-            // Standard font-size scaling
-            // We read the base font size from the inline attribute
-            const baseFontSize = parseFloat(svgText.getAttribute("font-size")) || 120;
             const maxTextWidth = 780; 
-            
-            svgText.setAttribute("font-size", baseFontSize + 'px');
+            svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
 
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 let currentWidth = 0;
                 try {
                     currentWidth = svgText.getBBox().width;
-                } catch (e) { currentWidth = 0; }
+                } catch (e) { 
+                    const charCount = newText.length || 1;
+                    currentWidth = charCount * (BASE_FONT_SIZE * 0.35); 
+                }
 
                 if (currentWidth > maxTextWidth) {
                     const ratio = maxTextWidth / currentWidth;
-                    const newFontSize = baseFontSize * ratio;
-                    svgText.setAttribute("font-size", newFontSize + 'px');
+                    const newFontSize = BASE_FONT_SIZE * ratio;
+                    svgText.setAttribute("font-size", Math.max(newFontSize, 20) + 'px');
+                } else {
+                    svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
                 }
-            }, 0); 
+            }); 
         }
         
-        // --- Call update on page load ---
-        window.onload = () => {
-            updateAllText();
-            initializeTiltCanvas(); // Initialize the new canvas effect
-        };
-        
-        
-        // --- NEW SCRIPT for Tilt-to-Read Canvas ---
-        
+        // --- Tilt-to-Read Canvas Functions (updated to use selected font) ---
+
         let tiltCanvas, tiltCtx, tiltScale, tiltText;
 
         function initializeTiltCanvas() {
@@ -507,10 +588,13 @@
             if (!tiltCanvas) return;
             
             tiltCtx = tiltCanvas.getContext('2d');
+            const font = getSelectedFont();
 
             tiltCanvas.width = 500;
             tiltCanvas.height = 500;
-            tiltCtx.font = '25px Arial';
+            
+            // Apply selected font to the canvas context
+            tiltCtx.font = `25px ${font}`;
             tiltCtx.textAlign = 'center';
             tiltCtx.textBaseline = 'middle';
 
@@ -519,17 +603,20 @@
               v: tiltCanvas.width / 20
             };
             
+            const hTextElement = document.getElementById('hText');
+            const vTextElement = document.getElementById('vText');
+
             tiltText = {
-              h: document.getElementById('hText').value.toUpperCase(),
-              v: document.getElementById('vText').value.toUpperCase()
+              h: hTextElement.value.toUpperCase(),
+              v: vTextElement.value.toUpperCase()
             };
             
-            document.getElementById('hText').oninput = function() {
+            hTextElement.oninput = function() {
               tiltText.h = this.value.toUpperCase();
               updateTiltCanvas();
             };
             
-            document.getElementById('vText').oninput = function() {
+            vTextElement.oninput = function() {
               tiltText.v = this.value.toUpperCase();
               updateTiltCanvas();
             };
@@ -540,18 +627,21 @@
         function updateTiltCanvas() {
             if (!tiltCtx) return;
             
+            // Re-apply font on update since text size might change
+            const font = getSelectedFont();
+            tiltCtx.font = `25px ${font}`;
+            
+            // Clear canvas
             tiltCtx.fillStyle = "#fff";
             tiltCtx.fillRect(0, 0, tiltCanvas.width, tiltCanvas.height);
 
             tiltCtx.fillStyle = "#000";
 
-            // Draw horizontal text
             tiltCtx.save();
             tiltCtx.scale(1, tiltScale.h);
             tiltCtx.fillText(tiltText.h, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.h / 2);
             tiltCtx.restore();
 
-            // Draw vertical text
             tiltCtx.save();
             tiltCtx.translate(tiltCanvas.width / 2, tiltCanvas.height / 2);
             tiltCtx.rotate(Math.PI / 2);
@@ -562,6 +652,7 @@
         }
         
         function downloadTiltCanvas(button, canvasId) {
+            // Download logic remains the same
             const canvas = document.getElementById(canvasId);
             if (!canvas) return;
             
@@ -587,23 +678,23 @@
                 console.error("Error downloading canvas:", err);
             }
             
-            button.innerHTML = originalButtonHTML;
-            button.disabled = false;
+            setTimeout(() => {
+                button.innerHTML = originalButtonHTML;
+                button.disabled = false;
+            }, 100);
         }
 
-        // --- Refactored, reusable download function for SVGs ---
-        // *** This is the reverted, simpler, and correct version ***
+        // --- Download Functions (unchanged) ---
         function downloadPNG(button, svgId, filenameBase) {
             const svg = document.getElementById(svgId);
             if (!svg) return;
             
-            // Store original HTML to restore it later
             button.originalHTML = button.innerHTML; 
             const loadingTemplate = document.getElementById('loading-button-template');
             button.innerHTML = loadingTemplate.innerHTML;
             button.disabled = true;
 
-            const canvasWidth = 1600;
+            const canvasWidth = 1600; 
             const canvasHeight = 800;
 
             const svgData = new XMLSerializer().serializeToString(svg);
@@ -617,11 +708,8 @@
                 canvas.height = canvasHeight;
                 const ctx = canvas.getContext('2d');
 
-                // Draw the SVG to the canvas. The absolute x/y in the SVG
-                // will now be respected relative to the viewBox.
                 ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
 
-                // Finalize the download
                 finalizeDownload(canvas, button, filenameBase);
                 URL.revokeObjectURL(url);
             };
@@ -642,18 +730,241 @@
             link.href = pngDataUrl;
             
             const inputText = document.getElementById('text-input').value || 'illusion';
-            const filename = `${filenameBase}-${inputText.toLowerCase().replace(/\s+/g, '-')}.png`;
+            const filename = `${filenameBase}-${inputText.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.png`;
             link.download = filename;
 
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            // Restore button
-            button.innerHTML = button.originalHTML; // Use stored original HTML
-            button.disabled = false;
+            setTimeout(() => {
+                button.innerHTML = button.originalHTML; 
+                button.disabled = false;
+            }, 100);
         }
+
+        // ----------------------------------------------------------------------
+        // --- NEW FEATURE: Security Stamp Generator Functions (Updated 0/1/2 logic and font) ---
+        // ----------------------------------------------------------------------
+        
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                uploadedImage = null;
+                renderStamps();
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    uploadedImage = img;
+                    renderStamps();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Helper function to draw an N-pointed star path
+        function drawStarPath(ctx, centerX, centerY, outerRadius, innerRadius, points) {
+            ctx.beginPath();
+            
+            points = Math.max(3, Math.floor(points)); 
+            
+            for (let i = 0; i < points * 2; i++) {
+                const radius = (i % 2 === 0) ? outerRadius : innerRadius;
+                const angle = (Math.PI / points) * i - (Math.PI / 2); 
+
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+        }
+        
+        function drawStarStamp(canvas, image, digitChar) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            const center = size / 2;
+            const outerRadius = size * 0.45;
+            const innerRadius = size * 0.2;
+            const font = getSelectedFont();
+            const digit = parseInt(digitChar);
+            
+            let shapeType = ''; // Used for labeling
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // 1. Crop/Mask the image to the defined shape
+            ctx.save();
+            
+            // Set the shape clipping path based on the digit
+            if (digit === 0) {
+                // Case 0: Circle
+                ctx.beginPath();
+                ctx.arc(center, center, outerRadius, 0, Math.PI * 2);
+                ctx.closePath();
+                shapeType = 'Circle';
+            } else if (digit === 1 || digit === 2) {
+                // Case 1 & 2: Minimum stable star shape (3 points)
+                drawStarPath(ctx, center, center, outerRadius, innerRadius, 3);
+                shapeType = '3-Point Star';
+            } else {
+                // Case 3-9: N-point star shape
+                drawStarPath(ctx, center, center, outerRadius, innerRadius, digit);
+                shapeType = `${digit}-Point Star`;
+            }
+
+            ctx.clip(); // Clip everything drawn after this to the shape
+
+            // Draw the uploaded image (or placeholder) inside the clip
+            if (image) {
+                const minDim = Math.min(image.width, image.height);
+                const cropX = (image.width - minDim) / 2;
+                const cropY = (image.height - minDim) / 2;
+                
+                ctx.drawImage(image, 
+                              cropX, cropY, minDim, minDim, 
+                              0, 0, size, size);
+            } else {
+                ctx.fillStyle = "#CCC";
+                ctx.fillRect(0, 0, size, size);
+            }
+
+            ctx.restore(); // Stop clipping
+
+            // 2. Punch out the digit text from the center
+            ctx.save();
+            
+            // Apply selected font for punch-out
+            ctx.font = `${size * 0.4}px ${font}`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.globalCompositeOperation = 'destination-out';
+            
+            ctx.fillStyle = 'black'; 
+            ctx.fillText(digitChar, center, center);
+
+            ctx.restore(); 
+            
+            return shapeType;
+        }
+
+
+        function renderStamps() {
+            const container = document.getElementById('stamp-output-container');
+            const sequenceInput = document.getElementById('number-sequence');
+            const sequence = sequenceInput.value.trim().replace(/[^0-9]/g, ''); 
+            
+            container.innerHTML = ''; 
+
+            const placeholder = document.getElementById('stamp-placeholder');
+            if (placeholder) {
+                 placeholder.style.display = 'none';
+            }
+
+            if (!uploadedImage && sequence.length > 0) {
+                 container.innerHTML = '<p class="text-red-500 self-center text-center">Please upload an image first to generate stamps.</p>';
+                 return;
+            }
+            
+            if (sequence.length === 0) {
+                 container.innerHTML = '<p class="text-gray-500 self-center text-center">Enter a sequence of digits (0-9) to generate stamps.</p>';
+                 if (placeholder) placeholder.style.display = 'block';
+                 return;
+            }
+
+            const image = uploadedImage;
+
+            // Loop through all digits (0-9 allowed)
+            sequence.split('').forEach((digitChar, index) => {
+                
+                // Create Card/Container
+                const card = document.createElement('div');
+                card.className = 'stamp-card';
+
+                // Create Canvas Element
+                const canvas = document.createElement('canvas');
+                canvas.width = 300; 
+                canvas.height = 300;
+                canvas.id = `stamp-canvas-${index}`;
+                
+                // Draw the stamp and get the shape type used
+                const shapeType = drawStarStamp(canvas, image, digitChar);
+
+                // Title
+                const title = document.createElement('p');
+                title.className = 'text-sm font-semibold text-gray-800';
+                title.textContent = `Digit ${digitChar}: ${shapeType}`;
+                
+                // Download Button
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'download-btn !py-2 !px-3 !text-sm mt-2';
+                button.textContent = 'Download PNG';
+                button.onclick = () => downloadCanvasStamp(button, canvas.id, `security-stamp-${digitChar}-${shapeType.replace(/\s+/g, '-')}`);
+
+                card.appendChild(title);
+                card.appendChild(canvas);
+                card.appendChild(button);
+                container.appendChild(card);
+            });
+        }
+        
+        function downloadCanvasStamp(button, canvasId, filenameBase) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            button.originalHTML = button.innerHTML; 
+            const loadingTemplate = document.getElementById('loading-button-template');
+            button.innerHTML = loadingTemplate.innerHTML;
+            button.disabled = true;
+
+            try {
+                const dataUrl = canvas.toDataURL('image/png', 1.0); 
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = `${filenameBase}.png`;
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (err) {
+                console.error("Error downloading canvas stamp:", err);
+            }
+            
+            setTimeout(() => {
+                button.innerHTML = button.originalHTML;
+                button.disabled = false;
+            }, 100);
+        }
+
+        // --- Initializers ---
+        window.onload = () => {
+            // Set initial font family for all SVG elements
+            const initialFont = getSelectedFont();
+            document.querySelectorAll('.svg-text-base').forEach(el => {
+                // Ensure text elements start with a valid font-family attribute for scaling logic
+                el.setAttribute("font-family", initialFont);
+            });
+            
+            updateAllText();
+            initializeTiltCanvas();
+            renderStamps(); 
+        };
+        
+        // --- End NEW FEATURE ---
     </script>
 
 </body>
 </html>
+
