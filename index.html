@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Illusion Gallery</title>
-    <!-- Custom Fonts: Bold, unique options -->
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bangers&family=Monoton&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bangers&family=Monoton&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -137,15 +137,17 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion (High Density)</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion (Maximum Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-1" width="6" height="6" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
-                                <rect width="6" height="6" fill="white"/><line x1="0" y1="3" x2="6" y2="3" stroke="black" stroke-width="1"/>
+                            
+
+<pattern id="pattern-1" width="4" height="4" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+                                <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="3"/>
                             </pattern>
-                            <pattern id="pattern-2" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                                <rect width="6" height="6" fill="white"/><line x1="0" y1="3" x2="6" y2="3" stroke="black" stroke-width="1"/>
+                            <pattern id="pattern-2" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                                <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="3"/>
                             </pattern>
                             <mask id="text-mask-1">
                                 <rect width="800" height="400" fill="black" />
@@ -192,12 +194,14 @@
             </div>
 
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space) (High Density)</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space) (Maximum Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-3" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-3" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                                <rect width="6" height="6" fill="white"/><line x1="0" y1="3" x2="6" y2="3" stroke="black" stroke-width="1"/>
+                            
+
+<pattern id="pattern-3" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                                <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="3"/>
                             </pattern>
                             <mask id="text-mask-3">
                                 <rect width="800" height="400" fill="white" />
@@ -458,8 +462,9 @@
 
         </div> 
         
-        <!-- NEW FEATURE: Custom Security Stamp Generator -->
-        <div class="mt-12 pt-6 border-t border-gray-300">
+        
+
+<div class="mt-12 pt-6 border-t border-gray-300">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
                 Custom Security Stamp Generator
             </h2>
@@ -744,7 +749,7 @@
         }
 
         // ----------------------------------------------------------------------
-        // --- NEW FEATURE: Security Stamp Generator Functions (Updated 0/1/2 logic and font) ---
+        // --- NEW FEATURE: Security Stamp Generator Functions ---
         // ----------------------------------------------------------------------
         
         function handleImageUpload(event) {
