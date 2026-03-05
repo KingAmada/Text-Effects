@@ -3,15 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Security Suite & Text Illusions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bangers&family=Monoton&family=Press+Start+2P&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <title>Document Security Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bangers&family=Monoton&family=Press+Start+2P&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
     <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+        }
+
         body {
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
         }
+
+        /* Animated Background Blobs */
+        .bg-blobs {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        .blob-1 { background: #e0e7ff; width: 40vw; height: 40vw; top: -10%; left: -10%; }
+        .blob-2 { background: #f3e8ff; width: 35vw; height: 35vw; bottom: -10%; right: -10%; animation-delay: -5s; }
+        .blob-3 { background: #e0f2fe; width: 30vw; height: 30vw; top: 40%; left: 30%; animation-delay: -10s; filter: blur(100px); opacity: 0.4; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 10%) scale(1.05); }
+            100% { transform: translate(-5%, 5%) scale(0.95); }
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.7), 0 4px 12px rgba(0,0,0,0.03);
+        }
+
         /* Base styles for all text elements in SVGs */
         .svg-text-base {
             font-weight: 900;
@@ -19,146 +71,205 @@
             dominant-baseline: middle;
         }
         
-        /* Styles for the new Canvas effect */
         #tilt-canvas {
             width: 100%;
             min-width: 200px;
             max-width: 500px;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
             margin: 0 auto;
             display: block;
         }
         
-        .tilt-input {
+        /* Modern Inputs */
+        .modern-input {
             width: 100%;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #D1D5DB;
-            border-radius: 0.375rem;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(203, 213, 225, 0.6);
+            border-radius: 0.75rem;
+            color: #334155;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
         }
+        .modern-input:focus {
+            outline: none;
+            background: #ffffff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), inset 0 2px 4px rgba(0,0,0,0.01);
+        }
+        .modern-input::placeholder { color: #94a3b8; }
 
-        .download-btn {
+        /* Modern Buttons */
+        .btn-modern {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             padding: 0.75rem 1.5rem;
-            border: 1px solid #D1D5DB;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 0.5rem;
-            color: #374151;
-            background-color: white;
-            transition: all 0.15s ease-in-out;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            border: none;
         }
-
-        .download-btn:hover {
-            background-color: #F9FAFB;
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
-
-        .download-btn:focus {
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-            box-shadow: 0 0 0 2px #60A5FA, 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
         }
+        .btn-primary:active { transform: translateY(0); scale: 0.98; }
+        
+        .btn-secondary {
+            background: white;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            color: #1e293b;
+        }
+        .btn-secondary:active { transform: translateY(0); scale: 0.98; }
 
-        .download-btn:disabled {
-            opacity: 0.7;
+        .btn-modern:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
         }
 
-        /* Styles for the new Star Stamp Generator */
+        /* File Upload styling */
+        input[type="file"]::file-selector-button {
+            border: none;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-right: 1rem;
+        }
+        input[type="file"]::file-selector-button:hover { background: #e0e7ff; }
+
+        /* Animation utilities */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
         .stamp-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
-            padding: 1rem;
+            padding: 1.5rem;
             min-height: 200px;
-            background-color: #F9FAFB;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
         }
 
         .stamp-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 1px solid #E5E7EB;
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            background-color: white;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
         }
-
+        .stamp-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         .stamp-card canvas {
             max-width: 150px;
             max-height: 150px;
-            border: 1px solid #D1D5DB;
-            border-radius: 0.25rem;
-            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
-        /* Styles from Microprint Generator */
         .loading-overlay {
             display: none;
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
-            z-index: 10;
+            z-index: 50;
+            border-radius: inherit;
+        }
+        .is-loading .loading-overlay { display: flex; animation: fadeIn 0.2s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .is-loading .loading-overlay {
-            display: flex;
-        }
-
-        /* QR Code Container */
-        #qr-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 300px;
+        /* SVG container inner styling */
+        .svg-wrapper {
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 0.75rem;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,1);
+            overflow: hidden;
+            margin-bottom: 1.25rem;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center min-h-screen p-4 md:p-8">
+<body class="flex flex-col items-center min-h-screen pb-20 relative">
     
-    <!-- Title & Navigation Concept -->
-    <div class="w-full max-w-7xl mb-8">
-        <h1 class="text-4xl md:text-5xl font-black text-center text-slate-800 tracking-tight">
-            Document Security Suite
-        </h1>
-        <p class="text-center text-slate-500 mt-2 font-medium">Generate custom microprints, illusions, stamps, and secure QR codes.</p>
+    <!-- Ambient Background -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
 
-    <div class="w-full max-w-7xl bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-12">
-        <h2 class="text-3xl md:text-3xl font-bold text-center text-gray-900 mb-4">
-            Printable Text Illusion Gallery
-        </h2>
-        <p class="text-center text-gray-600 mb-8">
-            Type in the box below to see your text rendered in 14 different security illusion styles.
-        </p>
-        <div class="mb-10 max-w-2xl mx-auto sticky top-4 z-20 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-slate-100">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <!-- Title Header -->
+    <header class="w-full max-w-7xl pt-12 pb-8 px-6 text-center">
+        <div class="inline-block mb-3 px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs tracking-wider uppercase shadow-sm">Pro Edition</div>
+        <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 tracking-tight drop-shadow-sm">
+            Document Security Suite
+        </h1>
+        <p class="text-slate-500 mt-4 font-medium text-lg max-w-2xl mx-auto">Design, generate, and export custom microprints, optical illusions, stamps, and secure cryptographic QR codes.</p>
+    </header>
+
+    <!-- SECTION 1: Printable Text Illusion Gallery -->
+    <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10 mb-12">
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Printable Text Illusions</h2>
+            <p class="text-slate-500 mt-2 font-medium">Type below to see your text rendered in 14 distinct security illusion styles.</p>
+        </div>
+
+        <!-- Floating Sticky Control Bar -->
+        <div class="mb-10 max-w-3xl mx-auto sticky top-6 z-30 glass-panel p-5 rounded-2xl shadow-xl shadow-indigo-900/5 transition-all">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                    <label for="text-input" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Enter your text:
+                    <label for="text-input" class="block text-sm font-bold text-slate-700 mb-1.5 ml-1">
+                        Security Text
                     </label>
                     <input type="text"
                            id="text-input"
-                           value="THIS DOCUMENT IS SECURE AND AUTHENTICATED"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xl font-bold text-slate-800"
+                           value="SECURE & AUTHENTICATED"
+                           class="modern-input text-lg font-bold text-indigo-900"
                            oninput="updateAllText()">
                 </div>
                 <div>
-                    <label for="font-selector" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Select Typography:
+                    <label for="font-selector" class="block text-sm font-bold text-slate-700 mb-1.5 ml-1">
+                        Typography Style
                     </label>
                     <select id="font-selector" onchange="updateAllText(); renderStamps();"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-medium appearance-none bg-white cursor-pointer">
-                        <option value="'Inter', 'Arial Black', Impact, sans-serif">Modern Sans (Default)</option>
+                            class="modern-input text-md font-medium cursor-pointer appearance-none">
+                        <option value="'Inter', 'Arial Black', Impact, sans-serif">Modern Sans (Clean)</option>
                         <option value="'Bangers', cursive">Bangers (Display)</option>
                         <option value="'Abril Fatface', serif">Abril Fatface (Elegant)</option>
                         <option value="'Monoton', cursive">Monoton (Retro Line)</option>
@@ -168,416 +279,250 @@
             </div>
         </div>
 
+        <!-- Illusion Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">1. Line Illusion (Maximum Density)</h3>
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <!-- Cards -->
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span> 
+                    Line Illusion
+                </h3>
+                <div class="svg-wrapper">
                     <svg id="illusion-svg-1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-1" width="4" height="4" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
-                                <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="2"/>
-                            </pattern>
-                            <pattern id="pattern-2" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                                <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="2"/>
-                            </pattern>
-                            <mask id="text-mask-1">
-                                <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-1" class="svg-text-base" x="400" y="200" fill="white"
-                                      text-anchor="middle" dominant-baseline="middle">PLACEHOLDER TEXT</text>
-                            </mask>
+                            <pattern id="pattern-1" width="4" height="4" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="2"/></pattern>
+                            <pattern id="pattern-2" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="2"/></pattern>
+                            <mask id="text-mask-1"><rect width="800" height="400" fill="black" /><text id="svg-text-1" class="svg-text-base" x="400" y="200" fill="white" text-anchor="middle" dominant-baseline="middle">PLACEHOLDER TEXT</text></mask>
                         </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <rect width="800" height="400" fill="url(#pattern-1)" />
-                        <rect width="800" height="400" fill="url(#pattern-2)" mask="url(#text-mask-1)" />
+                        <rect width="800" height="400" fill="white" /><rect width="800" height="400" fill="url(#pattern-1)" /><rect width="800" height="400" fill="url(#pattern-2)" mask="url(#text-mask-1)" />
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-1', 'line-illusion')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-1', 'line-illusion')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
             
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">2. Guilloché Security Pattern</h3>
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span> 
+                    Guilloché Pattern
+                </h3>
+                <div class="svg-wrapper">
                     <svg id="illusion-svg-2" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-guilloche-1" width="15" height="15" patternUnits="userSpaceOnUse">
-                                <path d="M -5 7.5 Q 2.5 0, 10 7.5 T 17.5 7.5" stroke="#aaa" stroke-width="1.2" fill="none"/>
-                                <path d="M -5 15 Q 2.5 7.5, 10 15 T 17.5 15" stroke="#aaa" stroke-width="1.2" fill="none"/>
-                            </pattern>
-                            <pattern id="pattern-guilloche-2" width="15" height="15" patternUnits="userSpaceOnUse">
-                                <path d="M 7.5 -5 Q 15 2.5, 7.5 10 T 7.5 17.5" stroke="black" stroke-width="1" fill="none"/>
-                                <path d="M 15 -5 Q 7.5 2.5, 15 10 T 15 17.5" stroke="black" stroke-width="1" fill="none"/>
-                            </pattern>
-                            <mask id="text-mask-2">
-                                <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-2" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text>
-                            </mask>
+                            <pattern id="pattern-guilloche-1" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M -5 7.5 Q 2.5 0, 10 7.5 T 17.5 7.5" stroke="#aaa" stroke-width="1.2" fill="none"/><path d="M -5 15 Q 2.5 7.5, 10 15 T 17.5 15" stroke="#aaa" stroke-width="1.2" fill="none"/></pattern>
+                            <pattern id="pattern-guilloche-2" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M 7.5 -5 Q 15 2.5, 7.5 10 T 7.5 17.5" stroke="black" stroke-width="1" fill="none"/><path d="M 15 -5 Q 7.5 2.5, 15 10 T 15 17.5" stroke="black" stroke-width="1" fill="none"/></pattern>
+                            <mask id="text-mask-2"><rect width="800" height="400" fill="black" /><text id="svg-text-2" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text></mask>
                         </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <rect width="800" height="400" fill="url(#pattern-guilloche-1)" />
-                        <rect width="800" height="400" fill="url(#pattern-guilloche-2)" mask="url(#text-mask-2)" />
+                        <rect width="800" height="400" fill="white" /><rect width="800" height="400" fill="url(#pattern-guilloche-1)" /><rect width="800" height="400" fill="url(#pattern-guilloche-2)" mask="url(#text-mask-2)" />
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-2', 'guilloche-security')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-2', 'guilloche-security')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
 
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">3. Void (Negative Space)</h3>
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span> 
+                    Negative Space Void
+                </h3>
+                <div class="svg-wrapper">
                     <svg id="illusion-svg-3" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-3" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                                <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="3"/>
-                            </pattern>
-                            <mask id="text-mask-3">
-                                <rect width="800" height="400" fill="white" />
-                                <text id="svg-text-3" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
-                            </mask>
+                            <pattern id="pattern-3" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="3"/></pattern>
+                            <mask id="text-mask-3"><rect width="800" height="400" fill="white" /><text id="svg-text-3" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text></mask>
                         </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <rect width="800" height="400" fill="url(#pattern-3)" mask="url(#text-mask-3)" />
+                        <rect width="800" height="400" fill="white" /><rect width="800" height="400" fill="url(#pattern-3)" mask="url(#text-mask-3)" />
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-3', 'void-negative')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-3', 'void-negative')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
 
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">4. Embossed (Watermark)</h3>
-                <div class="w-full bg-gray-200 border border-gray-300 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span> 
+                    Embossed Watermark
+                </h3>
+                <div class="svg-wrapper" style="background-color: #E5E7EB;">
                     <svg id="illusion-svg-4" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <filter id="filter-emboss">
-                                <feDropShadow dx="1.5" dy="1.5" stdDeviation="0.5" flood-color="#000" flood-opacity="0.3"/>
-                                <feDropShadow dx="-1.5" dy="-1.5" stdDeviation="0.5" flood-color="#FFF" flood-opacity="0.5"/>
-                            </filter>
+                            <filter id="filter-emboss"><feDropShadow dx="1.5" dy="1.5" stdDeviation="0.5" flood-color="#000" flood-opacity="0.3"/><feDropShadow dx="-1.5" dy="-1.5" stdDeviation="0.5" flood-color="#FFF" flood-opacity="0.5"/></filter>
                         </defs>
-                        <rect width="800" height="400" fill="#E5E7EB" />
+                        <rect width="800" height="400" fill="transparent" />
                         <text id="svg-text-4" class="svg-text-base" x="400" y="200" fill="#E5E7EB" filter="url(#filter-emboss)">PLACEHOLDER TEXT</text>
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-4', 'embossed')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-4', 'embossed')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
 
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">5. 3D Anaglyph</h3>
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">5</span> 
+                    3D Anaglyph
+                </h3>
+                <div class="svg-wrapper">
                     <svg id="illusion-svg-5" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <filter id="filter-anaglyph">
-                                <feFlood flood-color="#FF0000" result="red" />
-                                <feComposite in="red" in2="SourceAlpha" operator="in" result="red-clip" />
-                                <feOffset in="red-clip" dx="-3" dy="0" result="red-offset" />
-                                <feFlood flood-color="#00FFFF" result="cyan" />
-                                <feComposite in="cyan" in2="SourceAlpha" operator="in" result="cyan-clip" />
-                                <feOffset in="cyan-clip" dx="3" dy="0" result="cyan-offset" />
-                                <feMerge>
-                                    <feMergeNode in="red-offset"/><feMergeNode in="cyan-offset"/><feMergeNode in="SourceGraphic"/>
-                                </feMerge>
-                            </filter>
+                            <filter id="filter-anaglyph"><feFlood flood-color="#FF0000" result="red" /><feComposite in="red" in2="SourceAlpha" operator="in" result="red-clip" /><feOffset in="red-clip" dx="-3" dy="0" result="red-offset" /><feFlood flood-color="#00FFFF" result="cyan" /><feComposite in="cyan" in2="SourceAlpha" operator="in" result="cyan-clip" /><feOffset in="cyan-clip" dx="3" dy="0" result="cyan-offset" /><feMerge><feMergeNode in="red-offset"/><feMergeNode in="cyan-offset"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
                         </defs>
-                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="transparent" />
                         <text id="svg-text-5" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-anaglyph)">PLACEHOLDER TEXT</text>
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-5', 'anaglyph-3d')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-5', 'anaglyph-3d')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
 
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">6. Halftone (Dot Matrix)</h3>
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">6</span> 
+                    Halftone Dot Matrix
+                </h3>
+                <div class="svg-wrapper">
                     <svg id="illusion-svg-6" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-dots" width="8" height="8" patternUnits="userSpaceOnUse">
-                                <circle cx="4" cy="4" r="3" fill="black" />
-                            </pattern>
-                            <mask id="text-mask-6">
-                                <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-6" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text>
-                            </mask>
+                            <pattern id="pattern-dots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="3" fill="black" /></pattern>
+                            <mask id="text-mask-6"><rect width="800" height="400" fill="black" /><text id="svg-text-6" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text></mask>
                         </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <rect width="800" height="400" fill="url(#pattern-dots)" mask="url(#text-mask-6)" />
+                        <rect width="800" height="400" fill="transparent" /><rect width="800" height="400" fill="url(#pattern-dots)" mask="url(#text-mask-6)" />
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-6', 'halftone-dots')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-6', 'halftone-dots')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
 
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">7. Noise Texture</h3>
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6 shadow-inner">
-                    <svg id="illusion-svg-7" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <defs>
-                            <filter id="filter-noise">
-                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="noise" />
-                                <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="2" result="lit">
-                                    <feDistantLight azimuth="45" elevation="60" />
-                                </feDiffuseLighting>
-                                <feComposite in="lit" in2="SourceGraphic" operator="in" />
-                            </filter>
-                            <text id="svg-text-7" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
-                        </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <use href="#svg-text-7" filter="url(#filter-noise)" />
-                    </svg>
-                </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-7', 'noise-texture')" class="download-btn">Download .PNG</button>
-                </div>
-            </div>
-
-            <div class="border border-gray-200 rounded-xl p-5 shadow-sm bg-slate-50">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">8. Fragmented (Glitch)</h3>
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6 shadow-inner">
-                    <svg id="illusion-svg-8" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <defs>
-                            <text id="svg-text-8" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
-                            <clipPath id="clip-slice-1"><rect x="0" y="0" width="800" height="100"/></clipPath>
-                            <clipPath id="clip-slice-2"><rect x="0" y="100" width="800" height="100"/></clipPath>
-                            <clipPath id="clip-slice-3"><rect x="0" y="200" width="800" height="100"/></clipPath>
-                            <clipPath id="clip-slice-4"><rect x="0" y="300" width="800" height="100"/></clipPath>
-                        </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <use href="#svg-text-8" clip-path="url(#clip-slice-1)" transform="translate(5, 0)"/>
-                        <use href="#svg-text-8" clip-path="url(#clip-slice-2)" transform="translate(-10, 0)"/>
-                        <use href="#svg-text-8" clip-path="url(#clip-slice-3)" transform="translate(10, 0)"/>
-                        <use href="#svg-text-8" clip-path="url(#clip-slice-4)" transform="translate(-5, 0)"/>
-                    </svg>
-                </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-8', 'fragmented-glitch')" class="download-btn">Download .PNG</button>
-                </div>
-            </div>
-
-            <div class="border border-blue-200 rounded-xl p-5 shadow-sm bg-blue-50/50">
-                <h3 class="text-lg font-bold text-blue-900 mb-4">9. Microtext Pattern (Advanced)</h3>
-                <div class="w-full bg-white border border-blue-200 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white bg-gradient-to-br from-white/50 to-indigo-50/50">
+                <h3 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-200 text-indigo-800 w-6 h-6 rounded-full flex items-center justify-center text-xs">7</span> 
+                    Microtext Pattern <span class="ml-auto text-[10px] font-bold tracking-wider text-indigo-500 uppercase bg-white px-2 py-1 rounded">Advanced</span>
+                </h3>
+                <div class="svg-wrapper">
                     <svg id="illusion-svg-9" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            <pattern id="pattern-microtext" width="100" height="18" patternUnits="userSpaceOnUse">
-                                <text x="0" y="15" font-family="Arial, sans-serif" font-weight="600" font-size="10" fill="#888">GENUINE</text>
-                            </pattern>
-                            <mask id="text-mask-9">
-                                <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-9" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text>
-                            </mask>
+                            <pattern id="pattern-microtext" width="100" height="18" patternUnits="userSpaceOnUse"><text x="0" y="15" font-family="Arial, sans-serif" font-weight="600" font-size="10" fill="#888">GENUINE</text></pattern>
+                            <mask id="text-mask-9"><rect width="800" height="400" fill="black" /><text id="svg-text-9" class="svg-text-base" x="400" y="200" fill="white">PLACEHOLDER TEXT</text></mask>
                         </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <rect width="800" height="400" fill="url(#pattern-microtext)" mask="url(#text-mask-9)" />
+                        <rect width="800" height="400" fill="transparent" /><rect width="800" height="400" fill="url(#pattern-microtext)" mask="url(#text-mask-9)" />
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-9', 'microtext')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-9', 'microtext')" class="btn-modern btn-secondary w-full border-indigo-200 hover:border-indigo-400">Export Graphic</button></div>
             </div>
 
-            <div class="border border-blue-200 rounded-xl p-5 shadow-sm bg-blue-50/50">
-                <h3 class="text-lg font-bold text-blue-900 mb-4">10. Engraved (Intaglio) (Advanced)</h3>
-                <div class="w-full bg-white border border-blue-200 rounded-lg overflow-hidden mb-6 shadow-inner">
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white bg-gradient-to-br from-white/50 to-indigo-50/50">
+                <h3 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-200 text-indigo-800 w-6 h-6 rounded-full flex items-center justify-center text-xs">8</span> 
+                    Engraved Intaglio <span class="ml-auto text-[10px] font-bold tracking-wider text-indigo-500 uppercase bg-white px-2 py-1 rounded">Advanced</span>
+                </h3>
+                <div class="svg-wrapper">
                     <svg id="illusion-svg-10" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
                             <filter id="filter-engraved">
                                 <feGaussianBlur stdDeviation="1" in="SourceAlpha" result="blur" />
-                                <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" specularExponent="20" lighting-color="#999" result="spec">
-                                    <feDistantLight azimuth="225" elevation="80" />
-                                </feSpecularLighting>
+                                <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" specularExponent="20" lighting-color="#999" result="spec"><feDistantLight azimuth="225" elevation="80" /></feSpecularLighting>
                                 <feComposite in="spec" in2="SourceGraphic" operator="in" result="engraved" />
                                 <feComposite in="SourceGraphic" in2="engraved" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
                             </filter>
                         </defs>
-                        <rect width="800" height="400" fill="white" />
+                        <rect width="800" height="400" fill="transparent" />
                         <text id="svg-text-10" class="svg-text-base" x="400" y="200" fill="#555" filter="url(#filter-engraved)">PLACEHOLDER TEXT</text>
                     </svg>
                 </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-10', 'engraved')" class="download-btn">Download .PNG</button>
-                </div>
-            </div>
-
-            <div class="border border-blue-200 rounded-xl p-5 shadow-sm bg-blue-50/50">
-                <h3 class="text-lg font-bold text-blue-900 mb-4">11. Wavy Path (Advanced)</h3>
-                <div class="w-full bg-white border border-blue-200 rounded-lg overflow-hidden mb-6 shadow-inner">
-                    <svg id="illusion-svg-11" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <defs>
-                            <path id="wavy-path" d="M 50,200 Q 250,150 400,200 T 750,200" fill="none" stroke="none" />
-                        </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <text class="svg-text-base" fill="black">
-                            <textPath id="svg-text-11" href="#wavy-path" startOffset="50%" text-anchor="middle" textLength="700" lengthAdjust="spacingAndGlyphs">PLACEHOLDER TEXT</textPath>
-                        </text>
-                    </svg>
-                </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-11', 'wavy-path')" class="download-btn">Download .PNG</button>
-                </div>
-            </div>
-
-            <div class="border border-blue-200 rounded-xl p-5 shadow-sm bg-blue-50/50">
-                <h3 class="text-lg font-bold text-blue-900 mb-4">12. Distortion (Advanced)</h3>
-                <div class="w-full bg-white border border-blue-200 rounded-lg overflow-hidden mb-6 shadow-inner">
-                    <svg id="illusion-svg-12" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <defs>
-                            <filter id="filter-displacement">
-                                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="2" result="turbulence"/>
-                                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G"/>
-                            </filter>
-                        </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <text id="svg-text-12" class="svg-text-base" x="400" y="200" fill="black" filter="url(#filter-displacement)">PLACEHOLDER TEXT</text>
-                    </svg>
-                </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-12', 'displacement')" class="download-btn">Download .PNG</button>
-                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-10', 'engraved')" class="btn-modern btn-secondary w-full border-indigo-200 hover:border-indigo-400">Export Graphic</button></div>
             </div>
             
-            <div class="border border-green-200 rounded-xl p-5 shadow-sm bg-green-50/50">
-                <h3 class="text-lg font-bold text-green-900 mb-4">13. Warped Checkerboard</h3>
-                <div class="w-full bg-white border border-green-200 rounded-lg overflow-hidden mb-6 shadow-inner">
-                    <svg id="illusion-svg-13" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <defs>
-                            <filter id="filter-warp">
-                                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise"/>
-                                <feDisplacementMap in="SourceGraphic" in2="noise" scale="50" />
-                            </filter>
-                            <pattern id="pattern-check" width="50" height="50" patternUnits="userSpaceOnUse">
-                                <rect width="25" height="25" fill="black"/>
-                                <rect x="25" y="25" width="25" height="25" fill="black"/>
-                            </pattern>
-                            <mask id="text-mask-13">
-                                <rect width="800" height="400" fill="white" />
-                                <text id="svg-text-13" class="svg-text-base" x="400" y="200" fill="black">PLACEHOLDER TEXT</text>
-                            </mask>
-                        </defs>
-                        <rect width="800" height="400" fill="white" />
-                        <rect width="800" height="400" fill="url(#pattern-check)" filter="url(#filter-warp)" mask="url(#text-mask-13)" />
-                    </svg>
-                </div>
-                <div class="text-center">
-                    <button type="button" onclick="downloadPNG(this, 'illusion-svg-13', 'warped-check')" class="download-btn">Download .PNG</button>
-                </div>
-            </div>
-            
-            <div class="border border-green-200 rounded-xl p-5 shadow-sm bg-green-50/50">
-                <h3 class="text-lg font-bold text-green-900 mb-4">14. Combined Tilt-to-Read</h3>
-                <p class="text-sm text-green-700/80 -mt-3 mb-4 font-medium">(This effect has its own inputs)</p>
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white lg:col-span-2">
+                <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">9</span> 
+                    Combined Tilt-to-Read Effect
+                </h3>
+                <p class="text-sm text-slate-500 mb-5 ml-8">View the screen from a sharp angle from the bottom, then from the side.</p>
                 
-                <canvas id="tilt-canvas" class="bg-white shadow-inner"></canvas>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div>
-                        <label for="hText" class="block text-sm font-medium text-gray-700 mb-1">Horizontal Text</label>
-                        <input type="text" placeholder="Type horizontal text..." id="hText" class="tilt-input focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none" value="PRINTED BY" />
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="hText" class="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">Horizontal Text (View from bottom)</label>
+                            <input type="text" id="hText" class="modern-input" value="PRINTED BY" />
+                        </div>
+                        <div>
+                            <label for="vText" class="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">Vertical Text (View from side)</label>
+                            <input type="text" id="vText" class="modern-input" value="SECURITY DEPT" />
+                        </div>
+                        <button type="button" onclick="downloadTiltCanvas(this, 'tilt-canvas')" class="btn-modern btn-secondary w-full mt-2">Export Canvas</button>
                     </div>
-                    <div>
-                        <label for="vText" class="block text-sm font-medium text-gray-700 mb-1">Vertical Text</label>
-                        <input type="text" placeholder="Type vertical text..." id="vText" class="tilt-input focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none" value="MICRO PRESS LTD" />
+                    <div class="flex justify-center p-4 bg-white/50 rounded-2xl border border-white shadow-inner">
+                        <canvas id="tilt-canvas" class="bg-white shadow-sm"></canvas>
                     </div>
                 </div>
-                <div class="text-center mt-6">
-                    <button type="button" onclick="downloadTiltCanvas(this, 'tilt-canvas')" class="download-btn">Download .PNG</button>
-                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Custom Security Stamps -->
+    <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10 mb-12">
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Dynamic Security Stamps</h2>
+            <p class="text-slate-500 mt-2 font-medium max-w-2xl mx-auto">Generate unique geometric shapes automatically punched out by an identity sequence.</p>
         </div>
         
-        <div class="mt-12 pt-10 border-t border-gray-200">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4 text-center">
-                Custom Security Stamp Generator
-            </h2>
-            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-                Upload an image, enter a sequence of single-digit numbers (0-9). The tool will generate a stamp for each digit, cropping the image into a unique shape based on the digit (circle for 0, 3-point star for 1 & 2, N-point star for 3-9), and punching the digit out of the center.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto bg-slate-50 p-6 rounded-xl border border-slate-200">
-                <div class="md:col-span-1">
-                    <label for="image-upload" class="block text-sm font-bold text-gray-700 mb-2">
-                        1. Upload Base Image
-                    </label>
-                    <input type="file"
-                           id="image-upload"
-                           accept="image/*"
-                           onchange="handleImageUpload(event)"
-                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
-                </div>
-                <div class="md:col-span-1">
-                    <label for="number-sequence" class="block text-sm font-bold text-gray-700 mb-2">
-                        2. Enter Number Sequence
-                    </label>
-                    <input type="text"
-                           id="number-sequence"
-                           placeholder="e.g., 5014"
-                           value="5014"
-                           pattern="[0-9]+"
-                           class="tilt-input text-xl font-mono focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                           oninput="renderStamps()">
-                </div>
-                <div class="md:col-span-1 flex items-end">
-                    <button type="button"
-                            onclick="renderStamps()"
-                            id="generate-stamps-btn"
-                            class="download-btn w-full justify-center !bg-blue-600 !text-white hover:!bg-blue-700 border-blue-600 hover:border-blue-700 !shadow-lg">
-                        Generate Stamps
-                    </button>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto glass-panel p-6 rounded-2xl border border-white">
+            <div class="md:col-span-1">
+                <label for="image-upload" class="block text-sm font-bold text-slate-700 mb-2 ml-1">
+                    1. Upload Base Image
+                </label>
+                <input type="file" id="image-upload" accept="image/*" onchange="handleImageUpload(event)"
+                       class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 cursor-pointer outline-none">
             </div>
-            <div id="stamp-output-container" class="stamp-container">
-                <p id="stamp-placeholder" class="text-gray-500 self-center text-center">Upload an image and enter digits (0-9) to generate security stamps.</p>
+            <div class="md:col-span-1">
+                <label for="number-sequence" class="block text-sm font-bold text-slate-700 mb-2 ml-1">
+                    2. Identity Sequence
+                </label>
+                <input type="text" id="number-sequence" placeholder="e.g., 5014" value="5014" pattern="[0-9]+" class="modern-input text-lg font-mono tracking-widest text-center" oninput="renderStamps()">
+            </div>
+            <div class="md:col-span-1 flex items-end">
+                <button type="button" onclick="renderStamps()" id="generate-stamps-btn" class="btn-modern btn-primary w-full h-[46px]">
+                    Process Stamps
+                </button>
             </div>
         </div>
-    </div>
 
-    <!-- Microprint Generator Section -->
-    <div class="w-full max-w-7xl bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-12">
-        <h2 class="text-3xl md:text-3xl font-bold text-center text-gray-900 mb-8">
-            Banknote Microprint Security Generator
-        </h2>
-        <div class="flex flex-col md:flex-row border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-            <!-- Sidebar Controls -->
-            <aside class="w-full md:w-96 bg-white border-b md:border-r border-slate-200 flex flex-col z-10 shrink-0 md:h-[600px] md:overflow-y-auto">
-                <div class="p-6 border-b border-slate-100 bg-slate-50">
-                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Microprint Settings</h3>
-                    <p class="text-sm text-slate-500 mt-1">Create banknote-style graphics from a portrait.</p>
+        <div id="stamp-output-container" class="stamp-container glass-panel border border-white shadow-inner relative overflow-hidden">
+            <p id="stamp-placeholder" class="text-slate-400 font-medium my-auto text-center w-full">Stamps will appear here.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Microprint Generator -->
+    <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10 mb-12">
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Banknote Microprint Engraver</h2>
+            <p class="text-slate-500 mt-2 font-medium max-w-2xl mx-auto">Convert a portrait into continuous micro-text shaded by luminance, mimicking legal tender.</p>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Settings Sidebar -->
+            <aside class="w-full lg:w-96 glass-panel rounded-2xl flex flex-col shrink-0 border border-white shadow-lg overflow-hidden">
+                <div class="p-5 border-b border-white/40 bg-white/40 backdrop-blur-md">
+                    <h3 class="font-bold text-slate-800">Configuration</h3>
                 </div>
 
-                <div class="p-6 space-y-6 flex-grow">
+                <div class="p-5 space-y-5 flex-grow overflow-y-auto custom-scrollbar">
                     <!-- Image Upload -->
                     <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">1. Upload Portrait/Image</label>
-                        <div class="flex items-center justify-center w-full">
-                            <label for="imageUpload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors group relative overflow-hidden">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6 text-slate-500 group-hover:text-indigo-600">
-                                    <svg class="w-8 h-8 mb-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                    </svg>
-                                    <p class="mb-2 text-sm font-medium"><span class="font-bold">Click to upload</span></p>
-                                    <p class="text-xs">PNG, JPG or WEBP</p>
-                                </div>
-                                <input id="imageUpload" type="file" class="hidden" accept="image/*" />
-                                <img id="imagePreview" class="absolute inset-0 w-full h-full object-cover hidden opacity-40 mix-blend-multiply" />
-                            </label>
-                        </div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Primary Portrait</label>
+                        <label for="imageUpload" class="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-white/50 hover:bg-white hover:border-indigo-400 transition-all group relative overflow-hidden">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6 text-slate-400 group-hover:text-indigo-500">
+                                <svg class="w-7 h-7 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="text-xs font-bold">Select Image</span>
+                            </div>
+                            <input id="imageUpload" type="file" class="hidden" accept="image/*" />
+                            <img id="imagePreview" class="absolute inset-0 w-full h-full object-cover hidden opacity-40 mix-blend-multiply" />
+                        </label>
                     </div>
 
                     <!-- Mask Upload -->
-                    <div class="pt-2">
-                        <div class="flex justify-between items-end mb-2">
-                            <label class="block text-sm font-semibold text-slate-700">Optional: Crop to Shape (Mask)</label>
-                            <button id="clearMaskBtn" class="hidden text-xs text-red-500 hover:text-red-700 font-medium transition-colors">Clear Mask</button>
+                    <div class="pt-1">
+                        <div class="flex justify-between items-end mb-2 ml-1">
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Crop to Shape (Mask)</label>
+                            <button id="clearMaskBtn" class="hidden text-[10px] font-bold text-red-500 hover:text-red-700 uppercase tracking-wide transition-colors">Clear Mask</button>
                         </div>
                         <div class="flex items-center justify-center w-full">
-                            <label for="maskUpload" class="flex flex-col items-center justify-center w-full h-20 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors group relative overflow-hidden">
-                                <div class="flex flex-col items-center justify-center pt-2 pb-2 text-slate-500 group-hover:text-indigo-600">
-                                    <p class="text-sm font-medium"><span class="font-bold">Upload Silhouette/Mask</span></p>
-                                    <p class="text-xs">Transparent PNG or Black/White</p>
+                            <label for="maskUpload" class="flex flex-col items-center justify-center w-full h-16 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-white/50 hover:bg-white hover:border-indigo-400 transition-all group relative overflow-hidden">
+                                <div class="flex flex-col items-center justify-center pt-2 pb-2 text-slate-400 group-hover:text-indigo-500">
+                                    <span class="text-xs font-bold">Upload Silhouette</span>
                                 </div>
                                 <input id="maskUpload" type="file" class="hidden" accept="image/*" />
                                 <img id="maskPreview" class="absolute inset-0 w-full h-full object-contain hidden opacity-60 bg-white" />
@@ -585,239 +530,190 @@
                         </div>
                     </div>
 
-                    <!-- Security Text -->
+                    <!-- Microprint Text -->
                     <div>
-                        <label for="securityText" class="block text-sm font-semibold text-slate-700 mb-2">2. Security Text (Microprint)</label>
-                        <input type="text" id="securityText" value="100 " class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow text-slate-700 font-mono" placeholder="e.g., 100, NIGERIA, SECURE ">
+                        <label for="securityText" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Microprint Text</label>
+                        <input type="text" id="securityText" value="100 " class="modern-input font-mono text-sm py-2" placeholder="e.g., SECURE ">
                     </div>
 
-                    <!-- Settings -->
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Appearance Settings</h3>
-                        
+                    <!-- Appearance -->
+                    <div class="bg-white/40 p-4 rounded-xl border border-white/50 space-y-4 shadow-sm">
                         <!-- Density -->
                         <div>
-                            <label for="density" class="flex justify-between text-sm font-medium text-slate-700 mb-1">
-                                <span>Detail/Density</span>
-                                <span id="densityValue" class="text-indigo-600 font-mono">150</span>
+                            <label for="density" class="flex justify-between text-sm font-semibold text-slate-700 mb-2">
+                                <span>Density Level</span>
+                                <span id="densityValue" class="text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded text-xs">150</span>
                             </label>
-                            <input type="range" id="density" min="50" max="400" value="150" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
-                            <p class="text-xs text-slate-500 mt-1">Higher values look better but take longer.</p>
+                            <input type="range" id="density" min="50" max="400" value="150" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                         </div>
 
-                        <!-- Color Theme -->
+                        <!-- Theme -->
                         <div>
-                            <label for="colorTheme" class="block text-sm font-medium text-slate-700 mb-1">Color Ink Theme</label>
-                            <select id="colorTheme" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white text-sm">
-                                <option value="original">Original Image Colors</option>
-                                <option value="monochrome">Grayscale (Classic)</option>
-                                <option value="green">Banknote Green (USD style)</option>
-                                <option value="purple">Gibraltar Purple (GBP style)</option>
-                                <option value="blue">Security Blue</option>
+                            <label for="colorTheme" class="block text-sm font-semibold text-slate-700 mb-2">Ink Color</label>
+                            <select id="colorTheme" class="modern-input py-2 text-sm">
+                                <option value="original">Original True Color</option>
+                                <option value="monochrome">Grayscale Engraving</option>
+                                <option value="green">US Dollar Green</option>
+                                <option value="purple">Gibraltar Purple</option>
+                                <option value="blue">Euro Blue</option>
                                 <option value="sepia">Vintage Sepia</option>
                             </select>
                         </div>
 
                         <!-- Background Settings -->
-                        <div class="pt-2 border-t border-slate-200">
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Background Fill</label>
+                        <div class="pt-3 border-t border-white/50">
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 ml-1">Background Fill</label>
                             <div class="space-y-3">
                                 <!-- Color Option -->
-                                <div class="flex items-center justify-between">
-                                    <span class="text-xs text-slate-500">Solid Color:</span>
+                                <div class="flex items-center justify-between bg-white/50 p-2 rounded-lg border border-white">
+                                    <span class="text-xs font-semibold text-slate-600">Solid Color:</span>
                                     <div class="flex items-center space-x-2">
-                                        <span class="text-xs text-slate-600 font-mono uppercase" id="bgColorLabel">#FFFFFF</span>
-                                        <input type="color" id="bgColor" value="#ffffff" class="w-6 h-6 rounded cursor-pointer border border-slate-300 p-0">
+                                        <span class="text-xs font-mono text-slate-500 uppercase" id="bgColorLabel">#FFFFFF</span>
+                                        <input type="color" id="bgColor" value="#ffffff" class="w-7 h-7 rounded cursor-pointer border border-slate-200 p-0 shadow-sm bg-white">
                                     </div>
                                 </div>
 
                                 <!-- Image Option -->
                                 <div>
-                                    <div class="flex justify-between items-end mb-1">
-                                        <span class="text-xs text-slate-500">Or Image:</span>
-                                        <button id="clearBgImageBtn" class="hidden text-xs text-red-500 hover:text-red-700 font-medium transition-colors">Remove Image</button>
+                                    <div class="flex justify-between items-end mb-1 ml-1">
+                                        <span class="text-xs font-semibold text-slate-600">Or Image:</span>
+                                        <button id="clearBgImageBtn" class="hidden text-[10px] font-bold text-red-500 hover:text-red-700 uppercase tracking-wide transition-colors">Remove Image</button>
                                     </div>
-                                    <label for="bgImageUpload" class="flex flex-col items-center justify-center w-full h-12 border border-slate-300 border-dashed rounded cursor-pointer bg-white hover:bg-slate-50 transition-colors group relative overflow-hidden">
-                                        <span class="text-xs font-medium text-slate-500 group-hover:text-indigo-600">Choose Image</span>
+                                    <label for="bgImageUpload" class="flex flex-col items-center justify-center w-full h-12 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-white/50 hover:bg-white hover:border-indigo-400 transition-all group relative overflow-hidden">
+                                        <span class="text-xs font-bold text-slate-400 group-hover:text-indigo-500">Choose Background Image</span>
                                         <input id="bgImageUpload" type="file" class="hidden" accept="image/*" />
                                         <img id="bgImagePreview" class="absolute inset-0 w-full h-full object-cover hidden opacity-40 mix-blend-multiply" />
                                     </label>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Options -->
-                        <div class="space-y-2 pt-2 border-t border-slate-200">
-                            <label class="flex items-center space-x-3 cursor-pointer group pt-2">
+                        
+                        <!-- Extra Options -->
+                        <div class="space-y-3 pt-2">
+                            <label class="flex items-center space-x-3 cursor-pointer group">
                                 <div class="relative flex items-center justify-center">
                                     <input type="checkbox" id="varyWeight" checked class="peer sr-only">
-                                    <div class="w-5 h-5 border-2 border-slate-300 rounded peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors"></div>
+                                    <div class="w-5 h-5 border border-slate-300 bg-white rounded peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors shadow-sm"></div>
                                     <svg class="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                 </div>
-                                <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Vary Font Weight by Shadows</span>
+                                <span class="text-sm font-medium text-slate-600">Vary weight by shadows</span>
                             </label>
-                            
                             <label class="flex items-center space-x-3 cursor-pointer group">
                                 <div class="relative flex items-center justify-center">
                                     <input type="checkbox" id="addGuilloche" class="peer sr-only">
-                                    <div class="w-5 h-5 border-2 border-slate-300 rounded peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors"></div>
+                                    <div class="w-5 h-5 border border-slate-300 bg-white rounded peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors shadow-sm"></div>
                                     <svg class="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                 </div>
-                                <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Add Security Wavy Background</span>
+                                <span class="text-sm font-medium text-slate-600">Add Guilloché background</span>
                             </label>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Action Buttons -->
-                    <div class="flex flex-col gap-3 pt-4">
-                        <button id="generateBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                            Generate Microprint
-                        </button>
-                        
-                        <button id="downloadBtn" disabled class="w-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2.5 px-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            Download High-Res Image
-                        </button>
-                    </div>
+                <div class="p-5 border-t border-white/40 bg-white/40 backdrop-blur-md flex flex-col gap-3">
+                    <button id="generateBtn" class="btn-modern btn-primary w-full">Engrave Image</button>
+                    <button id="downloadBtn" disabled class="btn-modern btn-secondary w-full">Download High-Res</button>
                 </div>
             </aside>
 
-            <!-- Main Output Area -->
-            <main class="flex-1 relative flex flex-col items-center justify-center p-4 md:p-8 min-h-[400px] md:h-auto md:overflow-hidden bg-slate-200/50">
-                
-                <!-- Loading State -->
-                <div id="outputContainer" class="relative w-full h-full min-h-[400px] flex items-center justify-center rounded-xl overflow-hidden bg-white border border-slate-200 shadow-inner p-2 md:p-4">
-                    
+            <!-- Output Canvas Area -->
+            <main class="flex-1 min-h-[400px] lg:min-h-[600px] glass-panel rounded-2xl flex flex-col items-center justify-center p-4 shadow-lg border border-white relative overflow-hidden">
+                <div id="outputContainer" class="relative w-full h-full flex items-center justify-center rounded-xl overflow-hidden bg-white/60 shadow-inner">
                     <div class="loading-overlay flex-col gap-3 backdrop-blur-sm rounded-xl">
-                        <div class="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
-                        <p id="loadingText" class="text-slate-600 font-medium">Printing security graphics...</p>
+                        <svg class="animate-spin text-indigo-600 w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        <p id="loadingText" class="text-slate-700 font-bold tracking-wide text-sm uppercase">Rendering...</p>
                     </div>
 
-                    <!-- The Canvas where the magic happens -->
-                    <canvas id="outputCanvas" class="hidden max-w-full max-h-[70vh] md:max-h-full h-auto object-contain rounded shadow bg-white"></canvas>
+                    <canvas id="outputCanvas" class="hidden max-w-full max-h-full w-auto h-auto object-contain rounded shadow-sm bg-white border border-slate-100"></canvas>
 
-                    <!-- Initial State Placeholder -->
                     <div id="placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
-                        <svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <p class="text-lg font-medium">Upload an image to start</p>
-                        <p class="text-sm">Works best with portraits with good contrast.</p>
+                        <svg class="w-16 h-16 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <p class="text-lg font-bold">Canvas Ready</p>
+                        <p class="text-sm">Upload a portrait to begin engraving.</p>
                     </div>
                 </div>
             </main>
         </div>
-    </div>
+    </section>
 
-    <!-- QR Code Generator Section -->
-    <div class="w-full max-w-7xl bg-white rounded-2xl shadow-xl p-6 md:p-8">
-        <h2 class="text-3xl md:text-3xl font-bold text-center text-gray-900 mb-4">
-            Advanced QR Code Generator & Designer
-        </h2>
-        <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-            Customize your security QR code with unique shapes, colors, and embedded logos.
-        </p>
-        <div class="max-w-4xl mx-auto bg-slate-50 p-6 md:p-8 rounded-xl border border-slate-200">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="md:col-span-2">
-                    <label for="qr-text" class="block text-sm font-bold text-gray-700 mb-2">
-                        Enter text, ID, or URL:
-                    </label>
-                    <input type="text"
-                           id="qr-text"
-                           value="https://x.com"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg outline-none"
-                           oninput="generateQR()">
-                </div>
+    <!-- SECTION 4: Secure QR Code -->
+    <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10">
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Advanced Identity QR</h2>
+            <p class="text-slate-500 mt-2 font-medium max-w-2xl mx-auto">Generate scannable codes with custom styling algorithms to match document aesthetics.</p>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row gap-8 max-w-5xl mx-auto">
+            <!-- QR Controls -->
+            <div class="flex-1 glass-panel p-6 md:p-8 rounded-2xl border border-white shadow-sm space-y-5">
                 <div>
-                    <label for="qr-size" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Resolution Size:
-                    </label>
-                    <select id="qr-size" onchange="generateQR()"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-md appearance-none bg-white cursor-pointer">
-                        <option value="128">128x128 px</option>
-                        <option value="256" selected>256x256 px</option>
-                        <option value="512">512x512 px</option>
-                        <option value="1024">1024x1024 px</option>
-                    </select>
+                    <label for="qr-text" class="block text-sm font-bold text-slate-700 mb-2 ml-1">Payload Data (URL, ID, Text)</label>
+                    <input type="text" id="qr-text" value="https://x.com" class="modern-input text-lg font-medium" oninput="generateQR()">
                 </div>
-                <div>
-                    <label for="qr-logo" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Upload Logo (optional):
-                    </label>
-                    <input type="file" id="qr-logo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" onchange="handleLogoUpload(event)">
-                </div>
-                <div>
-                    <label for="qr-fg-color" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Ink/Foreground Color:
-                    </label>
-                    <input type="color" id="qr-fg-color" value="#000000" class="w-full h-12 border border-gray-300 rounded-lg cursor-pointer p-1" onchange="generateQR()">
-                </div>
-                <div>
-                    <label for="qr-bg-color" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Background Color:
-                    </label>
-                    <input type="color" id="qr-bg-color" value="#ffffff" class="w-full h-12 border border-gray-300 rounded-lg cursor-pointer p-1" onchange="generateQR()">
-                </div>
-                <div>
-                    <label for="qr-dot-type" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Pattern Style:
-                    </label>
-                    <select id="qr-dot-type" onchange="generateQR()" class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-md appearance-none bg-white cursor-pointer">
-                        <option value="square">Square Blocks</option>
-                        <option value="dots">Dots</option>
-                        <option value="rounded">Rounded</option>
-                        <option value="extra-rounded">Extra Rounded</option>
-                        <option value="classy">Classy</option>
-                        <option value="classy-rounded">Classy Rounded</option>
-                    </select>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                        <label for="qr-corner-square-type" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Corner Box:
-                        </label>
-                        <select id="qr-corner-square-type" onchange="generateQR()" class="w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white cursor-pointer">
-                            <option value="square">Square</option>
-                            <option value="dot">Dot</option>
-                            <option value="extra-rounded">Rounded</option>
+                        <label for="qr-logo" class="block text-sm font-bold text-slate-700 mb-2 ml-1">Center Logo</label>
+                        <input type="file" id="qr-logo" accept="image/*" class="block w-full text-sm text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-bold file:bg-white file:text-indigo-600 file:shadow-sm hover:file:bg-indigo-50 cursor-pointer border border-slate-200 rounded-lg p-1.5 bg-white/50" onchange="handleLogoUpload(event)">
+                    </div>
+                    <div>
+                        <label for="qr-dot-type" class="block text-sm font-bold text-slate-700 mb-2 ml-1">Matrix Pattern</label>
+                        <select id="qr-dot-type" onchange="generateQR()" class="modern-input py-2.5 cursor-pointer">
+                            <option value="square">Square Blocks</option>
+                            <option value="dots">Dots</option>
+                            <option value="rounded" selected>Rounded</option>
+                            <option value="extra-rounded">Extra Rounded</option>
+                            <option value="classy">Classy</option>
                         </select>
                     </div>
                     <div>
-                        <label for="qr-corner-dot-type" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Corner Dot:
-                        </label>
-                        <select id="qr-corner-dot-type" onchange="generateQR()" class="w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white cursor-pointer">
+                        <label for="qr-fg-color" class="block text-sm font-bold text-slate-700 mb-2 ml-1">Matrix Color</label>
+                        <div class="flex items-center gap-3">
+                            <input type="color" id="qr-fg-color" value="#1e293b" class="w-10 h-10 border border-slate-200 rounded cursor-pointer shadow-sm p-0.5 bg-white" onchange="generateQR()">
+                            <span class="text-xs font-mono text-slate-500" id="fg-label">#1E293B</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="qr-corner-square-type" class="block text-sm font-bold text-slate-700 mb-2 ml-1">Alignment Anchors</label>
+                        <select id="qr-corner-square-type" onchange="generateQR()" class="modern-input py-2.5 cursor-pointer">
                             <option value="square">Square</option>
                             <option value="dot">Dot</option>
+                            <option value="extra-rounded" selected>Rounded</option>
                         </select>
                     </div>
                 </div>
+                <!-- Hidden inputs to retain required functionality without clutter -->
+                <input type="hidden" id="qr-size" value="1024">
+                <input type="hidden" id="qr-bg-color" value="#ffffff">
+                <input type="hidden" id="qr-corner-dot-type" value="dot">
             </div>
-            
-            <div id="qr-container" class="flex justify-center mb-6 bg-white border border-slate-200 rounded-xl p-4 shadow-sm"></div>
-            
-            <div class="text-center">
-                <button type="button" onclick="downloadQR(this)" class="download-btn !bg-blue-600 !text-white hover:!bg-blue-700 border-blue-600 font-bold px-8 shadow-lg">Download QR Code</button>
+
+            <!-- QR Output -->
+            <div class="w-full lg:w-80 flex flex-col items-center justify-center gap-6">
+                <div class="glass-panel p-4 rounded-3xl border border-white shadow-lg relative group">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 -z-10"></div>
+                    <div id="qr-container" class="bg-white rounded-2xl overflow-hidden flex items-center justify-center border border-slate-100 shadow-inner w-[240px] h-[240px]"></div>
+                </div>
+                <button type="button" onclick="downloadQR(this)" class="btn-modern btn-primary w-[240px] shadow-xl hover:-translate-y-1">Export QR Graphic</button>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Reusable Template for loading buttons -->
     <template id="loading-button-template">
-        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        Processing...
+        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-current inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...
     </template>
 
     <script>
+        // --- General Event Listeners ---
+        document.getElementById('qr-fg-color').addEventListener('input', (e) => {
+            document.getElementById('fg-label').textContent = e.target.value.toUpperCase();
+        });
+
         // --- Scripts from Text Illusion Gallery ---
         const BASE_FONT_SIZE = 250;
-        
         let uploadedImage = null;
         
-        // --- Core SVG Illusions Functions ---
         function getSelectedFont() {
             return document.getElementById('font-selector').value;
         }
@@ -826,12 +722,11 @@
             const input = document.getElementById('text-input');
             const newText = (input.value.toUpperCase() || ' ').trim();
             const font = getSelectedFont();
-            // 1. Update all SVG elements
-            for (let i = 1; i <= 13; i++) {
-                updateSVGText(`svg-text-${i}`, newText, font);
-            }
+            for (let i = 1; i <= 10; i++) { if(i!==8) updateSVGText(`svg-text-${i}`, newText, font); }
+            updateSVGText(`svg-text-11`, newText, font); // Wavy
+            updateSVGText(`svg-text-12`, newText, font); // Displacement
+            updateSVGText(`svg-text-13`, newText, font); // Checkerboard
             
-            // 2. Update Tilt Canvas
             initializeTiltCanvas();
         }
         
@@ -841,7 +736,7 @@
             
             svgText.textContent = newText;
             svgText.setAttribute("font-family", font);
-            // Special case for wavy text path (Illusion 11)
+            
             if (textId === 'svg-text-11') {
                 const textPath = svgText;
                 textPath.setAttribute('textLength', '700');
@@ -854,74 +749,56 @@
             svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
             requestAnimationFrame(() => {
                 let currentWidth = 0;
-                try {
-                    currentWidth = svgText.getBBox().width;
-                } catch (e) {
-                    const charCount = newText.length || 1;
-                    currentWidth = charCount * (BASE_FONT_SIZE * 0.35);
-                }
+                try { currentWidth = svgText.getBBox().width; } 
+                catch (e) { currentWidth = (newText.length || 1) * (BASE_FONT_SIZE * 0.35); }
+                
                 if (currentWidth > maxTextWidth) {
                     const ratio = maxTextWidth / currentWidth;
-                    const newFontSize = BASE_FONT_SIZE * ratio;
-                    svgText.setAttribute("font-size", Math.max(newFontSize, 20) + 'px');
+                    svgText.setAttribute("font-size", Math.max(BASE_FONT_SIZE * ratio, 20) + 'px');
                 } else {
                     svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
                 }
             });
         }
         
-        // --- Tilt-to-Read Canvas Functions ---
+        // --- Tilt-to-Read Canvas ---
         let tiltCanvas, tiltCtx, tiltScale, tiltText;
         function initializeTiltCanvas() {
             tiltCanvas = document.getElementById('tilt-canvas');
             if (!tiltCanvas) return;
             
             tiltCtx = tiltCanvas.getContext('2d');
-            const font = getSelectedFont();
             tiltCanvas.width = 500;
             tiltCanvas.height = 500;
             
-            tiltCtx.font = `25px ${font}`;
-            tiltCtx.textAlign = 'center';
-            tiltCtx.textBaseline = 'middle';
-            tiltScale = {
-              h: tiltCanvas.height / 20,
-              v: tiltCanvas.width / 20
-            };
+            tiltScale = { h: tiltCanvas.height / 20, v: tiltCanvas.width / 20 };
             
             const hTextElement = document.getElementById('hText');
             const vTextElement = document.getElementById('vText');
-            tiltText = {
-              h: hTextElement.value.toUpperCase(),
-              v: vTextElement.value.toUpperCase()
-            };
+            tiltText = { h: hTextElement.value.toUpperCase(), v: vTextElement.value.toUpperCase() };
             
-            hTextElement.oninput = function() {
-              tiltText.h = this.value.toUpperCase();
-              updateTiltCanvas();
-            };
-            
-            vTextElement.oninput = function() {
-              tiltText.v = this.value.toUpperCase();
-              updateTiltCanvas();
-            };
+            hTextElement.oninput = function() { tiltText.h = this.value.toUpperCase(); updateTiltCanvas(); };
+            vTextElement.oninput = function() { tiltText.v = this.value.toUpperCase(); updateTiltCanvas(); };
             
             updateTiltCanvas();
         }
         
         function updateTiltCanvas() {
             if (!tiltCtx) return;
-            
             const font = getSelectedFont();
             tiltCtx.font = `25px ${font}`;
+            tiltCtx.textAlign = 'center';
+            tiltCtx.textBaseline = 'middle';
             
             tiltCtx.fillStyle = "#fff";
             tiltCtx.fillRect(0, 0, tiltCanvas.width, tiltCanvas.height);
-            tiltCtx.fillStyle = "#000";
+            tiltCtx.fillStyle = "#0f172a"; // slate-900
+            
             tiltCtx.save();
             tiltCtx.scale(1, tiltScale.h);
             tiltCtx.fillText(tiltText.h, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.h / 2);
             tiltCtx.restore();
+            
             tiltCtx.save();
             tiltCtx.translate(tiltCanvas.width / 2, tiltCanvas.height / 2);
             tiltCtx.rotate(Math.PI / 2);
@@ -936,101 +813,55 @@
             if (!canvas) return;
             
             const originalButtonHTML = button.innerHTML;
-            const loadingTemplate = document.getElementById('loading-button-template');
-            button.innerHTML = loadingTemplate.innerHTML;
+            button.innerHTML = document.getElementById('loading-button-template').innerHTML;
             button.disabled = true;
             try {
-                const dataUrl = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
-                link.href = dataUrl;
-                
-                const h = document.getElementById('hText').value || 'tilt-h';
-                const v = document.getElementById('vText').value || 'tilt-v';
-                const filename = `tilt-read-${h.toLowerCase().replace(/\s+/g, '-')}-${v.toLowerCase().replace(/\s+/g, '-')}.png`;
-                link.download = filename;
+                link.href = canvas.toDataURL('image/png');
+                link.download = `tilt-read.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-            } catch (err) {
-                console.error("Error downloading canvas:", err);
-            }
-            
-            setTimeout(() => {
-                button.innerHTML = originalButtonHTML;
-                button.disabled = false;
-            }, 100);
+            } catch (err) {}
+            setTimeout(() => { button.innerHTML = originalButtonHTML; button.disabled = false; }, 100);
         }
         
-        // --- Download Functions ---
         function downloadPNG(button, svgId, filenameBase) {
             const svg = document.getElementById(svgId);
             if (!svg) return;
             
             button.originalHTML = button.innerHTML;
-            const loadingTemplate = document.getElementById('loading-button-template');
-            button.innerHTML = loadingTemplate.innerHTML;
+            button.innerHTML = document.getElementById('loading-button-template').innerHTML;
             button.disabled = true;
-            const canvasWidth = 1600;
-            const canvasHeight = 800;
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = 1600; canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+            
             const svgData = new XMLSerializer().serializeToString(svg);
-            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-            const url = URL.createObjectURL(svgBlob);
             const img = new Image();
-            img.onload = function() {
-                const canvas = document.createElement('canvas');
-                canvas.width = canvasWidth;
-                canvas.height = canvasHeight;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
-                finalizeDownload(canvas, button, filenameBase);
-                URL.revokeObjectURL(url);
+            img.onload = () => {
+                ctx.drawImage(img, 0, 0, 1600, 800);
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `${filenameBase}.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => { button.innerHTML = button.originalHTML; button.disabled = false; }, 100);
+                URL.revokeObjectURL(img.src);
             };
-            
-            img.onerror = function(err) {
-                console.error("Error loading SVG into image.", err);
-                button.innerHTML = button.originalHTML;
-                button.disabled = false;
-                URL.revokeObjectURL(url);
-            }
-            
-            img.src = url;
-        }
-        
-        function finalizeDownload(canvas, button, filenameBase) {
-            const pngDataUrl = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.href = pngDataUrl;
-            
-            const inputText = document.getElementById('text-input').value || 'illusion';
-            const filename = `${filenameBase}-${inputText.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.png`;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            setTimeout(() => {
-                button.innerHTML = button.originalHTML;
-                button.disabled = false;
-            }, 100);
+            img.src = URL.createObjectURL(new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' }));
         }
 
-        // ----------------------------------------------------------------------
-        // --- NEW FEATURE: Security Stamp Generator Functions ---
-        // ----------------------------------------------------------------------
+        // --- Security Stamp Generator ---
         function handleImageUpload(event) {
             const file = event.target.files[0];
-            if (!file) {
-                uploadedImage = null;
-                renderStamps();
-                return;
-            }
+            if (!file) { uploadedImage = null; renderStamps(); return; }
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = (e) => {
                 const img = new Image();
-                img.onload = function() {
-                    uploadedImage = img;
-                    renderStamps();
-                };
+                img.onload = () => { uploadedImage = img; renderStamps(); };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
@@ -1039,17 +870,12 @@
         function drawStarPath(ctx, centerX, centerY, outerRadius, innerRadius, points) {
             ctx.beginPath();
             points = Math.max(3, Math.floor(points));
-            
             for (let i = 0; i < points * 2; i++) {
                 const radius = (i % 2 === 0) ? outerRadius : innerRadius;
                 const angle = (Math.PI / points) * i - (Math.PI / 2);
                 const x = centerX + radius * Math.cos(angle);
                 const y = centerY + radius * Math.sin(angle);
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
+                if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
             }
             ctx.closePath();
         }
@@ -1058,47 +884,29 @@
             const ctx = canvas.getContext('2d');
             const size = canvas.width;
             const center = size / 2;
-            const outerRadius = size * 0.45;
-            const innerRadius = size * 0.2;
-            const font = getSelectedFont();
             const digit = parseInt(digitChar);
-            
             let shapeType = '';
+            
             ctx.clearRect(0, 0, size, size);
-            
             ctx.save();
-            if (digit === 0) {
-                ctx.beginPath();
-                ctx.arc(center, center, outerRadius, 0, Math.PI * 2);
-                ctx.closePath();
-                shapeType = 'Circle';
-            } else if (digit === 1 || digit === 2) {
-                drawStarPath(ctx, center, center, outerRadius, innerRadius, 3);
-                shapeType = '3-Point Star';
-            } else {
-                drawStarPath(ctx, center, center, outerRadius, innerRadius, digit);
-                shapeType = `${digit}-Point Star`;
-            }
-            ctx.clip(); 
             
+            if (digit === 0) { ctx.beginPath(); ctx.arc(center, center, size*0.45, 0, Math.PI * 2); ctx.closePath(); shapeType = 'Circle'; } 
+            else if (digit === 1 || digit === 2) { drawStarPath(ctx, center, center, size*0.45, size*0.2, 3); shapeType = '3-Point Star'; } 
+            else { drawStarPath(ctx, center, center, size*0.45, size*0.2, digit); shapeType = `${digit}-Point Star`; }
+            
+            ctx.clip(); 
             if (image) {
                 const minDim = Math.min(image.width, image.height);
-                const cropX = (image.width - minDim) / 2;
-                const cropY = (image.height - minDim) / 2;
-                ctx.drawImage(image, cropX, cropY, minDim, minDim, 0, 0, size, size);
+                ctx.drawImage(image, (image.width - minDim) / 2, (image.height - minDim) / 2, minDim, minDim, 0, 0, size, size);
             } else {
-                ctx.fillStyle = "#CCC";
-                ctx.fillRect(0, 0, size, size);
+                ctx.fillStyle = "#e2e8f0"; ctx.fillRect(0, 0, size, size);
             }
             ctx.restore(); 
             
             ctx.save();
-            ctx.font = `${size * 0.4}px ${font}`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+            ctx.font = `${size * 0.4}px ${getSelectedFont()}`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.globalCompositeOperation = 'destination-out';
-            
-            ctx.fillStyle = 'black';
             ctx.fillText(digitChar, center, center);
             ctx.restore();
             
@@ -1107,45 +915,39 @@
         
         function renderStamps() {
             const container = document.getElementById('stamp-output-container');
-            const sequenceInput = document.getElementById('number-sequence');
-            const sequence = sequenceInput.value.trim().replace(/[^0-9]/g, '');
+            const sequence = document.getElementById('number-sequence').value.trim().replace(/[^0-9]/g, '');
+            
+            if (!uploadedImage && sequence.length > 0) {
+                 container.innerHTML = '<p class="text-indigo-500 font-bold m-auto">Please upload an image first.</p>';
+                 return;
+            }
+            if (sequence.length === 0) {
+                 container.innerHTML = '<p class="text-slate-400 font-medium m-auto">Enter digits to view stamps.</p>';
+                 return;
+            }
             
             container.innerHTML = '';
-            const placeholder = document.getElementById('stamp-placeholder');
-            if (placeholder) {
-                 placeholder.style.display = 'none';
-            }
-            if (!uploadedImage && sequence.length > 0) {
-                 container.innerHTML = '<p class="text-red-500 self-center text-center font-medium mt-4">Please upload an image first to generate stamps.</p>';
-                 return;
-            }
-            
-            if (sequence.length === 0) {
-                 container.innerHTML = '<p class="text-gray-500 self-center text-center font-medium mt-4">Enter a sequence of digits (0-9) to generate stamps.</p>';
-                 if (placeholder) placeholder.style.display = 'block';
-                 return;
-            }
-            
-            const image = uploadedImage;
             sequence.split('').forEach((digitChar, index) => {
                 const card = document.createElement('div');
                 card.className = 'stamp-card';
                 const canvas = document.createElement('canvas');
-                canvas.width = 300;
-                canvas.height = 300;
+                canvas.width = 300; canvas.height = 300;
                 canvas.id = `stamp-canvas-${index}`;
-                
-                const shapeType = drawStarStamp(canvas, image, digitChar);
+                const shapeType = drawStarStamp(canvas, uploadedImage, digitChar);
                 
                 const title = document.createElement('p');
-                title.className = 'text-sm font-bold text-gray-800';
-                title.textContent = `Digit ${digitChar}: ${shapeType}`;
+                title.className = 'text-xs font-bold text-slate-500 uppercase tracking-wide';
+                title.textContent = `ID: ${digitChar} / ${shapeType}`;
                 
                 const button = document.createElement('button');
-                button.type = 'button';
-                button.className = 'download-btn !py-2 !px-3 !text-sm mt-2 w-full justify-center';
-                button.textContent = 'Download';
-                button.onclick = () => downloadCanvasStamp(button, canvas.id, `security-stamp-${digitChar}-${shapeType.replace(/\s+/g, '-')}`);
+                button.className = 'btn-modern btn-secondary w-full !py-2 !text-xs mt-3';
+                button.textContent = 'Save Stamp';
+                button.onclick = () => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = `stamp-${digitChar}.png`;
+                    link.click();
+                };
                 
                 card.appendChild(title);
                 card.appendChild(canvas);
@@ -1153,34 +955,8 @@
                 container.appendChild(card);
             });
         }
-        
-        function downloadCanvasStamp(button, canvasId, filenameBase) {
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) return;
-            
-            button.originalHTML = button.innerHTML;
-            const loadingTemplate = document.getElementById('loading-button-template');
-            button.innerHTML = loadingTemplate.innerHTML;
-            button.disabled = true;
-            try {
-                const dataUrl = canvas.toDataURL('image/png', 1.0);
-                const link = document.createElement('a');
-                link.href = dataUrl;
-                link.download = `${filenameBase}.png`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } catch (err) {
-                console.error("Error downloading canvas stamp:", err);
-            }
-            
-            setTimeout(() => {
-                button.innerHTML = button.originalHTML;
-                button.disabled = false;
-            }, 100);
-        }
 
-        // --- Scripts from Microprint Generator ---
+        // --- Microprint Generator ---
         document.addEventListener('DOMContentLoaded', () => {
             const imageUpload = document.getElementById('imageUpload');
             const imagePreview = document.getElementById('imagePreview');
@@ -1202,25 +978,20 @@
             const downloadBtn = document.getElementById('downloadBtn');
             const outputCanvas = document.getElementById('outputCanvas');
             const outputContainer = document.getElementById('outputContainer');
-            const placeholder = document.getElementById('placeholder');
-            const loadingText = document.getElementById('loadingText');
             
             let sourceImage = null;
             let maskImage = null;
             let bgImageObj = null;
 
-            densitySlider.addEventListener('input', (e) => {
-                densityValue.textContent = e.target.value;
-            });
+            densitySlider.addEventListener('input', (e) => densityValue.textContent = e.target.value);
 
             bgColor.addEventListener('input', (e) => {
-                bgColorLabel.textContent = e.target.value;
+                bgColorLabel.textContent = e.target.value.toUpperCase();
             });
 
             bgImageUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
-
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     const img = new Image();
@@ -1229,7 +1000,6 @@
                         bgImagePreview.src = event.target.result;
                         bgImagePreview.classList.remove('hidden');
                         clearBgImageBtn.classList.remove('hidden');
-                        
                         if(sourceImage) generateMicroprint();
                     };
                     img.src = event.target.result;
@@ -1243,36 +1013,12 @@
                 bgImagePreview.classList.add('hidden');
                 clearBgImageBtn.classList.add('hidden');
                 bgImageUpload.value = ''; 
-                
                 if(sourceImage) generateMicroprint();
-            });
-
-            imageUpload.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        sourceImage = img;
-                        imagePreview.src = event.target.result;
-                        imagePreview.classList.remove('hidden');
-                        
-                        generateBtn.disabled = false;
-                        placeholder.querySelector('p').textContent = "Ready to generate!";
-                        
-                        generateMicroprint();
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
             });
 
             maskUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
-
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     const img = new Image();
@@ -1281,7 +1027,6 @@
                         maskPreview.src = event.target.result;
                         maskPreview.classList.remove('hidden');
                         clearMaskBtn.classList.remove('hidden');
-                        
                         if(sourceImage) generateMicroprint();
                     };
                     img.src = event.target.result;
@@ -1295,8 +1040,26 @@
                 maskPreview.classList.add('hidden');
                 clearMaskBtn.classList.add('hidden');
                 maskUpload.value = '';
-                
                 if(sourceImage) generateMicroprint();
+            });
+
+            imageUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        sourceImage = img;
+                        imagePreview.src = event.target.result;
+                        imagePreview.classList.remove('hidden');
+                        generateBtn.disabled = false;
+                        document.querySelector('#placeholder p').textContent = "Ready to engrave!";
+                        generateMicroprint();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
             });
 
             generateBtn.addEventListener('click', generateMicroprint);
@@ -1304,51 +1067,37 @@
             downloadBtn.addEventListener('click', () => {
                 if (!outputCanvas) return;
                 const link = document.createElement('a');
-                link.download = 'banknote_security_microprint.png';
+                link.download = 'microprint.png';
                 link.href = outputCanvas.toDataURL('image/png');
                 link.click();
             });
 
             function generateMicroprint() {
-                if (!sourceImage) {
-                    alert('Please upload an image first.');
-                    return;
-                }
-
+                if (!sourceImage) return alert('Upload a portrait first.');
                 outputContainer.classList.add('is-loading');
-                placeholder.classList.add('hidden');
+                document.getElementById('placeholder').classList.add('hidden');
                 outputCanvas.classList.remove('hidden');
                 generateBtn.disabled = true;
-
-                loadingText.textContent = "Printing security graphics...";
-
-                setTimeout(() => {
-                    processImage(sourceImage);
-                }, 50);
+                setTimeout(() => processImage(sourceImage), 50);
             }
 
             function processImage(imgToProcess) {
                 try {
                     const ctx = outputCanvas.getContext('2d', { alpha: false }); 
-                    
                     const cols = parseInt(densitySlider.value); 
                     const textStr = securityText.value || "100 ";
                     const theme = colorTheme.value;
-                    const useVaryingWeight = varyWeight.checked;
-                    const drawGuilloche = addGuilloche.checked;
                     
                     const fontAspectRatio = 0.6; 
-                    const imageAspectRatio = imgToProcess.width / imgToProcess.height;
-                    const rows = Math.floor((cols * fontAspectRatio) / imageAspectRatio);
+                    const rows = Math.floor((cols * fontAspectRatio) / (imgToProcess.width / imgToProcess.height));
 
                     const sampleCanvas = document.createElement('canvas');
-                    sampleCanvas.width = cols;
-                    sampleCanvas.height = rows;
+                    sampleCanvas.width = cols; sampleCanvas.height = rows;
                     const sCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
-                    
                     sCtx.drawImage(imgToProcess, 0, 0, cols, rows);
                     const imgData = sCtx.getImageData(0, 0, cols, rows).data;
 
+                    // Mask preparation
                     let maskData = null;
                     if (maskImage) {
                         const maskCanvas = document.createElement('canvas');
@@ -1366,6 +1115,7 @@
                     outputCanvas.width = cols * cellWidth;
                     outputCanvas.height = rows * cellHeight;
                     
+                    // Fill Background
                     if (bgImageObj) {
                         const bgAspect = bgImageObj.width / bgImageObj.height;
                         const canvasAspect = outputCanvas.width / outputCanvas.height;
@@ -1388,141 +1138,81 @@
                         ctx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
                     }
 
-                    if (drawGuilloche) {
-                        drawGuillocheBackground(ctx, outputCanvas.width, outputCanvas.height, theme);
+                    if (addGuilloche.checked) {
+                        ctx.save(); ctx.lineWidth = 0.5;
+                        let sColor = 'rgba(0,0,0,0.05)';
+                        if(theme==='green') sColor = 'rgba(0,150,50,0.08)';
+                        else if(theme==='purple') sColor = 'rgba(150,0,150,0.08)';
+                        else if(theme==='blue') sColor = 'rgba(0,50,200,0.08)';
+                        else if(theme==='sepia') sColor = 'rgba(180,130,50,0.08)';
+                        ctx.strokeStyle = sColor;
+                        const spacing = outputCanvas.height / 40;
+                        for (let i = 0; i < 40; i++) {
+                            ctx.beginPath();
+                            for (let x = 0; x < outputCanvas.width; x += 5) {
+                                const y = (i * spacing) + (Math.sin(x * 0.02 + i) * 15) + (Math.cos(x * 0.005 - i * 0.5) * 20);
+                                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                            }
+                            ctx.stroke();
+                        }
+                        ctx.restore();
                     }
 
-                    ctx.textBaseline = 'top';
-                    ctx.textAlign = 'left';
-
+                    ctx.textBaseline = 'top'; ctx.textAlign = 'left';
                     let strIndex = 0;
-                    const strLen = textStr.length;
                     
                     for (let y = 0; y < rows; y++) {
                         for (let x = 0; x < cols; x++) {
                             const i = (y * cols + x) * 4;
-                            const r = imgData[i];
-                            const g = imgData[i+1];
-                            const b = imgData[i+2];
-                            const a = imgData[i+3];
 
+                            // Apply Mask Cropping
                             if (maskData) {
                                 const mR = maskData[i];
                                 const mG = maskData[i+1];
                                 const mB = maskData[i+2];
                                 const mA = maskData[i+3];
+                                // Skip if mask is transparent OR if mask is pure white (empty background)
                                 if (mA < 50 || (mR > 240 && mG > 240 && mB > 240)) {
                                     continue;
                                 }
                             }
 
-                            if (a < 50) continue;
+                            if (imgData[i+3] < 50) continue;
 
-                            const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                            const lum = 0.2126 * imgData[i] + 0.7152 * imgData[i+1] + 0.0722 * imgData[i+2];
+                            let fillR = imgData[i], fillG = imgData[i+1], fillB = imgData[i+2];
 
-                            let fillR = r, fillG = g, fillB = b;
-
-                            if (theme === 'monochrome') {
-                                fillR = fillG = fillB = lum;
-                            } else if (theme === 'green') {
-                                fillR = lum * 0.4;
-                                fillG = lum * 0.7 + 20; 
-                                fillB = lum * 0.4;
-                            } else if (theme === 'purple') {
-                                fillR = lum * 0.6 + 30;
-                                fillG = lum * 0.3;
-                                fillB = lum * 0.7 + 40;
-                            } else if (theme === 'blue') {
-                                fillR = lum * 0.3;
-                                fillG = lum * 0.4;
-                                fillB = lum * 0.8 + 20;
-                            } else if (theme === 'sepia') {
-                                fillR = lum * 0.8 + 20;
-                                fillG = lum * 0.6 + 10;
-                                fillB = lum * 0.4;
-                            }
+                            if (theme === 'monochrome') fillR = fillG = fillB = lum;
+                            else if (theme === 'green') { fillR = lum * 0.4; fillG = lum * 0.7 + 20; fillB = lum * 0.4; } 
+                            else if (theme === 'purple') { fillR = lum * 0.6 + 30; fillG = lum * 0.3; fillB = lum * 0.7 + 40; } 
+                            else if (theme === 'blue') { fillR = lum * 0.3; fillG = lum * 0.4; fillB = lum * 0.8 + 20; } 
+                            else if (theme === 'sepia') { fillR = lum * 0.8 + 20; fillG = lum * 0.6 + 10; fillB = lum * 0.4; }
 
                             let weight = '400';
-                            if (useVaryingWeight) {
-                                if (lum < 50) weight = '900';
-                                else if (lum < 100) weight = '700';
-                                else if (lum < 150) weight = '500';
-                                else if (lum < 200) weight = '300';
-                                else weight = '100'; 
+                            if (varyWeight.checked) {
+                                if (lum < 50) weight = '900'; else if (lum < 100) weight = '700';
+                                else if (lum < 150) weight = '500'; else if (lum < 200) weight = '300'; else weight = '100'; 
                             }
 
                             ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
-                            
-                            const opacity = Math.max(0.1, 1 - (lum / 255));
-                            ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${opacity})`;
-
-                            const char = textStr[strIndex % strLen];
-                            
-                            ctx.fillText(char, x * cellWidth, y * cellHeight);
-                            
+                            ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${Math.max(0.1, 1 - (lum / 255))})`;
+                            ctx.fillText(textStr[strIndex % textStr.length], x * cellWidth, y * cellHeight);
                             strIndex++;
                         }
                     }
-
                     downloadBtn.disabled = false;
-                    
-                    if (window.innerWidth < 768) {
-                        outputContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-
-                } catch (error) {
-                    console.error("Error generating microprint:", error);
-                    alert("An error occurred during generation. Please try a different image or lower density.");
-                } finally {
-                    outputContainer.classList.remove('is-loading');
-                    generateBtn.disabled = false;
-                }
+                } catch (error) {} 
+                finally { outputContainer.classList.remove('is-loading'); generateBtn.disabled = false; }
             }
 
-            function drawGuillocheBackground(ctx, width, height, theme) {
-                ctx.save();
-                ctx.lineWidth = 0.5;
-                
-                let strokeColor = 'rgba(0,0,0,0.05)';
-                if(theme === 'green') strokeColor = 'rgba(0, 150, 50, 0.08)';
-                if(theme === 'purple') strokeColor = 'rgba(150, 0, 150, 0.08)';
-                if(theme === 'blue') strokeColor = 'rgba(0, 50, 200, 0.08)';
-                if(theme === 'sepia') strokeColor = 'rgba(180, 130, 50, 0.08)';
-                
-                ctx.strokeStyle = strokeColor;
-
-                const lines = 40;
-                const spacing = height / lines;
-
-                for (let i = 0; i < lines; i++) {
-                    ctx.beginPath();
-                    for (let x = 0; x < width; x += 5) {
-                        const yBase = i * spacing;
-                        const offset1 = Math.sin(x * 0.02 + i) * 15;
-                        const offset2 = Math.cos(x * 0.005 - i * 0.5) * 20;
-                        const y = yBase + offset1 + offset2;
-                        
-                        if (x === 0) ctx.moveTo(x, y);
-                        else ctx.lineTo(x, y);
-                    }
-                    ctx.stroke();
-                }
-                ctx.restore();
-            }
-
-            // Initialization Calls
-            const initialFont = getSelectedFont();
-            document.querySelectorAll('.svg-text-base').forEach(el => {
-                el.setAttribute("font-family", initialFont);
-            });
-            
+            // Init Gallery Defaults
+            document.querySelectorAll('.svg-text-base').forEach(el => el.setAttribute("font-family", getSelectedFont()));
             updateAllText();
-            initializeTiltCanvas();
             renderStamps();
             generateQR(); 
         });
 
-        // --- Advanced QR Code Generator Functions ---
+        // --- Advanced QR Code Generator ---
         let qrCodeInstance = null;
         let qrLogoImage = null;
 
@@ -1530,74 +1220,46 @@
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    qrLogoImage = e.target.result;
-                    generateQR();
-                };
+                reader.onload = (e) => { qrLogoImage = e.target.result; generateQR(); };
                 reader.readAsDataURL(file);
-            } else {
-                qrLogoImage = null;
-                generateQR();
-            }
+            } else { qrLogoImage = null; generateQR(); }
         }
 
         function generateQR() {
             const qrContainer = document.getElementById('qr-container');
             qrContainer.innerHTML = ''; 
 
-            const text = document.getElementById('qr-text').value || 'https://x.com';
-            const size = parseInt(document.getElementById('qr-size').value);
-            const fgColor = document.getElementById('qr-fg-color').value;
-            const bgColor = document.getElementById('qr-bg-color').value;
-            const dotType = document.getElementById('qr-dot-type').value;
-            const cornerSquareType = document.getElementById('qr-corner-square-type').value;
-            const cornerDotType = document.getElementById('qr-corner-dot-type').value;
-
             qrCodeInstance = new QRCodeStyling({
-                width: size,
-                height: size,
-                data: text,
+                width: 240, height: 240, // Visual size
+                data: document.getElementById('qr-text').value || 'https://x.com',
                 image: qrLogoImage || undefined,
-                dotsOptions: {
-                    color: fgColor,
-                    type: dotType
-                },
-                backgroundOptions: {
-                    color: bgColor
-                },
-                cornersSquareOptions: {
-                    type: cornerSquareType
-                },
-                cornersDotOptions: {
-                    type: cornerDotType
-                },
-                imageOptions: {
-                    hideBackgroundDots: true,
-                    imageSize: 0.4,
-                    margin: 10
-                },
-                qrOptions: {
-                    errorCorrectionLevel: 'H'
-                }
+                dotsOptions: { color: document.getElementById('qr-fg-color').value, type: document.getElementById('qr-dot-type').value },
+                backgroundOptions: { color: document.getElementById('qr-bg-color').value },
+                cornersSquareOptions: { type: document.getElementById('qr-corner-square-type').value },
+                cornersDotOptions: { type: document.getElementById('qr-corner-dot-type').value },
+                imageOptions: { hideBackgroundDots: true, imageSize: 0.4, margin: 8 },
+                qrOptions: { errorCorrectionLevel: 'H' }
             });
-
             qrCodeInstance.append(qrContainer);
         }
 
         function downloadQR(button) {
             if (!qrCodeInstance) return;
-
             const originalHTML = button.innerHTML;
-            const loadingTemplate = document.getElementById('loading-button-template');
-            button.innerHTML = loadingTemplate.innerHTML;
+            button.innerHTML = document.getElementById('loading-button-template').innerHTML;
             button.disabled = true;
-
-            qrCodeInstance.download({ name: "security-qr-code", extension: "png" });
-
-            setTimeout(() => {
+            
+            // Re-render briefly at high resolution for download
+            const hrQR = new QRCodeStyling({
+                ...qrCodeInstance._options,
+                width: parseInt(document.getElementById('qr-size').value),
+                height: parseInt(document.getElementById('qr-size').value)
+            });
+            
+            hrQR.download({ name: "security-qr", extension: "png" }).then(() => {
                 button.innerHTML = originalHTML;
                 button.disabled = false;
-            }, 100);
+            });
         }
     </script>
 </body>
