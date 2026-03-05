@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Illusion Gallery</title>
-    
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bangers&family=Monoton&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Security Text Illusion and Microprint Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bangers&family=Monoton&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -18,7 +17,7 @@
             dominant-baseline: middle;
             /* Font family will be set dynamically via JS */
         }
-        
+       
         /* Styles for the new Canvas effect (from your code) */
         #tilt-canvas {
             width: 100%;
@@ -29,7 +28,7 @@
             margin: 0 auto; /* Center it */
             display: block;
         }
-        
+       
         .tilt-input {
             width: 100%;
             padding: 0.5rem 0.75rem;
@@ -37,7 +36,6 @@
             border-radius: 0.375rem; /* rounded-md */
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
         }
-
         .download-btn {
             display: inline-flex;
             align-items: center;
@@ -64,7 +62,6 @@
             opacity: 0.7;
             cursor: not-allowed;
         }
-
         /* Styles for the new Star Stamp Generator */
         .stamp-container {
             display: flex;
@@ -93,29 +90,43 @@
             border-radius: 0.25rem;
             margin-bottom: 0.5rem;
         }
+        /* Styles from Microprint Generator */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .loading-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .is-loading .loading-overlay {
+            display: flex;
+        }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 md:p-8">
-
-    <div class="w-full max-w-7xl bg-white rounded-lg shadow-xl p-6 md:p-8">
-        
+<body class="bg-gray-100 flex flex-col items-center min-h-screen p-4 md:p-8">
+    <div class="w-full max-w-7xl bg-white rounded-lg shadow-xl p-6 md:p-8 mb-12">
         <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
             Printable Text Illusion Gallery
         </h1>
         <p class="text-center text-gray-600 mb-8">
             Type in the box below to see your text rendered in 14 different illusion styles.
         </p>
-
         <div class="mb-10 max-w-2xl mx-auto sticky top-4 z-10 bg-white/95 backdrop-blur-sm p-4 rounded-lg shadow-lg">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label for="text-input" class="block text-sm font-medium text-gray-700 mb-2">
                         Enter your text:
                     </label>
-                    <input type="text" 
-                           id="text-input" 
-                           value="THIS DOCUMENT IS SECURE AND AUTHENTICATED" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-2xl" 
+                    <input type="text"
+                           id="text-input"
+                           value="THIS DOCUMENT IS SECURE AND AUTHENTICATED"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-2xl"
                            oninput="updateAllText()">
                 </div>
                 <div>
@@ -133,17 +144,13 @@
                 </div>
             </div>
         </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Line Illusion (Maximum Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            
-
-<pattern id="pattern-1" width="4" height="4" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+                            <pattern id="pattern-1" width="4" height="4" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
                                 <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="2"/>
                             </pattern>
                             <pattern id="pattern-2" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
@@ -151,7 +158,7 @@
                             </pattern>
                             <mask id="text-mask-1">
                                 <rect width="800" height="400" fill="black" />
-                                <text id="svg-text-1" class="svg-text-base" x="400" y="200" fill="white" 
+                                <text id="svg-text-1" class="svg-text-base" x="400" y="200" fill="white"
                                       text-anchor="middle" dominant-baseline="middle">PLACEHOLDER TEXT</text>
                             </mask>
                         </defs>
@@ -164,7 +171,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-1', 'line-illusion')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">2. Guilloché Security Pattern (Updated for Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -192,15 +198,12 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-2', 'guilloche-security')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">3. Void (Negative Space) (Maximum Density)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
                     <svg id="illusion-svg-3" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
                         <defs>
-                            
-
-<pattern id="pattern-3" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                            <pattern id="pattern-3" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
                                 <rect width="4" height="4" fill="white"/><line x1="0" y1="2" x2="4" y2="2" stroke="black" stroke-width="3"/>
                             </pattern>
                             <mask id="text-mask-3">
@@ -216,7 +219,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-3', 'void-negative')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">4. Embossed (Watermark)</h2>
                 <div class="w-full bg-gray-200 border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -235,7 +237,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-4', 'embossed')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">5. 3D Anaglyph</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -261,7 +262,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-5', 'anaglyph-3d')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">6. Halftone (Dot Matrix)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -283,7 +283,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-6', 'halftone-dots')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">7. Noise Texture</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -306,7 +305,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-7', 'noise-texture')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">8. Fragmented (Glitch)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -329,7 +327,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-8', 'fragmented-glitch')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">9. Microtext Pattern (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -351,7 +348,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-9', 'microtext')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">10. Engraved (Intaglio) (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -374,7 +370,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-10', 'engraved')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">11. Wavy Path (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -392,7 +387,6 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-11', 'wavy-path')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
             <div class="border border-blue-200 rounded-lg p-4 shadow-sm bg-blue-50">
                 <h2 class="text-xl font-semibold text-blue-800 mb-4">12. Distortion (Advanced)</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -411,7 +405,7 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-12', 'displacement')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-            
+           
             <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
                 <h2 class="text-xl font-semibold text-green-800 mb-4">13. Warped Checkerboard</h2>
                 <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden mb-6">
@@ -438,13 +432,13 @@
                     <button type="button" onclick="downloadPNG(this, 'illusion-svg-13', 'warped-check')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-            
+           
             <div class="border border-green-200 rounded-lg p-4 shadow-sm bg-green-50">
                 <h2 class="text-xl font-semibold text-green-800 mb-4">14. Combined Tilt-to-Read</h2>
                 <p class="text-sm text-gray-600 -mt-3 mb-4">(This effect has its own inputs)</p>
-                
+               
                 <canvas id="tilt-canvas"></canvas>
-                
+               
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                     <div>
                         <label for="hText" class="block text-sm font-medium text-gray-700 mb-1">Horizontal Text</label>
@@ -459,26 +453,23 @@
                     <button type="button" onclick="downloadTiltCanvas(this, 'tilt-canvas')" class="download-btn">Download .PNG</button>
                 </div>
             </div>
-
-        </div> 
-        
-        
-
-<div class="mt-12 pt-6 border-t border-gray-300">
+        </div>
+       
+       
+        <div class="mt-12 pt-6 border-t border-gray-300">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">
                 Custom Security Stamp Generator
             </h2>
             <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
                 Upload an image, enter a sequence of single-digit numbers (0-9). The tool will generate a stamp for each digit, cropping the image into a unique shape based on the digit (circle for 0, 3-point star for 1 & 2, N-point star for 3-9), and punching the digit out of the center.
             </p>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto">
                 <div class="md:col-span-1">
                     <label for="image-upload" class="block text-sm font-medium text-gray-700 mb-2">
                         1. Upload Base Image
                     </label>
-                    <input type="file" 
-                           id="image-upload" 
+                    <input type="file"
+                           id="image-upload"
                            accept="image/*"
                            onchange="handleImageUpload(event)"
                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
@@ -487,30 +478,200 @@
                     <label for="number-sequence" class="block text-sm font-medium text-gray-700 mb-2">
                         2. Enter Number Sequence (e.g., 5014)
                     </label>
-                    <input type="text" 
-                           id="number-sequence" 
-                           placeholder="Enter digits (0-9)" 
-                           value="5014" 
+                    <input type="text"
+                           id="number-sequence"
+                           placeholder="Enter digits (0-9)"
+                           value="5014"
                            pattern="[0-9]+"
-                           class="tilt-input text-xl" 
+                           class="tilt-input text-xl"
                            oninput="renderStamps()">
                 </div>
                 <div class="md:col-span-1 flex items-end">
-                    <button type="button" 
-                            onclick="renderStamps()" 
+                    <button type="button"
+                            onclick="renderStamps()"
                             id="generate-stamps-btn"
                             class="download-btn w-full justify-center bg-blue-500 text-white hover:bg-blue-600 border-blue-500 hover:border-blue-600">
                         Generate Stamps
                     </button>
                 </div>
             </div>
-
             <div id="stamp-output-container" class="stamp-container">
                 <p id="stamp-placeholder" class="text-gray-500 self-center text-center">Upload an image and enter digits (0-9) to generate security stamps.</p>
             </div>
         </div>
+    </div>
 
+    <!-- Microprint Generator Section -->
+    <div class="w-full max-w-7xl bg-white rounded-lg shadow-xl p-6 md:p-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
+            Banknote Microprint Security Generator
+        </h1>
+        <div class="flex flex-col md:flex-row">
+            <!-- Sidebar Controls -->
+            <aside class="w-full md:w-96 bg-white border-b md:border-r border-slate-200 shadow-lg flex flex-col z-10 shrink-0 md:h-auto md:overflow-y-auto">
+                <div class="p-6 border-b border-slate-100 bg-slate-50">
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Microprint Gen</h2>
+                    <p class="text-sm text-slate-500 mt-1">Create banknote-style security graphics.</p>
+                </div>
 
+                <div class="p-6 space-y-6 flex-grow">
+                    <!-- Image Upload -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">1. Upload Portrait/Image</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="imageUpload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors group relative overflow-hidden">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6 text-slate-500 group-hover:text-indigo-600">
+                                    <svg class="w-8 h-8 mb-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                    </svg>
+                                    <p class="mb-2 text-sm font-medium"><span class="font-bold">Click to upload</span></p>
+                                    <p class="text-xs">PNG, JPG or WEBP</p>
+                                </div>
+                                <input id="imageUpload" type="file" class="hidden" accept="image/*" />
+                                <img id="imagePreview" class="absolute inset-0 w-full h-full object-cover hidden opacity-40 mix-blend-multiply" />
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Mask Upload -->
+                    <div class="pt-2">
+                        <div class="flex justify-between items-end mb-2">
+                            <label class="block text-sm font-semibold text-slate-700">Optional: Crop to Shape (Mask)</label>
+                            <button id="clearMaskBtn" class="hidden text-xs text-red-500 hover:text-red-700 font-medium transition-colors">Clear Mask</button>
+                        </div>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="maskUpload" class="flex flex-col items-center justify-center w-full h-20 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors group relative overflow-hidden">
+                                <div class="flex flex-col items-center justify-center pt-2 pb-2 text-slate-500 group-hover:text-indigo-600">
+                                    <p class="text-sm font-medium"><span class="font-bold">Upload Silhouette/Mask</span></p>
+                                    <p class="text-xs">Transparent PNG or Black/White</p>
+                                </div>
+                                <input id="maskUpload" type="file" class="hidden" accept="image/*" />
+                                <img id="maskPreview" class="absolute inset-0 w-full h-full object-contain hidden opacity-60 bg-white" />
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Security Text -->
+                    <div>
+                        <label for="securityText" class="block text-sm font-semibold text-slate-700 mb-2">2. Security Text (Microprint)</label>
+                        <input type="text" id="securityText" value="100 " class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow text-slate-700 font-mono" placeholder="e.g., 100, NIGERIA, SECURE ">
+                    </div>
+
+                    <!-- Settings -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Appearance Settings</h3>
+                        
+                        <!-- Density -->
+                        <div>
+                            <label for="density" class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                                <span>Detail/Density</span>
+                                <span id="densityValue" class="text-indigo-600 font-mono">150</span>
+                            </label>
+                            <input type="range" id="density" min="50" max="400" value="150" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                            <p class="text-xs text-slate-500 mt-1">Higher values look better but take longer.</p>
+                        </div>
+
+                        <!-- Color Theme -->
+                        <div>
+                            <label for="colorTheme" class="block text-sm font-medium text-slate-700 mb-1">Color Ink Theme</label>
+                            <select id="colorTheme" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white text-sm">
+                                <option value="original">Original Image Colors</option>
+                                <option value="monochrome">Grayscale (Classic)</option>
+                                <option value="green">Banknote Green (USD style)</option>
+                                <option value="purple">Gibraltar Purple (GBP style)</option>
+                                <option value="blue">Security Blue</option>
+                                <option value="sepia">Vintage Sepia</option>
+                            </select>
+                        </div>
+
+                        <!-- Background Settings -->
+                        <div class="pt-2 border-t border-slate-200">
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Background Fill</label>
+                            <div class="space-y-3">
+                                <!-- Color Option -->
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-slate-500">Solid Color:</span>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-xs text-slate-600 font-mono uppercase" id="bgColorLabel">#FFFFFF</span>
+                                        <input type="color" id="bgColor" value="#ffffff" class="w-6 h-6 rounded cursor-pointer border border-slate-300 p-0">
+                                    </div>
+                                </div>
+
+                                <!-- Image Option -->
+                                <div>
+                                    <div class="flex justify-between items-end mb-1">
+                                        <span class="text-xs text-slate-500">Or Image:</span>
+                                        <button id="clearBgImageBtn" class="hidden text-xs text-red-500 hover:text-red-700 font-medium transition-colors">Remove Image</button>
+                                    </div>
+                                    <label for="bgImageUpload" class="flex flex-col items-center justify-center w-full h-12 border border-slate-300 border-dashed rounded cursor-pointer bg-white hover:bg-slate-50 transition-colors group relative overflow-hidden">
+                                        <span class="text-xs font-medium text-slate-500 group-hover:text-indigo-600">Choose Image</span>
+                                        <input id="bgImageUpload" type="file" class="hidden" accept="image/*" />
+                                        <img id="bgImagePreview" class="absolute inset-0 w-full h-full object-cover hidden opacity-40 mix-blend-multiply" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="space-y-2 pt-2">
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <div class="relative flex items-center justify-center">
+                                    <input type="checkbox" id="varyWeight" checked class="peer sr-only">
+                                    <div class="w-5 h-5 border-2 border-slate-300 rounded peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors"></div>
+                                    <svg class="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Vary Font Weight by Shadows</span>
+                            </label>
+                            
+                            <label class="flex items-center space-x-3 cursor-pointer group">
+                                <div class="relative flex items-center justify-center">
+                                    <input type="checkbox" id="addGuilloche" class="peer sr-only">
+                                    <div class="w-5 h-5 border-2 border-slate-300 rounded peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors"></div>
+                                    <svg class="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Add Security Wavy Background</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col gap-3 pt-4">
+                        <button id="generateBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            Generate Microprint
+                        </button>
+                        
+                        <button id="downloadBtn" disabled class="w-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2.5 px-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Download High-Res Image
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Output Area -->
+            <main class="flex-1 relative flex flex-col items-center justify-center p-4 md:p-8 min-h-[60vh] md:h-auto md:overflow-hidden">
+                
+                <!-- Loading State -->
+                <div id="outputContainer" class="relative w-full h-full min-h-[400px] flex items-center justify-center rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-inner p-2 md:p-4">
+                    
+                    <div class="loading-overlay flex-col gap-3 backdrop-blur-sm rounded-2xl">
+                        <div class="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+                        <p id="loadingText" class="text-slate-600 font-medium">Printing security graphics...</p>
+                    </div>
+
+                    <!-- The Canvas where the magic happens -->
+                    <canvas id="outputCanvas" class="hidden max-w-full max-h-[70vh] md:max-h-full h-auto object-contain rounded shadow-lg bg-white"></canvas>
+
+                    <!-- Initial State Placeholder -->
+                    <div id="placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                        <svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <p class="text-lg font-medium">Upload an image to start</p>
+                        <p class="text-sm">Works best with portraits with good contrast.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <template id="loading-button-template">
@@ -520,60 +681,52 @@
         </svg>
         Generating...
     </template>
-
     <script>
-        const BASE_FONT_SIZE = 250; 
-        
+        // --- Scripts from Text Illusion Gallery ---
+        const BASE_FONT_SIZE = 250;
+       
         let uploadedImage = null;
-
         // --- Core SVG Illusions Functions ---
-
         function getSelectedFont() {
             return document.getElementById('font-selector').value;
         }
-
         function updateAllText() {
             const input = document.getElementById('text-input');
-            const newText = (input.value.toUpperCase() || ' ').trim(); 
+            const newText = (input.value.toUpperCase() || ' ').trim();
             const font = getSelectedFont();
-
             // 1. Update all SVG elements
             for (let i = 1; i <= 13; i++) {
                 updateSVGText(`svg-text-${i}`, newText, font);
             }
-            
+           
             // 2. Update Tilt Canvas (it uses a separate canvas drawing function)
-            initializeTiltCanvas(); 
+            initializeTiltCanvas();
         }
-
         function updateSVGText(textId, newText, font) {
             const svgText = document.getElementById(textId);
             if (!svgText) return;
-            
+           
             svgText.textContent = newText;
             svgText.setAttribute("font-family", font);
-
             // Special case for wavy text path (Illusion 11)
             if (textId === 'svg-text-11') {
                 const textPath = svgText;
-                textPath.setAttribute('textLength', '700'); 
+                textPath.setAttribute('textLength', '700');
                 textPath.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-                textPath.setAttribute('font-size', '120px'); 
-                return; 
+                textPath.setAttribute('font-size', '120px');
+                return;
             }
-            
-            const maxTextWidth = 780; 
+           
+            const maxTextWidth = 780;
             svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
-
             requestAnimationFrame(() => {
                 let currentWidth = 0;
                 try {
                     currentWidth = svgText.getBBox().width;
-                } catch (e) { 
+                } catch (e) {
                     const charCount = newText.length || 1;
-                    currentWidth = charCount * (BASE_FONT_SIZE * 0.35); 
+                    currentWidth = charCount * (BASE_FONT_SIZE * 0.35);
                 }
-
                 if (currentWidth > maxTextWidth) {
                     const ratio = maxTextWidth / currentWidth;
                     const newFontSize = BASE_FONT_SIZE * ratio;
@@ -581,177 +734,157 @@
                 } else {
                     svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
                 }
-            }); 
+            });
         }
-        
+       
         // --- Tilt-to-Read Canvas Functions (updated to use selected font) ---
-
         let tiltCanvas, tiltCtx, tiltScale, tiltText;
-
         function initializeTiltCanvas() {
             tiltCanvas = document.getElementById('tilt-canvas');
             if (!tiltCanvas) return;
-            
+           
             tiltCtx = tiltCanvas.getContext('2d');
             const font = getSelectedFont();
-
             tiltCanvas.width = 500;
             tiltCanvas.height = 500;
-            
+           
             // Apply selected font to the canvas context
             tiltCtx.font = `25px ${font}`;
             tiltCtx.textAlign = 'center';
             tiltCtx.textBaseline = 'middle';
-
             tiltScale = {
               h: tiltCanvas.height / 20,
               v: tiltCanvas.width / 20
             };
-            
+           
             const hTextElement = document.getElementById('hText');
             const vTextElement = document.getElementById('vText');
-
             tiltText = {
               h: hTextElement.value.toUpperCase(),
               v: vTextElement.value.toUpperCase()
             };
-            
+           
             hTextElement.oninput = function() {
               tiltText.h = this.value.toUpperCase();
               updateTiltCanvas();
             };
-            
+           
             vTextElement.oninput = function() {
               tiltText.v = this.value.toUpperCase();
               updateTiltCanvas();
             };
-            
+           
             updateTiltCanvas();
         }
-
         function updateTiltCanvas() {
             if (!tiltCtx) return;
-            
+           
             // Re-apply font on update since text size might change
             const font = getSelectedFont();
             tiltCtx.font = `25px ${font}`;
-            
+           
             // Clear canvas
             tiltCtx.fillStyle = "#fff";
             tiltCtx.fillRect(0, 0, tiltCanvas.width, tiltCanvas.height);
-
             tiltCtx.fillStyle = "#000";
-
             tiltCtx.save();
             tiltCtx.scale(1, tiltScale.h);
             tiltCtx.fillText(tiltText.h, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.h / 2);
             tiltCtx.restore();
-
             tiltCtx.save();
             tiltCtx.translate(tiltCanvas.width / 2, tiltCanvas.height / 2);
             tiltCtx.rotate(Math.PI / 2);
-            tiltCtx.translate(-tiltCanvas.width / 2, -tiltCanvas.width / 2); 
+            tiltCtx.translate(-tiltCanvas.width / 2, -tiltCanvas.width / 2);
             tiltCtx.scale(1, tiltScale.v);
             tiltCtx.fillText(tiltText.v, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.v / 2);
             tiltCtx.restore();
         }
-        
+       
         function downloadTiltCanvas(button, canvasId) {
             // Download logic remains the same
             const canvas = document.getElementById(canvasId);
             if (!canvas) return;
-            
+           
             const originalButtonHTML = button.innerHTML;
             const loadingTemplate = document.getElementById('loading-button-template');
             button.innerHTML = loadingTemplate.innerHTML;
             button.disabled = true;
-
             try {
                 const dataUrl = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.href = dataUrl;
-                
+               
                 const h = document.getElementById('hText').value || 'tilt-h';
                 const v = document.getElementById('vText').value || 'tilt-v';
                 const filename = `tilt-read-${h.toLowerCase().replace(/\s+/g, '-')}-${v.toLowerCase().replace(/\s+/g, '-')}.png`;
                 link.download = filename;
-
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             } catch (err) {
                 console.error("Error downloading canvas:", err);
             }
-            
+           
             setTimeout(() => {
                 button.innerHTML = originalButtonHTML;
                 button.disabled = false;
             }, 100);
         }
-
         // --- Download Functions (unchanged) ---
         function downloadPNG(button, svgId, filenameBase) {
             const svg = document.getElementById(svgId);
             if (!svg) return;
-            
-            button.originalHTML = button.innerHTML; 
+           
+            button.originalHTML = button.innerHTML;
             const loadingTemplate = document.getElementById('loading-button-template');
             button.innerHTML = loadingTemplate.innerHTML;
             button.disabled = true;
-
-            const canvasWidth = 1600; 
+            const canvasWidth = 1600;
             const canvasHeight = 800;
-
             const svgData = new XMLSerializer().serializeToString(svg);
             const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(svgBlob);
-
             const img = new Image();
             img.onload = function() {
                 const canvas = document.createElement('canvas');
                 canvas.width = canvasWidth;
                 canvas.height = canvasHeight;
                 const ctx = canvas.getContext('2d');
-
                 ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
-
                 finalizeDownload(canvas, button, filenameBase);
                 URL.revokeObjectURL(url);
             };
-            
+           
             img.onerror = function(err) {
                 console.error("Error loading SVG into image.", err);
                 button.innerHTML = button.originalHTML;
                 button.disabled = false;
                 URL.revokeObjectURL(url);
             }
-            
+           
             img.src = url;
         }
-
         function finalizeDownload(canvas, button, filenameBase) {
             const pngDataUrl = canvas.toDataURL('image/png');
             const link = document.createElement('a');
             link.href = pngDataUrl;
-            
+           
             const inputText = document.getElementById('text-input').value || 'illusion';
             const filename = `${filenameBase}-${inputText.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.png`;
             link.download = filename;
-
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
+           
             setTimeout(() => {
-                button.innerHTML = button.originalHTML; 
+                button.innerHTML = button.originalHTML;
                 button.disabled = false;
             }, 100);
         }
-
         // ----------------------------------------------------------------------
         // --- NEW FEATURE: Security Stamp Generator Functions ---
         // ----------------------------------------------------------------------
-        
+       
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) {
@@ -759,7 +892,6 @@
                 renderStamps();
                 return;
             }
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
@@ -771,20 +903,17 @@
             };
             reader.readAsDataURL(file);
         }
-
         // Helper function to draw an N-pointed star path
         function drawStarPath(ctx, centerX, centerY, outerRadius, innerRadius, points) {
             ctx.beginPath();
-            
-            points = Math.max(3, Math.floor(points)); 
-            
+           
+            points = Math.max(3, Math.floor(points));
+           
             for (let i = 0; i < points * 2; i++) {
                 const radius = (i % 2 === 0) ? outerRadius : innerRadius;
-                const angle = (Math.PI / points) * i - (Math.PI / 2); 
-
+                const angle = (Math.PI / points) * i - (Math.PI / 2);
                 const x = centerX + radius * Math.cos(angle);
                 const y = centerY + radius * Math.sin(angle);
-
                 if (i === 0) {
                     ctx.moveTo(x, y);
                 } else {
@@ -793,7 +922,7 @@
             }
             ctx.closePath();
         }
-        
+       
         function drawStarStamp(canvas, image, digitChar) {
             const ctx = canvas.getContext('2d');
             const size = canvas.width;
@@ -802,15 +931,13 @@
             const innerRadius = size * 0.2;
             const font = getSelectedFont();
             const digit = parseInt(digitChar);
-            
+           
             let shapeType = ''; // Used for labeling
-
             // Clear canvas
             ctx.clearRect(0, 0, size, size);
-
             // 1. Crop/Mask the image to the defined shape
             ctx.save();
-            
+           
             // Set the shape clipping path based on the digit
             if (digit === 0) {
                 // Case 0: Circle
@@ -827,149 +954,518 @@
                 drawStarPath(ctx, center, center, outerRadius, innerRadius, digit);
                 shapeType = `${digit}-Point Star`;
             }
-
             ctx.clip(); // Clip everything drawn after this to the shape
-
             // Draw the uploaded image (or placeholder) inside the clip
             if (image) {
                 const minDim = Math.min(image.width, image.height);
                 const cropX = (image.width - minDim) / 2;
                 const cropY = (image.height - minDim) / 2;
-                
-                ctx.drawImage(image, 
-                              cropX, cropY, minDim, minDim, 
+               
+                ctx.drawImage(image,
+                              cropX, cropY, minDim, minDim,
                               0, 0, size, size);
             } else {
                 ctx.fillStyle = "#CCC";
                 ctx.fillRect(0, 0, size, size);
             }
-
             ctx.restore(); // Stop clipping
-
             // 2. Punch out the digit text from the center
             ctx.save();
-            
+           
             // Apply selected font for punch-out
             ctx.font = `${size * 0.4}px ${font}`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-
             ctx.globalCompositeOperation = 'destination-out';
-            
-            ctx.fillStyle = 'black'; 
+           
+            ctx.fillStyle = 'black';
             ctx.fillText(digitChar, center, center);
-
-            ctx.restore(); 
-            
+            ctx.restore();
+           
             return shapeType;
         }
-
-
         function renderStamps() {
             const container = document.getElementById('stamp-output-container');
             const sequenceInput = document.getElementById('number-sequence');
-            const sequence = sequenceInput.value.trim().replace(/[^0-9]/g, ''); 
-            
-            container.innerHTML = ''; 
-
+            const sequence = sequenceInput.value.trim().replace(/[^0-9]/g, '');
+           
+            container.innerHTML = '';
             const placeholder = document.getElementById('stamp-placeholder');
             if (placeholder) {
                  placeholder.style.display = 'none';
             }
-
             if (!uploadedImage && sequence.length > 0) {
                  container.innerHTML = '<p class="text-red-500 self-center text-center">Please upload an image first to generate stamps.</p>';
                  return;
             }
-            
+           
             if (sequence.length === 0) {
                  container.innerHTML = '<p class="text-gray-500 self-center text-center">Enter a sequence of digits (0-9) to generate stamps.</p>';
                  if (placeholder) placeholder.style.display = 'block';
                  return;
             }
-
             const image = uploadedImage;
-
             // Loop through all digits (0-9 allowed)
             sequence.split('').forEach((digitChar, index) => {
-                
+               
                 // Create Card/Container
                 const card = document.createElement('div');
                 card.className = 'stamp-card';
-
                 // Create Canvas Element
                 const canvas = document.createElement('canvas');
-                canvas.width = 300; 
+                canvas.width = 300;
                 canvas.height = 300;
                 canvas.id = `stamp-canvas-${index}`;
-                
+               
                 // Draw the stamp and get the shape type used
                 const shapeType = drawStarStamp(canvas, image, digitChar);
-
                 // Title
                 const title = document.createElement('p');
                 title.className = 'text-sm font-semibold text-gray-800';
                 title.textContent = `Digit ${digitChar}: ${shapeType}`;
-                
+               
                 // Download Button
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'download-btn !py-2 !px-3 !text-sm mt-2';
                 button.textContent = 'Download PNG';
                 button.onclick = () => downloadCanvasStamp(button, canvas.id, `security-stamp-${digitChar}-${shapeType.replace(/\s+/g, '-')}`);
-
                 card.appendChild(title);
                 card.appendChild(canvas);
                 card.appendChild(button);
                 container.appendChild(card);
             });
         }
-        
+       
         function downloadCanvasStamp(button, canvasId, filenameBase) {
             const canvas = document.getElementById(canvasId);
             if (!canvas) return;
-            
-            button.originalHTML = button.innerHTML; 
+           
+            button.originalHTML = button.innerHTML;
             const loadingTemplate = document.getElementById('loading-button-template');
             button.innerHTML = loadingTemplate.innerHTML;
             button.disabled = true;
-
             try {
-                const dataUrl = canvas.toDataURL('image/png', 1.0); 
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
                 const link = document.createElement('a');
                 link.href = dataUrl;
                 link.download = `${filenameBase}.png`;
-
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             } catch (err) {
                 console.error("Error downloading canvas stamp:", err);
             }
-            
+           
             setTimeout(() => {
                 button.innerHTML = button.originalHTML;
                 button.disabled = false;
             }, 100);
         }
 
-        // --- Initializers ---
-        window.onload = () => {
+        // --- Scripts from Microprint Generator ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const imageUpload = document.getElementById('imageUpload');
+            const imagePreview = document.getElementById('imagePreview');
+            const maskUpload = document.getElementById('maskUpload');
+            const maskPreview = document.getElementById('maskPreview');
+            const clearMaskBtn = document.getElementById('clearMaskBtn');
+            const securityText = document.getElementById('securityText');
+            const densitySlider = document.getElementById('density');
+            const densityValue = document.getElementById('densityValue');
+            const colorTheme = document.getElementById('colorTheme');
+            const bgColor = document.getElementById('bgColor');
+            const bgColorLabel = document.getElementById('bgColorLabel');
+            const bgImageUpload = document.getElementById('bgImageUpload');
+            const bgImagePreview = document.getElementById('bgImagePreview');
+            const clearBgImageBtn = document.getElementById('clearBgImageBtn');
+            const varyWeight = document.getElementById('varyWeight');
+            const addGuilloche = document.getElementById('addGuilloche');
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const outputCanvas = document.getElementById('outputCanvas');
+            const outputContainer = document.getElementById('outputContainer');
+            const placeholder = document.getElementById('placeholder');
+            const loadingText = document.getElementById('loadingText');
+            
+            let sourceImage = null;
+            let maskImage = null;
+            let bgImageObj = null;
+
+            // Update slider value display
+            densitySlider.addEventListener('input', (e) => {
+                densityValue.textContent = e.target.value;
+            });
+
+            // Update background color label
+            bgColor.addEventListener('input', (e) => {
+                bgColorLabel.textContent = e.target.value;
+            });
+
+            // Handle Background Image Upload
+            bgImageUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        bgImageObj = img;
+                        bgImagePreview.src = event.target.result;
+                        bgImagePreview.classList.remove('hidden');
+                        clearBgImageBtn.classList.remove('hidden');
+                        
+                        if(sourceImage) generateMicroprint();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Handle Clear Background Image
+            clearBgImageBtn.addEventListener('click', () => {
+                bgImageObj = null;
+                bgImagePreview.src = '';
+                bgImagePreview.classList.add('hidden');
+                clearBgImageBtn.classList.add('hidden');
+                bgImageUpload.value = ''; // reset file input
+                
+                if(sourceImage) generateMicroprint();
+            });
+
+            // Handle Image Upload
+            imageUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        sourceImage = img;
+                        // Show preview in the upload box
+                        imagePreview.src = event.target.result;
+                        imagePreview.classList.remove('hidden');
+                        
+                        // Enable generate button
+                        generateBtn.disabled = false;
+                        placeholder.querySelector('p').textContent = "Ready to generate!";
+                        
+                        // Auto-generate on first upload
+                        generateMicroprint();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Handle Mask Upload
+            maskUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        maskImage = img;
+                        // Show preview
+                        maskPreview.src = event.target.result;
+                        maskPreview.classList.remove('hidden');
+                        clearMaskBtn.classList.remove('hidden');
+                        
+                        // Auto-generate if base image is already there
+                        if(sourceImage) generateMicroprint();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Handle Clear Mask
+            clearMaskBtn.addEventListener('click', () => {
+                maskImage = null;
+                maskPreview.src = '';
+                maskPreview.classList.add('hidden');
+                clearMaskBtn.classList.add('hidden');
+                maskUpload.value = ''; // reset file input
+                
+                if(sourceImage) generateMicroprint();
+            });
+
+            // Generate Button Click
+            generateBtn.addEventListener('click', generateMicroprint);
+
+            // Download Button Click
+            downloadBtn.addEventListener('click', () => {
+                if (!outputCanvas) return;
+                const link = document.createElement('a');
+                link.download = 'banknote_security_microprint.png';
+                link.href = outputCanvas.toDataURL('image/png');
+                link.click();
+            });
+
+            function generateMicroprint() {
+                if (!sourceImage) {
+                    alert('Please upload an image first.');
+                    return;
+                }
+
+                // Show loading state
+                outputContainer.classList.add('is-loading');
+                placeholder.classList.add('hidden');
+                outputCanvas.classList.remove('hidden');
+                generateBtn.disabled = true;
+
+                loadingText.textContent = "Printing security graphics...";
+
+                // Use setTimeout to allow UI to update to loading state before heavy processing
+                setTimeout(() => {
+                    processImage(sourceImage);
+                }, 50);
+            }
+
+            function processImage(imgToProcess) {
+                try {
+                    const ctx = outputCanvas.getContext('2d', { alpha: false }); // alpha: false for performance if background is solid
+                    
+                    // --- Settings ---
+                    const cols = parseInt(densitySlider.value); // Number of characters across
+                    const textStr = securityText.value || "100 ";
+                    const theme = colorTheme.value;
+                    const useVaryingWeight = varyWeight.checked;
+                    const drawGuilloche = addGuilloche.checked;
+                    
+                    // --- Calculations ---
+                    // Monospace font aspect ratio is exactly 0.6 for Courier (width / height)
+                    // We need to adjust our sampling grid so the final image doesn't look stretched
+                    const fontAspectRatio = 0.6; 
+                    
+                    // Calculate rows needed to maintain image aspect ratio while accounting for font dimensions
+                    const imageAspectRatio = imgToProcess.width / imgToProcess.height;
+                    const rows = Math.floor((cols * fontAspectRatio) / imageAspectRatio);
+
+                    // Create a small off-screen canvas to sample colors
+                    const sampleCanvas = document.createElement('canvas');
+                    sampleCanvas.width = cols;
+                    sampleCanvas.height = rows;
+                    const sCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
+                    
+                    // Draw and scale original image down to our grid size
+                    sCtx.drawImage(imgToProcess, 0, 0, cols, rows);
+                    const imgData = sCtx.getImageData(0, 0, cols, rows).data;
+
+                    // Handle Mask
+                    let maskData = null;
+                    if (maskImage) {
+                        const maskCanvas = document.createElement('canvas');
+                        maskCanvas.width = cols;
+                        maskCanvas.height = rows;
+                        const mCtx = maskCanvas.getContext('2d', { willReadFrequently: true });
+                        // Draw mask, stretched to fit the main image boundaries
+                        mCtx.drawImage(maskImage, 0, 0, cols, rows); 
+                        maskData = mCtx.getImageData(0, 0, cols, rows).data;
+                    }
+
+                    // --- Setup High-Res Output Canvas ---
+                    // We render at a high resolution to make the text crisp
+                    const fontSize = 12; // Base pixel size for rendering text
+                    const cellWidth = fontSize * fontAspectRatio;
+                    const cellHeight = fontSize;
+                    
+                    outputCanvas.width = cols * cellWidth;
+                    outputCanvas.height = rows * cellHeight;
+                    
+                    // Fill Background
+                    if (bgImageObj) {
+                        // Draw background image covering the canvas (object-fit: cover equivalent)
+                        const bgAspect = bgImageObj.width / bgImageObj.height;
+                        const canvasAspect = outputCanvas.width / outputCanvas.height;
+                        let drawW, drawH, drawX, drawY;
+                        
+                        if (bgAspect > canvasAspect) {
+                            // Image is wider than canvas
+                            drawH = outputCanvas.height;
+                            drawW = bgImageObj.width * (drawH / bgImageObj.height);
+                            drawX = (outputCanvas.width - drawW) / 2;
+                            drawY = 0;
+                        } else {
+                            // Image is taller than canvas
+                            drawW = outputCanvas.width;
+                            drawH = bgImageObj.height * (drawW / bgImageObj.width);
+                            drawX = 0;
+                            drawY = (outputCanvas.height - drawH) / 2;
+                        }
+                        ctx.drawImage(bgImageObj, drawX, drawY, drawW, drawH);
+                    } else {
+                        // Solid color background
+                        ctx.fillStyle = bgColor.value;
+                        ctx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
+                    }
+
+                    // Optional: Draw Wavy Security Lines Background
+                    if (drawGuilloche) {
+                        drawGuillocheBackground(ctx, outputCanvas.width, outputCanvas.height, theme);
+                    }
+
+                    // --- Rendering Setup ---
+                    ctx.textBaseline = 'top';
+                    ctx.textAlign = 'left';
+
+                    let strIndex = 0;
+                    const strLen = textStr.length;
+
+                    // Optimization: Batch drawing by color/weight to minimize context state changes
+                    // For pure microprint, we'll draw cell by cell.
+                    
+                    for (let y = 0; y < rows; y++) {
+                        for (let x = 0; x < cols; x++) {
+                            const i = (y * cols + x) * 4;
+                            const r = imgData[i];
+                            const g = imgData[i+1];
+                            const b = imgData[i+2];
+                            const a = imgData[i+3];
+
+                            // Apply Mask Cropping
+                            if (maskData) {
+                                const mR = maskData[i];
+                                const mG = maskData[i+1];
+                                const mB = maskData[i+2];
+                                const mA = maskData[i+3];
+                                // Skip if mask is transparent OR if mask is pure white (treating white as empty background)
+                                if (mA < 50 || (mR > 240 && mG > 240 && mB > 240)) {
+                                    continue;
+                                }
+                            }
+
+                            // Skip fully transparent pixels if it was a PNG
+                            if (a < 50) continue;
+
+                            // Calculate Luminance (perceived brightness)
+                            const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+                            // Determine Color based on theme
+                            let fillR = r, fillG = g, fillB = b;
+
+                            if (theme === 'monochrome') {
+                                fillR = fillG = fillB = lum;
+                            } else if (theme === 'green') {
+                                // Classic US Dollar green tint
+                                fillR = lum * 0.4;
+                                fillG = lum * 0.7 + 20; // boost green
+                                fillB = lum * 0.4;
+                            } else if (theme === 'purple') {
+                                // Gibraltar £100 purple tint
+                                fillR = lum * 0.6 + 30;
+                                fillG = lum * 0.3;
+                                fillB = lum * 0.7 + 40;
+                            } else if (theme === 'blue') {
+                                fillR = lum * 0.3;
+                                fillG = lum * 0.4;
+                                fillB = lum * 0.8 + 20;
+                            } else if (theme === 'sepia') {
+                                fillR = lum * 0.8 + 20;
+                                fillG = lum * 0.6 + 10;
+                                fillB = lum * 0.4;
+                            }
+
+                            // Keep lighter pixels lighter, but ensure text is visible
+                            // If it's too white, maybe we skip drawing a character to simulate white paper
+                            // But for continuous microprint, we draw it faintly
+                            
+                            // Determine Font Weight (Darker areas get thicker text)
+                            let weight = '400';
+                            if (useVaryingWeight) {
+                                if (lum < 50) weight = '900';
+                                else if (lum < 100) weight = '700';
+                                else if (lum < 150) weight = '500';
+                                else if (lum < 200) weight = '300';
+                                else weight = '100'; // Very thin for highlights
+                            }
+
+                            // Set Context State
+                            ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
+                            
+                            // To simulate the 'engraved' look, we can slightly adjust opacity based on luminance
+                            // so dark areas are solid, light areas are faded ink
+                            const opacity = Math.max(0.1, 1 - (lum / 255));
+                            ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${opacity})`;
+
+                            // Get next character
+                            const char = textStr[strIndex % strLen];
+                            
+                            // Draw Character
+                            ctx.fillText(char, x * cellWidth, y * cellHeight);
+                            
+                            strIndex++;
+                        }
+                    }
+
+                    // Enable Download
+                    downloadBtn.disabled = false;
+                    
+                    // Auto-scroll to canvas on mobile view to see the result
+                    if (window.innerWidth < 768) {
+                        outputContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+
+                } catch (error) {
+                    console.error("Error generating microprint:", error);
+                    alert("An error occurred during generation. Please try a different image or lower density.");
+                } finally {
+                    // Hide loading state
+                    outputContainer.classList.remove('is-loading');
+                    generateBtn.disabled = false;
+                }
+            }
+
+            function drawGuillocheBackground(ctx, width, height, theme) {
+                ctx.save();
+                ctx.lineWidth = 0.5;
+                
+                // Base faint color based on theme
+                let strokeColor = 'rgba(0,0,0,0.05)';
+                if(theme === 'green') strokeColor = 'rgba(0, 150, 50, 0.08)';
+                if(theme === 'purple') strokeColor = 'rgba(150, 0, 150, 0.08)';
+                if(theme === 'blue') strokeColor = 'rgba(0, 50, 200, 0.08)';
+                if(theme === 'sepia') strokeColor = 'rgba(180, 130, 50, 0.08)';
+                
+                ctx.strokeStyle = strokeColor;
+
+                const lines = 40;
+                const spacing = height / lines;
+
+                for (let i = 0; i < lines; i++) {
+                    ctx.beginPath();
+                    for (let x = 0; x < width; x += 5) {
+                        // Create a complex sine wave pattern
+                        const yBase = i * spacing;
+                        const offset1 = Math.sin(x * 0.02 + i) * 15;
+                        const offset2 = Math.cos(x * 0.005 - i * 0.5) * 20;
+                        const y = yBase + offset1 + offset2;
+                        
+                        if (x === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
+
+            // --- Initializers from Text Illusion Gallery ---
             // Set initial font family for all SVG elements
             const initialFont = getSelectedFont();
             document.querySelectorAll('.svg-text-base').forEach(el => {
                 // Ensure text elements start with a valid font-family attribute for scaling logic
                 el.setAttribute("font-family", initialFont);
             });
-            
+           
             updateAllText();
             initializeTiltCanvas();
-            renderStamps(); 
-        };
-        
-        // --- End NEW FEATURE ---
+            renderStamps();
+        });
     </script>
-
 </body>
 </html>
-
