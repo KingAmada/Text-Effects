@@ -989,6 +989,17 @@
                 bgColorLabel.textContent = e.target.value.toUpperCase();
             });
 
+            // Auto-trigger rendering when any setting is changed
+            [colorTheme, bgColor, varyWeight, addGuilloche, densitySlider].forEach(el => {
+                el.addEventListener('change', () => {
+                    if (sourceImage) generateMicroprint();
+                });
+            });
+            
+            securityText.addEventListener('change', () => {
+                if (sourceImage) generateMicroprint();
+            });
+
             bgImageUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -1139,19 +1150,40 @@
                     }
 
                     if (addGuilloche.checked) {
-                        ctx.save(); ctx.lineWidth = 0.5;
-                        let sColor = 'rgba(0,0,0,0.05)';
-                        if(theme==='green') sColor = 'rgba(0,150,50,0.08)';
-                        else if(theme==='purple') sColor = 'rgba(150,0,150,0.08)';
-                        else if(theme==='blue') sColor = 'rgba(0,50,200,0.08)';
-                        else if(theme==='sepia') sColor = 'rgba(180,130,50,0.08)';
+                        ctx.save(); 
+                        
+                        // Make line width dynamic based on resolution to ensure visibility
+                        ctx.lineWidth = Math.max(1.5, outputCanvas.width / 600);
+                        
+                        // Increase opacity significantly
+                        let sColor = 'rgba(0,0,0,0.15)';
+                        if(theme==='green') sColor = 'rgba(0,150,50,0.25)';
+                        else if(theme==='purple') sColor = 'rgba(150,0,150,0.25)';
+                        else if(theme==='blue') sColor = 'rgba(0,50,200,0.25)';
+                        else if(theme==='sepia') sColor = 'rgba(180,130,50,0.25)';
+                        
                         ctx.strokeStyle = sColor;
-                        const spacing = outputCanvas.height / 40;
-                        for (let i = 0; i < 40; i++) {
+                        
+                        // Increase density of the waves
+                        const lines = 80; 
+                        const spacing = outputCanvas.height / lines;
+                        
+                        // Scale wave amplitudes and frequencies so they interlock beautifully at any resolution
+                        const amp1 = spacing * 1.5;
+                        const amp2 = spacing * 1.0;
+                        const freq1 = 0.015 * (1000 / outputCanvas.width);
+                        const freq2 = 0.005 * (1000 / outputCanvas.width);
+
+                        for (let i = 0; i < lines; i++) {
                             ctx.beginPath();
-                            for (let x = 0; x < outputCanvas.width; x += 5) {
-                                const y = (i * spacing) + (Math.sin(x * 0.02 + i) * 15) + (Math.cos(x * 0.005 - i * 0.5) * 20);
-                                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                            for (let x = 0; x <= outputCanvas.width; x += 10) {
+                                const yBase = i * spacing;
+                                const offset1 = Math.sin(x * freq1 + i) * amp1;
+                                const offset2 = Math.cos(x * freq2 - i * 0.5) * amp2;
+                                const y = yBase + offset1 + offset2;
+                                
+                                if (x === 0) ctx.moveTo(x, y); 
+                                else ctx.lineTo(x, y);
                             }
                             ctx.stroke();
                         }
