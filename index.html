@@ -1165,28 +1165,29 @@
                     ctx.textAlign = 'center';
                     let strIndex = 0;
 
-                    // Core Drawing Logic for dynamically transformed chars
+                    // --- PERFORMANCE OPTIMIZATION: State Caching Variables ---
+                    let lastWeight = '';
+                    let lastFillStyle = '';
+
                     function drawChar(dx, dy, rot) {
+                        // Fast boundary culling
                         if (dx < 0 || dx >= outputCanvas.width || dy < 0 || dy >= outputCanvas.height) return;
                         
                         const px = Math.floor(dx);
                         const py = Math.floor(dy);
                         const i = (py * outputCanvas.width + px) * 4;
 
-                        // Check mask mapping bounds
                         if (maskData) {
                             const mA = maskData[i+3];
-                            const mR = maskData[i];
-                            const mG = maskData[i+1];
-                            const mB = maskData[i+2];
-                            if (mA < 50 || (mR > 240 && mG > 240 && mB > 240)) return;
+                            if (mA < 50 || (maskData[i] > 240 && maskData[i+1] > 240 && maskData[i+2] > 240)) return;
                         }
 
                         if (imgData[i+3] < 50) return;
 
-                        const lum = 0.2126 * imgData[i] + 0.7152 * imgData[i+1] + 0.0722 * imgData[i+2];
-                        let fillR = imgData[i], fillG = imgData[i+1], fillB = imgData[i+2];
+                        const r = imgData[i], g = imgData[i+1], b = imgData[i+2];
+                        const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
                         
+                        let fillR = r, fillG = g, fillB = b;
                         if (theme === 'monochrome') fillR = fillG = fillB = lum;
                         else if (theme === 'green') { fillR = lum * 0.4; fillG = lum * 0.7 + 20; fillB = lum * 0.4; }
                         else if (theme === 'purple') { fillR = lum * 0.6 + 30; fillG = lum * 0.3; fillB = lum * 0.7 + 40; }
@@ -1199,24 +1200,40 @@
                             else if (lum < 150) weight = '500'; else if (lum < 200) weight = '300'; else weight = '100';
                         }
 
-                        ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
-                        ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${Math.max(0.1, 1 - (lum / 255))})`;
+                        // Apply properties ONLY if they changed
+                        if (weight !== lastWeight) {
+                            ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
+                            lastWeight = weight;
+                        }
+                        
+                        const alpha = Math.max(0.1, 1 - (lum / 255)).toFixed(2);
+                        const fillStyle = `rgba(${Math.floor(fillR)}, ${Math.floor(fillG)}, ${Math.floor(fillB)}, ${alpha})`;
+                        
+                        if (fillStyle !== lastFillStyle) {
+                            ctx.fillStyle = fillStyle;
+                            lastFillStyle = fillStyle;
+                        }
 
                         const char = textStr[strIndex % textStr.length];
                         strIndex++;
 
-                        ctx.save();
-                        ctx.translate(dx, dy);
-                        ctx.rotate(rot);
-                        ctx.fillText(char, 0, 0);
-                        ctx.restore();
+                        // Direct Matrix Transform avoids memory-heavy save/restore
+                        if (rot === 0) {
+                            ctx.setTransform(1, 0, 0, 1, 0, 0);
+                            ctx.fillText(char, dx, dy);
+                        } else {
+                            const cos = Math.cos(rot);
+                            const sin = Math.sin(rot);
+                            ctx.setTransform(cos, sin, -sin, cos, dx, dy);
+                            ctx.fillText(char, 0, 0);
+                        }
                     }
                    
-                    // Apply pattern pathways mapping onto the full canvas bounds
+                    const cx = outputCanvas.width / 2;
+                    const cy = outputCanvas.height / 2;
+                    const maxR = Math.sqrt(cx*cx + cy*cy);
+
                     if (pattern === 'circular') {
-                        const cx = outputCanvas.width / 2;
-                        const cy = outputCanvas.height / 2;
-                        const maxR = Math.sqrt(cx*cx + cy*cy);
                         const radiusSteps = Math.ceil(maxR / cellHeight);
 
                         for (let v = 1; v <= radiusSteps; v++) {
@@ -1233,15 +1250,19 @@
                             }
                         }
                     } else {
-                        // Extend grid looping coordinates slightly so rotated arrays don't cut corners off
                         let uMin = 0, uMax = cols;
                         let vMin = 0, vMax = rows;
 
                         if (pattern === 'wavy') {
-                            vMin = -4; vMax = rows + 4;
+                            vMin = -2; vMax = rows + 2; // Tighter bounds
                         } else if (pattern === 'rotate') {
-                            uMin = -cols; uMax = cols * 2;
-                            vMin = -rows; vMax = rows * 2;
+                            // Dramatically tighter bounds for 45deg rotation 
+                            const uCenter = cx / cellWidth;
+                            const vCenter = cy / cellHeight;
+                            const distU = maxR / cellWidth;
+                            const distV = maxR / cellHeight;
+                            uMin = Math.floor(uCenter - distU); uMax = Math.ceil(uCenter + distU);
+                            vMin = Math.floor(vCenter - distV); vMax = Math.ceil(vCenter + distV);
                         }
 
                         for (let v = vMin; v < vMax; v++) {
@@ -1258,11 +1279,9 @@
                                     dy = v * cellHeight + Math.sin(u * waveFreq) * waveAmplitude;
                                     rot = Math.atan2(Math.cos(u * waveFreq) * waveFreq * waveAmplitude, cellWidth);
                                 } else if (pattern === 'rotate') {
-                                    const cx = outputCanvas.width / 2;
-                                    const cy = outputCanvas.height / 2;
                                     const nx = u * cellWidth - cx;
                                     const ny = v * cellHeight - cy;
-                                    const angle = -Math.PI / 4; // Top-Right to Bottom-Left 45deg
+                                    const angle = -Math.PI / 4; 
                                     dx = cx + nx * Math.cos(angle) - ny * Math.sin(angle);
                                     dy = cy + nx * Math.sin(angle) + ny * Math.cos(angle);
                                     rot = angle;
@@ -1273,9 +1292,15 @@
                         }
                     }
 
+                    // Reset transform to keep future renders clean
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
                     downloadBtn.disabled = false;
-                } catch (error) { console.error(error); }
-                finally { outputContainer.classList.remove('is-loading'); generateBtn.disabled = false; }
+                } catch (error) { 
+                    console.error(error); 
+                } finally { 
+                    outputContainer.classList.remove('is-loading'); 
+                    generateBtn.disabled = false; 
+                }
             }
             // Init Gallery Defaults
             document.querySelectorAll('.svg-text-base').forEach(el => el.setAttribute("font-family", getSelectedFont()));
