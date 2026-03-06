@@ -399,56 +399,10 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-10', 'engraved')" class="btn-modern btn-secondary w-full border-indigo-200 hover:border-indigo-400">Export Graphic</button></div>
             </div>
-            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
-                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">9</span>
-                    Wavy Pattern
-                </h3>
-                <div class="svg-wrapper">
-                    <svg id="illusion-svg-11" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <defs>
-                            <path id="wave-path" d="M 0 200 Q 100 100, 200 200 T 400 200 T 600 200 T 800 200" />
-                        </defs>
-                        <text class="svg-text-base" fill="black">
-                            <textPath id="svg-text-11" href="#wave-path">PLACEHOLDER TEXT</textPath>
-                        </text>
-                    </svg>
-                </div>
-                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-11', 'wavy-pattern')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
-            </div>
-            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
-                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">10</span>
-                    Circular Pattern
-                </h3>
-                <div class="svg-wrapper">
-                    <svg id="illusion-svg-12" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <defs>
-                            <path id="circle-path" d="M 250 200 a 150 150 0 1 0 300 0 a 150 150 0 1 0 -300 0" />
-                        </defs>
-                        <text class="svg-text-base" fill="black">
-                            <textPath id="svg-text-12" href="#circle-path" startOffset="0">PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT</textPath>
-                        </text>
-                    </svg>
-                </div>
-                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-12', 'circular-pattern')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
-            </div>
-            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
-                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">11</span>
-                    Rotate Pattern
-                </h3>
-                <div class="svg-wrapper">
-                    <svg id="illusion-svg-13" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                        <text id="svg-text-13" class="svg-text-base" x="400" y="200" fill="black" transform="rotate(45 400 200)">PLACEHOLDER TEXT</text>
-                    </svg>
-                </div>
-                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-13', 'rotate-pattern')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
-            </div>
            
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white lg:col-span-2">
                 <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">12</span>
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">9</span>
                     Combined Tilt-to-Read Effect
                 </h3>
                 <p class="text-sm text-slate-500 mb-5 ml-8">View the screen from a sharp angle from the bottom, then from the side.</p>
@@ -570,6 +524,16 @@
                                 <option value="purple">Gibraltar Purple</option>
                                 <option value="blue">Euro Blue</option>
                                 <option value="sepia">Vintage Sepia</option>
+                            </select>
+                        </div>
+                        <!-- Text Pattern -->
+                        <div>
+                            <label for="textPattern" class="block text-sm font-semibold text-slate-700 mb-2">Text Pattern</label>
+                            <select id="textPattern" class="modern-input py-2 text-sm">
+                                <option value="straight" selected>Straight</option>
+                                <option value="wavy">Wavy</option>
+                                <option value="circular">Circular</option>
+                                <option value="rotate">Rotate</option>
                             </select>
                         </div>
                         <!-- Background Settings -->
@@ -744,12 +708,6 @@
                 textPath.setAttribute('textLength', '700');
                 textPath.setAttribute('lengthAdjust', 'spacingAndGlyphs');
                 textPath.setAttribute('font-size', '120px');
-                return;
-            }
-            if (textId === 'svg-text-12') {
-                svgText.textContent = (newText + ' ').repeat(5).trim();
-                svgText.setAttribute('font-size', '60px');
-                svgText.setAttribute('lengthAdjust', 'spacing');
                 return;
             }
            
@@ -980,6 +938,7 @@
             const clearBgImageBtn = document.getElementById('clearBgImageBtn');
             const varyWeight = document.getElementById('varyWeight');
             const addGuilloche = document.getElementById('addGuilloche');
+            const textPattern = document.getElementById('textPattern');
             const generateBtn = document.getElementById('generateBtn');
             const downloadBtn = document.getElementById('downloadBtn');
             const outputCanvas = document.getElementById('outputCanvas');
@@ -993,7 +952,7 @@
                 bgColorLabel.textContent = e.target.value.toUpperCase();
             });
             // Auto-trigger rendering when any setting is changed
-            [colorTheme, bgColor, varyWeight, addGuilloche, densitySlider].forEach(el => {
+            [colorTheme, bgColor, varyWeight, addGuilloche, densitySlider, textPattern].forEach(el => {
                 el.addEventListener('change', () => {
                     if (sourceImage) generateMicroprint();
                 });
@@ -1092,6 +1051,7 @@
                     const cols = parseInt(densitySlider.value);
                     const textStr = securityText.value || "100 ";
                     const theme = colorTheme.value;
+                    const pattern = textPattern.value;
                    
                     const fontAspectRatio = 0.6;
                     const rows = Math.floor((cols * fontAspectRatio) / (imgToProcess.width / imgToProcess.height));
@@ -1181,39 +1141,106 @@
                     ctx.textBaseline = 'top'; ctx.textAlign = 'left';
                     let strIndex = 0;
                    
-                    for (let y = 0; y < rows; y++) {
-                        for (let x = 0; x < cols; x++) {
-                            const i = (y * cols + x) * 4;
-                            // Apply Mask Cropping
-                            if (maskData) {
-                                const mR = maskData[i];
-                                const mG = maskData[i+1];
-                                const mB = maskData[i+2];
-                                const mA = maskData[i+3];
-                                // Skip if mask is transparent OR if mask is pure white (empty background)
-                                if (mA < 50 || (mR > 240 && mG > 240 && mB > 240)) {
-                                    continue;
+                    const centerX = outputCanvas.width / 2;
+                    const centerY = outputCanvas.height / 2;
+
+                    if (pattern === 'rotate') {
+                        ctx.save();
+                        ctx.translate(centerX, centerY);
+                        ctx.rotate(Math.PI / 4);
+                        ctx.translate(-centerX, -centerY);
+                    }
+
+                    if (pattern === 'straight' || pattern === 'wavy' || pattern === 'rotate') {
+                        for (let y = 0; y < rows; y++) {
+                            for (let x = 0; x < cols; x++) {
+                                const i = (y * cols + x) * 4;
+                                // Apply Mask Cropping
+                                if (maskData) {
+                                    const mR = maskData[i];
+                                    const mG = maskData[i+1];
+                                    const mB = maskData[i+2];
+                                    const mA = maskData[i+3];
+                                    // Skip if mask is transparent OR if mask is pure white (empty background)
+                                    if (mA < 50 || (mR > 240 && mG > 240 && mB > 240)) {
+                                        continue;
+                                    }
                                 }
+                                if (imgData[i+3] < 50) continue;
+                                const lum = 0.2126 * imgData[i] + 0.7152 * imgData[i+1] + 0.0722 * imgData[i+2];
+                                let fillR = imgData[i], fillG = imgData[i+1], fillB = imgData[i+2];
+                                if (theme === 'monochrome') fillR = fillG = fillB = lum;
+                                else if (theme === 'green') { fillR = lum * 0.4; fillG = lum * 0.7 + 20; fillB = lum * 0.4; }
+                                else if (theme === 'purple') { fillR = lum * 0.6 + 30; fillG = lum * 0.3; fillB = lum * 0.7 + 40; }
+                                else if (theme === 'blue') { fillR = lum * 0.3; fillG = lum * 0.4; fillB = lum * 0.8 + 20; }
+                                else if (theme === 'sepia') { fillR = lum * 0.8 + 20; fillG = lum * 0.6 + 10; fillB = lum * 0.4; }
+                                let weight = '400';
+                                if (varyWeight.checked) {
+                                    if (lum < 50) weight = '900'; else if (lum < 100) weight = '700';
+                                    else if (lum < 150) weight = '500'; else if (lum < 200) weight = '300'; else weight = '100';
+                                }
+                                ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
+                                ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${Math.max(0.1, 1 - (lum / 255))})`;
+                                let drawY = y * cellHeight;
+                                if (pattern === 'wavy') {
+                                    drawY += Math.sin(x / 5) * (cellHeight / 2);
+                                }
+                                ctx.fillText(textStr[strIndex % textStr.length], x * cellWidth, drawY);
+                                strIndex++;
                             }
-                            if (imgData[i+3] < 50) continue;
-                            const lum = 0.2126 * imgData[i] + 0.7152 * imgData[i+1] + 0.0722 * imgData[i+2];
-                            let fillR = imgData[i], fillG = imgData[i+1], fillB = imgData[i+2];
-                            if (theme === 'monochrome') fillR = fillG = fillB = lum;
-                            else if (theme === 'green') { fillR = lum * 0.4; fillG = lum * 0.7 + 20; fillB = lum * 0.4; }
-                            else if (theme === 'purple') { fillR = lum * 0.6 + 30; fillG = lum * 0.3; fillB = lum * 0.7 + 40; }
-                            else if (theme === 'blue') { fillR = lum * 0.3; fillG = lum * 0.4; fillB = lum * 0.8 + 20; }
-                            else if (theme === 'sepia') { fillR = lum * 0.8 + 20; fillG = lum * 0.6 + 10; fillB = lum * 0.4; }
-                            let weight = '400';
-                            if (varyWeight.checked) {
-                                if (lum < 50) weight = '900'; else if (lum < 100) weight = '700';
-                                else if (lum < 150) weight = '500'; else if (lum < 200) weight = '300'; else weight = '100';
+                        }
+                    } else if (pattern === 'circular') {
+                        const maxRadius = Math.min(centerX, centerY) - fontSize;
+                        const numRings = Math.floor(maxRadius / cellHeight);
+                        for (let r = 1; r <= numRings; r++) {
+                            const radius = r * cellHeight;
+                            const circumference = 2 * Math.PI * radius;
+                            const numChars = Math.floor(circumference / cellWidth);
+                            const angleStep = 2 * Math.PI / numChars;
+                            for (let c = 0; c < numChars; c++) {
+                                const angle = c * angleStep;
+                                const posX = centerX + radius * Math.cos(angle);
+                                const posY = centerY + radius * Math.sin(angle);
+                                // Map to sample
+                                const sampleX = Math.floor((posX / outputCanvas.width) * cols);
+                                const sampleY = Math.floor((posY / outputCanvas.height) * rows);
+                                const i = (sampleY * cols + sampleX) * 4;
+                                if (maskData) {
+                                    const mR = maskData[i];
+                                    const mG = maskData[i+1];
+                                    const mB = maskData[i+2];
+                                    const mA = maskData[i+3];
+                                    if (mA < 50 || (mR > 240 && mG > 240 && mB > 240)) continue;
+                                }
+                                if (imgData[i+3] < 50) continue;
+                                const lum = 0.2126 * imgData[i] + 0.7152 * imgData[i+1] + 0.0722 * imgData[i+2];
+                                let fillR = imgData[i], fillG = imgData[i+1], fillB = imgData[i+2];
+                                if (theme === 'monochrome') fillR = fillG = fillB = lum;
+                                else if (theme === 'green') { fillR = lum * 0.4; fillG = lum * 0.7 + 20; fillB = lum * 0.4; }
+                                else if (theme === 'purple') { fillR = lum * 0.6 + 30; fillG = lum * 0.3; fillB = lum * 0.7 + 40; }
+                                else if (theme === 'blue') { fillR = lum * 0.3; fillG = lum * 0.4; fillB = lum * 0.8 + 20; }
+                                else if (theme === 'sepia') { fillR = lum * 0.8 + 20; fillG = lum * 0.6 + 10; fillB = lum * 0.4; }
+                                let weight = '400';
+                                if (varyWeight.checked) {
+                                    if (lum < 50) weight = '900'; else if (lum < 100) weight = '700';
+                                    else if (lum < 150) weight = '500'; else if (lum < 200) weight = '300'; else weight = '100';
+                                }
+                                ctx.save();
+                                ctx.translate(posX, posY);
+                                ctx.rotate(angle + Math.PI / 2);
+                                ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
+                                ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${Math.max(0.1, 1 - (lum / 255))})`;
+                                ctx.fillText(textStr[strIndex % textStr.length], 0, 0);
+                                ctx.restore();
+                                strIndex++;
                             }
-                            ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
-                            ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${Math.max(0.1, 1 - (lum / 255))})`;
-                            ctx.fillText(textStr[strIndex % textStr.length], x * cellWidth, y * cellHeight);
-                            strIndex++;
                         }
                     }
+
+                    if (pattern === 'rotate') {
+                        ctx.restore();
+                    }
+
                     downloadBtn.disabled = false;
                 } catch (error) {}
                 finally { outputContainer.classList.remove('is-loading'); generateBtn.disabled = false; }
