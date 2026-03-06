@@ -14,14 +14,12 @@
             --glass-border: rgba(255, 255, 255, 0.6);
             --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
         }
-
         body {
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
             overflow-x: hidden;
         }
-
         /* Animated Background Blobs */
         .bg-blobs {
             position: fixed;
@@ -41,13 +39,11 @@
         .blob-1 { background: #e0e7ff; width: 40vw; height: 40vw; top: -10%; left: -10%; }
         .blob-2 { background: #f3e8ff; width: 35vw; height: 35vw; bottom: -10%; right: -10%; animation-delay: -5s; }
         .blob-3 { background: #e0f2fe; width: 30vw; height: 30vw; top: 40%; left: 30%; animation-delay: -10s; filter: blur(100px); opacity: 0.4; }
-
         @keyframes float {
             0% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(5%, 10%) scale(1.05); }
             100% { transform: translate(-5%, 5%) scale(0.95); }
         }
-
         /* Glassmorphism Utilities */
         .glass-card {
             background: var(--glass-bg);
@@ -56,21 +52,19 @@
             border: 1px solid var(--glass-border);
             box-shadow: var(--glass-shadow);
         }
-
         .glass-panel {
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: inset 0 2px 4px rgba(255,255,255,0.7), 0 4px 12px rgba(0,0,0,0.03);
         }
-
         /* Base styles for all text elements in SVGs */
         .svg-text-base {
             font-weight: 900;
             text-anchor: middle;
             dominant-baseline: middle;
         }
-        
+       
         #tilt-canvas {
             width: 100%;
             min-width: 200px;
@@ -79,7 +73,7 @@
             margin: 0 auto;
             display: block;
         }
-        
+       
         /* Modern Inputs */
         .modern-input {
             width: 100%;
@@ -98,7 +92,6 @@
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), inset 0 2px 4px rgba(0,0,0,0.01);
         }
         .modern-input::placeholder { color: #94a3b8; }
-
         /* Modern Buttons */
         .btn-modern {
             display: inline-flex;
@@ -122,7 +115,7 @@
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
         }
         .btn-primary:active { transform: translateY(0); scale: 0.98; }
-        
+       
         .btn-secondary {
             background: white;
             color: #475569;
@@ -137,14 +130,12 @@
             color: #1e293b;
         }
         .btn-secondary:active { transform: translateY(0); scale: 0.98; }
-
         .btn-modern:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
             box-shadow: none !important;
         }
-
         /* File Upload styling */
         input[type="file"]::file-selector-button {
             border: none;
@@ -158,7 +149,6 @@
             margin-right: 1rem;
         }
         input[type="file"]::file-selector-button:hover { background: #e0e7ff; }
-
         /* Animation utilities */
         .hover-lift {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -167,7 +157,6 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
-
         .stamp-container {
             display: flex;
             flex-wrap: wrap;
@@ -177,7 +166,6 @@
             min-height: 200px;
             border-radius: 1rem;
         }
-
         .stamp-card {
             background: white;
             border-radius: 1rem;
@@ -195,7 +183,6 @@
             border-radius: 0.5rem;
             margin-bottom: 0.75rem;
         }
-
         .loading-overlay {
             display: none;
             position: absolute;
@@ -208,12 +195,10 @@
             border-radius: inherit;
         }
         .is-loading .loading-overlay { display: flex; animation: fadeIn 0.2s ease-out; }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
         /* SVG container inner styling */
         .svg-wrapper {
             background-color: rgba(255,255,255,0.7);
@@ -226,14 +211,13 @@
     </style>
 </head>
 <body class="flex flex-col items-center min-h-screen pb-20 relative">
-    
+   
     <!-- Ambient Background -->
     <div class="bg-blobs">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
-
     <!-- Title Header -->
     <header class="w-full max-w-7xl pt-12 pb-8 px-6 text-center">
         <div class="inline-block mb-3 px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs tracking-wider uppercase shadow-sm">Pro Edition</div>
@@ -242,14 +226,12 @@
         </h1>
         <p class="text-slate-500 mt-4 font-medium text-lg max-w-2xl mx-auto">Design, generate, and export custom microprints, optical illusions, stamps, and secure cryptographic QR codes.</p>
     </header>
-
     <!-- SECTION 1: Printable Text Illusion Gallery -->
     <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10 mb-12">
         <div class="mb-8 text-center">
             <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Printable Text Illusions</h2>
             <p class="text-slate-500 mt-2 font-medium">Type below to see your text rendered in 14 distinct security illusion styles.</p>
         </div>
-
         <!-- Floating Sticky Control Bar -->
         <div class="mb-10 max-w-3xl mx-auto sticky top-6 z-30 glass-panel p-5 rounded-2xl shadow-xl shadow-indigo-900/5 transition-all">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -278,13 +260,12 @@
                 </div>
             </div>
         </div>
-
         <!-- Illusion Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Cards -->
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span> 
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
                     Line Illusion
                 </h3>
                 <div class="svg-wrapper">
@@ -299,10 +280,10 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-1', 'line-illusion')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
-            
+           
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span> 
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
                     Guilloché Pattern
                 </h3>
                 <div class="svg-wrapper">
@@ -317,10 +298,9 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-2', 'guilloche-security')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
-
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span> 
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
                     Negative Space Void
                 </h3>
                 <div class="svg-wrapper">
@@ -334,10 +314,9 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-3', 'void-negative')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
-
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span> 
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span>
                     Embossed Watermark
                 </h3>
                 <div class="svg-wrapper" style="background-color: #E5E7EB;">
@@ -351,10 +330,9 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-4', 'embossed')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
-
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">5</span> 
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">5</span>
                     3D Anaglyph
                 </h3>
                 <div class="svg-wrapper">
@@ -368,10 +346,9 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-5', 'anaglyph-3d')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
-
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
                 <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">6</span> 
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">6</span>
                     Halftone Dot Matrix
                 </h3>
                 <div class="svg-wrapper">
@@ -385,10 +362,9 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-6', 'halftone-dots')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
             </div>
-
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white bg-gradient-to-br from-white/50 to-indigo-50/50">
                 <h3 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-200 text-indigo-800 w-6 h-6 rounded-full flex items-center justify-center text-xs">7</span> 
+                    <span class="bg-indigo-200 text-indigo-800 w-6 h-6 rounded-full flex items-center justify-center text-xs">7</span>
                     Microtext Pattern <span class="ml-auto text-[10px] font-bold tracking-wider text-indigo-500 uppercase bg-white px-2 py-1 rounded">Advanced</span>
                 </h3>
                 <div class="svg-wrapper">
@@ -402,10 +378,9 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-9', 'microtext')" class="btn-modern btn-secondary w-full border-indigo-200 hover:border-indigo-400">Export Graphic</button></div>
             </div>
-
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white bg-gradient-to-br from-white/50 to-indigo-50/50">
                 <h3 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-200 text-indigo-800 w-6 h-6 rounded-full flex items-center justify-center text-xs">8</span> 
+                    <span class="bg-indigo-200 text-indigo-800 w-6 h-6 rounded-full flex items-center justify-center text-xs">8</span>
                     Engraved Intaglio <span class="ml-auto text-[10px] font-bold tracking-wider text-indigo-500 uppercase bg-white px-2 py-1 rounded">Advanced</span>
                 </h3>
                 <div class="svg-wrapper">
@@ -424,14 +399,60 @@
                 </div>
                 <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-10', 'engraved')" class="btn-modern btn-secondary w-full border-indigo-200 hover:border-indigo-400">Export Graphic</button></div>
             </div>
-            
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">9</span>
+                    Wavy Pattern
+                </h3>
+                <div class="svg-wrapper">
+                    <svg id="illusion-svg-11" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <path id="wave-path" d="M 0 200 Q 100 100, 200 200 T 400 200 T 600 200 T 800 200" />
+                        </defs>
+                        <text class="svg-text-base" fill="black">
+                            <textPath id="svg-text-11" href="#wave-path">PLACEHOLDER TEXT</textPath>
+                        </text>
+                    </svg>
+                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-11', 'wavy-pattern')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">10</span>
+                    Circular Pattern
+                </h3>
+                <div class="svg-wrapper">
+                    <svg id="illusion-svg-12" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <defs>
+                            <path id="circle-path" d="M 250 200 a 150 150 0 1 0 300 0 a 150 150 0 1 0 -300 0" />
+                        </defs>
+                        <text class="svg-text-base" fill="black">
+                            <textPath id="svg-text-12" href="#circle-path" startOffset="0">PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT</textPath>
+                        </text>
+                    </svg>
+                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-12', 'circular-pattern')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 hover-lift border border-white">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">11</span>
+                    Rotate Pattern
+                </h3>
+                <div class="svg-wrapper">
+                    <svg id="illusion-svg-13" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                        <text id="svg-text-13" class="svg-text-base" x="400" y="200" fill="black" transform="rotate(45 400 200)">PLACEHOLDER TEXT</text>
+                    </svg>
+                </div>
+                <div class="text-center"><button type="button" onclick="downloadPNG(this, 'illusion-svg-13', 'rotate-pattern')" class="btn-modern btn-secondary w-full">Export Graphic</button></div>
+            </div>
+           
             <div class="glass-panel rounded-2xl p-6 hover-lift border border-white lg:col-span-2">
                 <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">9</span> 
+                    <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">12</span>
                     Combined Tilt-to-Read Effect
                 </h3>
                 <p class="text-sm text-slate-500 mb-5 ml-8">View the screen from a sharp angle from the bottom, then from the side.</p>
-                
+               
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                     <div class="space-y-4">
                         <div>
@@ -451,14 +472,13 @@
             </div>
         </div>
     </section>
-
     <!-- SECTION 2: Custom Security Stamps -->
     <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10 mb-12">
         <div class="mb-8 text-center">
             <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Dynamic Security Stamps</h2>
             <p class="text-slate-500 mt-2 font-medium max-w-2xl mx-auto">Generate unique geometric shapes automatically punched out by an identity sequence.</p>
         </div>
-        
+       
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-4xl mx-auto glass-panel p-6 rounded-2xl border border-white">
             <div class="md:col-span-1">
                 <label for="image-upload" class="block text-sm font-bold text-slate-700 mb-2 ml-1">
@@ -479,26 +499,23 @@
                 </button>
             </div>
         </div>
-
         <div id="stamp-output-container" class="stamp-container glass-panel border border-white shadow-inner relative overflow-hidden">
             <p id="stamp-placeholder" class="text-slate-400 font-medium my-auto text-center w-full">Stamps will appear here.</p>
         </div>
     </section>
-
     <!-- SECTION 3: Microprint Generator -->
     <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10 mb-12">
         <div class="mb-8 text-center">
             <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Banknote Microprint Engraver</h2>
             <p class="text-slate-500 mt-2 font-medium max-w-2xl mx-auto">Convert a portrait into continuous micro-text shaded by luminance, mimicking legal tender.</p>
         </div>
-        
+       
         <div class="flex flex-col lg:flex-row gap-6">
             <!-- Settings Sidebar -->
             <aside class="w-full lg:w-96 glass-panel rounded-2xl flex flex-col shrink-0 border border-white shadow-lg overflow-hidden">
                 <div class="p-5 border-b border-white/40 bg-white/40 backdrop-blur-md">
                     <h3 class="font-bold text-slate-800">Configuration</h3>
                 </div>
-
                 <div class="p-5 space-y-5 flex-grow overflow-y-auto custom-scrollbar">
                     <!-- Image Upload -->
                     <div>
@@ -512,7 +529,6 @@
                             <img id="imagePreview" class="absolute inset-0 w-full h-full object-cover hidden opacity-40 mix-blend-multiply" />
                         </label>
                     </div>
-
                     <!-- Mask Upload -->
                     <div class="pt-1">
                         <div class="flex justify-between items-end mb-2 ml-1">
@@ -529,13 +545,11 @@
                             </label>
                         </div>
                     </div>
-
                     <!-- Microprint Text -->
                     <div>
                         <label for="securityText" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Microprint Text</label>
                         <input type="text" id="securityText" value="100 " class="modern-input font-mono text-sm py-2" placeholder="e.g., SECURE ">
                     </div>
-
                     <!-- Appearance -->
                     <div class="bg-white/40 p-4 rounded-xl border border-white/50 space-y-4 shadow-sm">
                         <!-- Density -->
@@ -546,7 +560,6 @@
                             </label>
                             <input type="range" id="density" min="50" max="400" value="150" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                         </div>
-
                         <!-- Theme -->
                         <div>
                             <label for="colorTheme" class="block text-sm font-semibold text-slate-700 mb-2">Ink Color</label>
@@ -559,7 +572,6 @@
                                 <option value="sepia">Vintage Sepia</option>
                             </select>
                         </div>
-
                         <!-- Background Settings -->
                         <div class="pt-3 border-t border-white/50">
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 ml-1">Background Fill</label>
@@ -572,7 +584,6 @@
                                         <input type="color" id="bgColor" value="#ffffff" class="w-7 h-7 rounded cursor-pointer border border-slate-200 p-0 shadow-sm bg-white">
                                     </div>
                                 </div>
-
                                 <!-- Image Option -->
                                 <div>
                                     <div class="flex justify-between items-end mb-1 ml-1">
@@ -587,7 +598,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+                       
                         <!-- Extra Options -->
                         <div class="space-y-3 pt-2">
                             <label class="flex items-center space-x-3 cursor-pointer group">
@@ -609,13 +620,11 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="p-5 border-t border-white/40 bg-white/40 backdrop-blur-md flex flex-col gap-3">
                     <button id="generateBtn" class="btn-modern btn-primary w-full">Engrave Image</button>
                     <button id="downloadBtn" disabled class="btn-modern btn-secondary w-full">Download High-Res</button>
                 </div>
             </aside>
-
             <!-- Output Canvas Area -->
             <main class="flex-1 min-h-[400px] lg:min-h-[600px] glass-panel rounded-2xl flex flex-col items-center justify-center p-4 shadow-lg border border-white relative overflow-hidden">
                 <div id="outputContainer" class="relative w-full h-full flex items-center justify-center rounded-xl overflow-hidden bg-white/60 shadow-inner">
@@ -623,9 +632,7 @@
                         <svg class="animate-spin text-indigo-600 w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                         <p id="loadingText" class="text-slate-700 font-bold tracking-wide text-sm uppercase">Rendering...</p>
                     </div>
-
                     <canvas id="outputCanvas" class="hidden max-w-full max-h-full w-auto h-auto object-contain rounded shadow-sm bg-white border border-slate-100"></canvas>
-
                     <div id="placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
                         <svg class="w-16 h-16 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <p class="text-lg font-bold">Canvas Ready</p>
@@ -635,14 +642,13 @@
             </main>
         </div>
     </section>
-
     <!-- SECTION 4: Secure QR Code -->
     <section class="w-full max-w-7xl glass-card rounded-3xl p-6 md:p-10">
         <div class="mb-8 text-center">
             <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Advanced Identity QR</h2>
             <p class="text-slate-500 mt-2 font-medium max-w-2xl mx-auto">Generate scannable codes with custom styling algorithms to match document aesthetics.</p>
         </div>
-        
+       
         <div class="flex flex-col lg:flex-row gap-8 max-w-5xl mx-auto">
             <!-- QR Controls -->
             <div class="flex-1 glass-panel p-6 md:p-8 rounded-2xl border border-white shadow-sm space-y-5">
@@ -650,7 +656,7 @@
                     <label for="qr-text" class="block text-sm font-bold text-slate-700 mb-2 ml-1">Payload Data (URL, ID, Text)</label>
                     <input type="text" id="qr-text" value="https://x.com" class="modern-input text-lg font-medium" oninput="generateQR()">
                 </div>
-                
+               
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                         <label for="qr-logo" class="block text-sm font-bold text-slate-700 mb-2 ml-1">Center Logo</label>
@@ -687,7 +693,6 @@
                 <input type="hidden" id="qr-bg-color" value="#ffffff">
                 <input type="hidden" id="qr-corner-dot-type" value="dot">
             </div>
-
             <!-- QR Output -->
             <div class="w-full lg:w-80 flex flex-col items-center justify-center gap-6">
                 <div class="glass-panel p-4 rounded-3xl border border-white shadow-lg relative group">
@@ -698,26 +703,23 @@
             </div>
         </div>
     </section>
-
     <!-- Reusable Template for loading buttons -->
     <template id="loading-button-template">
         <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-current inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...
     </template>
-
     <script>
         // --- General Event Listeners ---
         document.getElementById('qr-fg-color').addEventListener('input', (e) => {
             document.getElementById('fg-label').textContent = e.target.value.toUpperCase();
         });
-
         // --- Scripts from Text Illusion Gallery ---
         const BASE_FONT_SIZE = 250;
         let uploadedImage = null;
-        
+       
         function getSelectedFont() {
             return document.getElementById('font-selector').value;
         }
-        
+       
         function updateAllText() {
             const input = document.getElementById('text-input');
             const newText = (input.value.toUpperCase() || ' ').trim();
@@ -726,17 +728,17 @@
             updateSVGText(`svg-text-11`, newText, font); // Wavy
             updateSVGText(`svg-text-12`, newText, font); // Displacement
             updateSVGText(`svg-text-13`, newText, font); // Checkerboard
-            
+           
             initializeTiltCanvas();
         }
-        
+       
         function updateSVGText(textId, newText, font) {
             const svgText = document.getElementById(textId);
             if (!svgText) return;
-            
+           
             svgText.textContent = newText;
             svgText.setAttribute("font-family", font);
-            
+           
             if (textId === 'svg-text-11') {
                 const textPath = svgText;
                 textPath.setAttribute('textLength', '700');
@@ -744,14 +746,20 @@
                 textPath.setAttribute('font-size', '120px');
                 return;
             }
-            
+            if (textId === 'svg-text-12') {
+                svgText.textContent = (newText + ' ').repeat(5).trim();
+                svgText.setAttribute('font-size', '60px');
+                svgText.setAttribute('lengthAdjust', 'spacing');
+                return;
+            }
+           
             const maxTextWidth = 780;
             svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
             requestAnimationFrame(() => {
                 let currentWidth = 0;
-                try { currentWidth = svgText.getBBox().width; } 
+                try { currentWidth = svgText.getBBox().width; }
                 catch (e) { currentWidth = (newText.length || 1) * (BASE_FONT_SIZE * 0.35); }
-                
+               
                 if (currentWidth > maxTextWidth) {
                     const ratio = maxTextWidth / currentWidth;
                     svgText.setAttribute("font-size", Math.max(BASE_FONT_SIZE * ratio, 20) + 'px');
@@ -760,45 +768,45 @@
                 }
             });
         }
-        
+       
         // --- Tilt-to-Read Canvas ---
         let tiltCanvas, tiltCtx, tiltScale, tiltText;
         function initializeTiltCanvas() {
             tiltCanvas = document.getElementById('tilt-canvas');
             if (!tiltCanvas) return;
-            
+           
             tiltCtx = tiltCanvas.getContext('2d');
             tiltCanvas.width = 500;
             tiltCanvas.height = 500;
-            
+           
             tiltScale = { h: tiltCanvas.height / 20, v: tiltCanvas.width / 20 };
-            
+           
             const hTextElement = document.getElementById('hText');
             const vTextElement = document.getElementById('vText');
             tiltText = { h: hTextElement.value.toUpperCase(), v: vTextElement.value.toUpperCase() };
-            
+           
             hTextElement.oninput = function() { tiltText.h = this.value.toUpperCase(); updateTiltCanvas(); };
             vTextElement.oninput = function() { tiltText.v = this.value.toUpperCase(); updateTiltCanvas(); };
-            
+           
             updateTiltCanvas();
         }
-        
+       
         function updateTiltCanvas() {
             if (!tiltCtx) return;
             const font = getSelectedFont();
             tiltCtx.font = `25px ${font}`;
             tiltCtx.textAlign = 'center';
             tiltCtx.textBaseline = 'middle';
-            
+           
             tiltCtx.fillStyle = "#fff";
             tiltCtx.fillRect(0, 0, tiltCanvas.width, tiltCanvas.height);
             tiltCtx.fillStyle = "#0f172a"; // slate-900
-            
+           
             tiltCtx.save();
             tiltCtx.scale(1, tiltScale.h);
             tiltCtx.fillText(tiltText.h, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.h / 2);
             tiltCtx.restore();
-            
+           
             tiltCtx.save();
             tiltCtx.translate(tiltCanvas.width / 2, tiltCanvas.height / 2);
             tiltCtx.rotate(Math.PI / 2);
@@ -807,11 +815,11 @@
             tiltCtx.fillText(tiltText.v, tiltCanvas.width / 2, tiltCanvas.height / tiltScale.v / 2);
             tiltCtx.restore();
         }
-        
+       
         function downloadTiltCanvas(button, canvasId) {
             const canvas = document.getElementById(canvasId);
             if (!canvas) return;
-            
+           
             const originalButtonHTML = button.innerHTML;
             button.innerHTML = document.getElementById('loading-button-template').innerHTML;
             button.disabled = true;
@@ -825,19 +833,19 @@
             } catch (err) {}
             setTimeout(() => { button.innerHTML = originalButtonHTML; button.disabled = false; }, 100);
         }
-        
+       
         function downloadPNG(button, svgId, filenameBase) {
             const svg = document.getElementById(svgId);
             if (!svg) return;
-            
+           
             button.originalHTML = button.innerHTML;
             button.innerHTML = document.getElementById('loading-button-template').innerHTML;
             button.disabled = true;
-            
+           
             const canvas = document.createElement('canvas');
             canvas.width = 1600; canvas.height = 800;
             const ctx = canvas.getContext('2d');
-            
+           
             const svgData = new XMLSerializer().serializeToString(svg);
             const img = new Image();
             img.onload = () => {
@@ -853,7 +861,6 @@
             };
             img.src = URL.createObjectURL(new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' }));
         }
-
         // --- Security Stamp Generator ---
         function handleImageUpload(event) {
             const file = event.target.files[0];
@@ -866,7 +873,7 @@
             };
             reader.readAsDataURL(file);
         }
-        
+       
         function drawStarPath(ctx, centerX, centerY, outerRadius, innerRadius, points) {
             ctx.beginPath();
             points = Math.max(3, Math.floor(points));
@@ -879,44 +886,44 @@
             }
             ctx.closePath();
         }
-        
+       
         function drawStarStamp(canvas, image, digitChar) {
             const ctx = canvas.getContext('2d');
             const size = canvas.width;
             const center = size / 2;
             const digit = parseInt(digitChar);
             let shapeType = '';
-            
+           
             ctx.clearRect(0, 0, size, size);
             ctx.save();
-            
-            if (digit === 0) { ctx.beginPath(); ctx.arc(center, center, size*0.45, 0, Math.PI * 2); ctx.closePath(); shapeType = 'Circle'; } 
-            else if (digit === 1 || digit === 2) { drawStarPath(ctx, center, center, size*0.45, size*0.2, 3); shapeType = '3-Point Star'; } 
+           
+            if (digit === 0) { ctx.beginPath(); ctx.arc(center, center, size*0.45, 0, Math.PI * 2); ctx.closePath(); shapeType = 'Circle'; }
+            else if (digit === 1 || digit === 2) { drawStarPath(ctx, center, center, size*0.45, size*0.2, 3); shapeType = '3-Point Star'; }
             else { drawStarPath(ctx, center, center, size*0.45, size*0.2, digit); shapeType = `${digit}-Point Star`; }
-            
-            ctx.clip(); 
+           
+            ctx.clip();
             if (image) {
                 const minDim = Math.min(image.width, image.height);
                 ctx.drawImage(image, (image.width - minDim) / 2, (image.height - minDim) / 2, minDim, minDim, 0, 0, size, size);
             } else {
                 ctx.fillStyle = "#e2e8f0"; ctx.fillRect(0, 0, size, size);
             }
-            ctx.restore(); 
-            
+            ctx.restore();
+           
             ctx.save();
             ctx.font = `${size * 0.4}px ${getSelectedFont()}`;
             ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.globalCompositeOperation = 'destination-out';
             ctx.fillText(digitChar, center, center);
             ctx.restore();
-            
+           
             return shapeType;
         }
-        
+       
         function renderStamps() {
             const container = document.getElementById('stamp-output-container');
             const sequence = document.getElementById('number-sequence').value.trim().replace(/[^0-9]/g, '');
-            
+           
             if (!uploadedImage && sequence.length > 0) {
                  container.innerHTML = '<p class="text-indigo-500 font-bold m-auto">Please upload an image first.</p>';
                  return;
@@ -925,7 +932,7 @@
                  container.innerHTML = '<p class="text-slate-400 font-medium m-auto">Enter digits to view stamps.</p>';
                  return;
             }
-            
+           
             container.innerHTML = '';
             sequence.split('').forEach((digitChar, index) => {
                 const card = document.createElement('div');
@@ -934,11 +941,11 @@
                 canvas.width = 300; canvas.height = 300;
                 canvas.id = `stamp-canvas-${index}`;
                 const shapeType = drawStarStamp(canvas, uploadedImage, digitChar);
-                
+               
                 const title = document.createElement('p');
                 title.className = 'text-xs font-bold text-slate-500 uppercase tracking-wide';
                 title.textContent = `ID: ${digitChar} / ${shapeType}`;
-                
+               
                 const button = document.createElement('button');
                 button.className = 'btn-modern btn-secondary w-full !py-2 !text-xs mt-3';
                 button.textContent = 'Save Stamp';
@@ -948,14 +955,13 @@
                     link.download = `stamp-${digitChar}.png`;
                     link.click();
                 };
-                
+               
                 card.appendChild(title);
                 card.appendChild(canvas);
                 card.appendChild(button);
                 container.appendChild(card);
             });
         }
-
         // --- Microprint Generator ---
         document.addEventListener('DOMContentLoaded', () => {
             const imageUpload = document.getElementById('imageUpload');
@@ -978,28 +984,24 @@
             const downloadBtn = document.getElementById('downloadBtn');
             const outputCanvas = document.getElementById('outputCanvas');
             const outputContainer = document.getElementById('outputContainer');
-            
+           
             let sourceImage = null;
             let maskImage = null;
             let bgImageObj = null;
-
             densitySlider.addEventListener('input', (e) => densityValue.textContent = e.target.value);
-
             bgColor.addEventListener('input', (e) => {
                 bgColorLabel.textContent = e.target.value.toUpperCase();
             });
-
             // Auto-trigger rendering when any setting is changed
             [colorTheme, bgColor, varyWeight, addGuilloche, densitySlider].forEach(el => {
                 el.addEventListener('change', () => {
                     if (sourceImage) generateMicroprint();
                 });
             });
-            
+           
             securityText.addEventListener('change', () => {
                 if (sourceImage) generateMicroprint();
             });
-
             bgImageUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -1017,16 +1019,14 @@
                 };
                 reader.readAsDataURL(file);
             });
-
             clearBgImageBtn.addEventListener('click', () => {
                 bgImageObj = null;
                 bgImagePreview.src = '';
                 bgImagePreview.classList.add('hidden');
                 clearBgImageBtn.classList.add('hidden');
-                bgImageUpload.value = ''; 
+                bgImageUpload.value = '';
                 if(sourceImage) generateMicroprint();
             });
-
             maskUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -1044,7 +1044,6 @@
                 };
                 reader.readAsDataURL(file);
             });
-
             clearMaskBtn.addEventListener('click', () => {
                 maskImage = null;
                 maskPreview.src = '';
@@ -1053,7 +1052,6 @@
                 maskUpload.value = '';
                 if(sourceImage) generateMicroprint();
             });
-
             imageUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -1072,9 +1070,7 @@
                 };
                 reader.readAsDataURL(file);
             });
-
             generateBtn.addEventListener('click', generateMicroprint);
-
             downloadBtn.addEventListener('click', () => {
                 if (!outputCanvas) return;
                 const link = document.createElement('a');
@@ -1082,7 +1078,6 @@
                 link.href = outputCanvas.toDataURL('image/png');
                 link.click();
             });
-
             function generateMicroprint() {
                 if (!sourceImage) return alert('Upload a portrait first.');
                 outputContainer.classList.add('is-loading');
@@ -1091,23 +1086,20 @@
                 generateBtn.disabled = true;
                 setTimeout(() => processImage(sourceImage), 50);
             }
-
             function processImage(imgToProcess) {
                 try {
-                    const ctx = outputCanvas.getContext('2d', { alpha: false }); 
-                    const cols = parseInt(densitySlider.value); 
+                    const ctx = outputCanvas.getContext('2d', { alpha: false });
+                    const cols = parseInt(densitySlider.value);
                     const textStr = securityText.value || "100 ";
                     const theme = colorTheme.value;
-                    
-                    const fontAspectRatio = 0.6; 
+                   
+                    const fontAspectRatio = 0.6;
                     const rows = Math.floor((cols * fontAspectRatio) / (imgToProcess.width / imgToProcess.height));
-
                     const sampleCanvas = document.createElement('canvas');
                     sampleCanvas.width = cols; sampleCanvas.height = rows;
                     const sCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
                     sCtx.drawImage(imgToProcess, 0, 0, cols, rows);
                     const imgData = sCtx.getImageData(0, 0, cols, rows).data;
-
                     // Mask preparation
                     let maskData = null;
                     if (maskImage) {
@@ -1115,23 +1107,22 @@
                         maskCanvas.width = cols;
                         maskCanvas.height = rows;
                         const mCtx = maskCanvas.getContext('2d', { willReadFrequently: true });
-                        mCtx.drawImage(maskImage, 0, 0, cols, rows); 
+                        mCtx.drawImage(maskImage, 0, 0, cols, rows);
                         maskData = mCtx.getImageData(0, 0, cols, rows).data;
                     }
-
-                    const fontSize = 12; 
+                    const fontSize = 12;
                     const cellWidth = fontSize * fontAspectRatio;
                     const cellHeight = fontSize;
-                    
+                   
                     outputCanvas.width = cols * cellWidth;
                     outputCanvas.height = rows * cellHeight;
-                    
+                   
                     // Fill Background
                     if (bgImageObj) {
                         const bgAspect = bgImageObj.width / bgImageObj.height;
                         const canvasAspect = outputCanvas.width / outputCanvas.height;
                         let drawW, drawH, drawX, drawY;
-                        
+                       
                         if (bgAspect > canvasAspect) {
                             drawH = outputCanvas.height;
                             drawW = bgImageObj.width * (drawH / bgImageObj.height);
@@ -1148,32 +1139,30 @@
                         ctx.fillStyle = bgColor.value;
                         ctx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
                     }
-
                     if (addGuilloche.checked) {
-                        ctx.save(); 
-                        
+                        ctx.save();
+                       
                         // Make line width dynamic based on resolution to ensure visibility
                         ctx.lineWidth = Math.max(1.5, outputCanvas.width / 600);
-                        
+                       
                         // Increase opacity significantly
                         let sColor = 'rgba(0,0,0,0.15)';
                         if(theme==='green') sColor = 'rgba(0,150,50,0.25)';
                         else if(theme==='purple') sColor = 'rgba(150,0,150,0.25)';
                         else if(theme==='blue') sColor = 'rgba(0,50,200,0.25)';
                         else if(theme==='sepia') sColor = 'rgba(180,130,50,0.25)';
-                        
+                       
                         ctx.strokeStyle = sColor;
-                        
+                       
                         // Increase density of the waves
-                        const lines = 80; 
+                        const lines = 80;
                         const spacing = outputCanvas.height / lines;
-                        
+                       
                         // Scale wave amplitudes and frequencies so they interlock beautifully at any resolution
                         const amp1 = spacing * 1.5;
                         const amp2 = spacing * 1.0;
                         const freq1 = 0.015 * (1000 / outputCanvas.width);
                         const freq2 = 0.005 * (1000 / outputCanvas.width);
-
                         for (let i = 0; i < lines; i++) {
                             ctx.beginPath();
                             for (let x = 0; x <= outputCanvas.width; x += 10) {
@@ -1181,22 +1170,20 @@
                                 const offset1 = Math.sin(x * freq1 + i) * amp1;
                                 const offset2 = Math.cos(x * freq2 - i * 0.5) * amp2;
                                 const y = yBase + offset1 + offset2;
-                                
-                                if (x === 0) ctx.moveTo(x, y); 
+                               
+                                if (x === 0) ctx.moveTo(x, y);
                                 else ctx.lineTo(x, y);
                             }
                             ctx.stroke();
                         }
                         ctx.restore();
                     }
-
                     ctx.textBaseline = 'top'; ctx.textAlign = 'left';
                     let strIndex = 0;
-                    
+                   
                     for (let y = 0; y < rows; y++) {
                         for (let x = 0; x < cols; x++) {
                             const i = (y * cols + x) * 4;
-
                             // Apply Mask Cropping
                             if (maskData) {
                                 const mR = maskData[i];
@@ -1208,24 +1195,19 @@
                                     continue;
                                 }
                             }
-
                             if (imgData[i+3] < 50) continue;
-
                             const lum = 0.2126 * imgData[i] + 0.7152 * imgData[i+1] + 0.0722 * imgData[i+2];
                             let fillR = imgData[i], fillG = imgData[i+1], fillB = imgData[i+2];
-
                             if (theme === 'monochrome') fillR = fillG = fillB = lum;
-                            else if (theme === 'green') { fillR = lum * 0.4; fillG = lum * 0.7 + 20; fillB = lum * 0.4; } 
-                            else if (theme === 'purple') { fillR = lum * 0.6 + 30; fillG = lum * 0.3; fillB = lum * 0.7 + 40; } 
-                            else if (theme === 'blue') { fillR = lum * 0.3; fillG = lum * 0.4; fillB = lum * 0.8 + 20; } 
+                            else if (theme === 'green') { fillR = lum * 0.4; fillG = lum * 0.7 + 20; fillB = lum * 0.4; }
+                            else if (theme === 'purple') { fillR = lum * 0.6 + 30; fillG = lum * 0.3; fillB = lum * 0.7 + 40; }
+                            else if (theme === 'blue') { fillR = lum * 0.3; fillG = lum * 0.4; fillB = lum * 0.8 + 20; }
                             else if (theme === 'sepia') { fillR = lum * 0.8 + 20; fillG = lum * 0.6 + 10; fillB = lum * 0.4; }
-
                             let weight = '400';
                             if (varyWeight.checked) {
                                 if (lum < 50) weight = '900'; else if (lum < 100) weight = '700';
-                                else if (lum < 150) weight = '500'; else if (lum < 200) weight = '300'; else weight = '100'; 
+                                else if (lum < 150) weight = '500'; else if (lum < 200) weight = '300'; else weight = '100';
                             }
-
                             ctx.font = `${weight} ${fontSize}px "Courier New", Courier, monospace`;
                             ctx.fillStyle = `rgba(${fillR}, ${fillG}, ${fillB}, ${Math.max(0.1, 1 - (lum / 255))})`;
                             ctx.fillText(textStr[strIndex % textStr.length], x * cellWidth, y * cellHeight);
@@ -1233,21 +1215,18 @@
                         }
                     }
                     downloadBtn.disabled = false;
-                } catch (error) {} 
+                } catch (error) {}
                 finally { outputContainer.classList.remove('is-loading'); generateBtn.disabled = false; }
             }
-
             // Init Gallery Defaults
             document.querySelectorAll('.svg-text-base').forEach(el => el.setAttribute("font-family", getSelectedFont()));
             updateAllText();
             renderStamps();
-            generateQR(); 
+            generateQR();
         });
-
         // --- Advanced QR Code Generator ---
         let qrCodeInstance = null;
         let qrLogoImage = null;
-
         function handleLogoUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1256,11 +1235,9 @@
                 reader.readAsDataURL(file);
             } else { qrLogoImage = null; generateQR(); }
         }
-
         function generateQR() {
             const qrContainer = document.getElementById('qr-container');
-            qrContainer.innerHTML = ''; 
-
+            qrContainer.innerHTML = '';
             qrCodeInstance = new QRCodeStyling({
                 width: 240, height: 240, // Visual size
                 data: document.getElementById('qr-text').value || 'https://x.com',
@@ -1274,20 +1251,19 @@
             });
             qrCodeInstance.append(qrContainer);
         }
-
         function downloadQR(button) {
             if (!qrCodeInstance) return;
             const originalHTML = button.innerHTML;
             button.innerHTML = document.getElementById('loading-button-template').innerHTML;
             button.disabled = true;
-            
+           
             // Re-render briefly at high resolution for download
             const hrQR = new QRCodeStyling({
                 ...qrCodeInstance._options,
                 width: parseInt(document.getElementById('qr-size').value),
                 height: parseInt(document.getElementById('qr-size').value)
             });
-            
+           
             hrQR.download({ name: "security-qr", extension: "png" }).then(() => {
                 button.innerHTML = originalHTML;
                 button.disabled = false;
