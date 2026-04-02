@@ -208,6 +208,74 @@
             overflow: hidden;
             margin-bottom: 1.25rem;
         }
+        .color-control {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            padding: 0.85rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), 0 8px 24px rgba(15, 23, 42, 0.04);
+        }
+        .color-control-label {
+            margin-bottom: 0 !important;
+            margin-left: 0 !important;
+            line-height: 1.1;
+        }
+        .color-control-row {
+            display: grid;
+            grid-template-columns: 2.75rem minmax(0, 1fr);
+            gap: 0.65rem;
+            align-items: center;
+        }
+        .color-swatch {
+            width: 2.75rem !important;
+            height: 2.75rem !important;
+            border-radius: 0.9rem !important;
+            padding: 0.25rem !important;
+            border: 1px solid #dbe4f0 !important;
+            background:
+                linear-gradient(45deg, #e2e8f0 25%, transparent 25%, transparent 75%, #e2e8f0 75%, #e2e8f0),
+                linear-gradient(45deg, #e2e8f0 25%, #ffffff 25%, #ffffff 75%, #e2e8f0 75%, #e2e8f0);
+            background-position: 0 0, 8px 8px;
+            background-size: 16px 16px;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.9);
+        }
+        .color-text-input {
+            min-width: 0;
+            padding-top: 0.78rem;
+            padding-bottom: 0.78rem;
+            font-size: 0.9rem;
+        }
+        .color-transparent-btn {
+            width: 100%;
+            min-height: 2.5rem;
+            border-radius: 0.85rem;
+            border: 1px solid #dbe4f0;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            color: #475569;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+        }
+        .color-transparent-btn:hover {
+            border-color: #a5b4fc;
+            color: #4338ca;
+            background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
+            transform: translateY(-1px);
+        }
+        .color-transparent-btn:active {
+            transform: translateY(0);
+        }
+        @media (max-width: 767px) {
+            .color-control {
+                padding: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body class="flex flex-col items-center min-h-screen pb-20 relative">
@@ -229,7 +297,7 @@
             <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">Printable Text Illusions</h2>
             <p class="text-slate-500 mt-2 font-medium">Type below to see your text rendered in 14 distinct security illusion styles.</p>
         </div>
-        <div class="mb-10 max-w-3xl mx-auto sticky top-6 z-30 glass-panel p-5 rounded-2xl shadow-xl shadow-indigo-900/5 transition-all">
+        <div class="mb-10 max-w-3xl mx-auto glass-panel p-5 rounded-2xl shadow-xl shadow-indigo-900/5 transition-all">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <label for="text-input" class="block text-sm font-bold text-slate-700 mb-1.5 ml-1">
@@ -262,7 +330,7 @@
                     <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
                     Line Illusion
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-3 mb-4">
                     <div>
                         <label for="line-illusion-line-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Line Color</label>
                         <div class="flex gap-2">
@@ -284,6 +352,13 @@
                             <input type="text" id="line-illusion-bg-color" value="#ffffff" class="modern-input text-sm" placeholder="transparent or any CSS color">
                         </div>
                     </div>
+                    <div>
+                        <label for="line-illusion-text-bg-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Text Background</label>
+                        <div class="flex gap-2">
+                            <input type="color" id="line-illusion-text-bg-color-picker" value="#ffffff" class="w-10 h-10 rounded cursor-pointer border border-slate-200 p-0.5 bg-white">
+                            <input type="text" id="line-illusion-text-bg-color" value="#ffffff" class="modern-input text-sm" placeholder="transparent or any CSS color">
+                        </div>
+                    </div>
                 </div>
                 <div class="svg-wrapper">
                     <svg id="illusion-svg-1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
@@ -303,7 +378,7 @@
                     <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
                     Guilloché Pattern
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 mb-4">
                     <div>
                         <label for="guilloche-line-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Line Color</label>
                         <div class="flex gap-2">
@@ -343,7 +418,7 @@
                     <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
                     Negative Space Void
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 mb-4">
                     <div>
                         <label for="negative-space-line-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Line Color</label>
                         <div class="flex gap-2">
@@ -382,7 +457,7 @@
                     <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span>
                     Embossed Watermark
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     <div>
                         <label for="embossed-text-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Text Color</label>
                         <div class="flex gap-2">
@@ -430,7 +505,7 @@
                     <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">6</span>
                     Halftone Dot Matrix
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     <div>
                         <label for="halftone-text-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Text Color</label>
                         <div class="flex gap-2">
@@ -462,7 +537,7 @@
                     <span class="bg-indigo-200 text-indigo-800 w-6 h-6 rounded-full flex items-center justify-center text-xs">7</span>
                     Microtext Pattern <span class="ml-auto text-[10px] font-bold tracking-wider text-indigo-500 uppercase bg-white px-2 py-1 rounded">Advanced</span>
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     <div>
                         <label for="microtext-text-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Text Color</label>
                         <div class="flex gap-2">
@@ -520,8 +595,8 @@
                         <defs>
                             <path id="wave-path" d="M 0 200 Q 100 100, 200 200 T 400 200 T 600 200 T 800 200" />
                         </defs>
-                        <text class="svg-text-base" fill="black">
-                            <textPath id="svg-text-11" href="#wave-path">PLACEHOLDER TEXT</textPath>
+                        <text class="svg-text-base" fill="black" text-anchor="middle">
+                            <textPath id="svg-text-11" href="#wave-path" startOffset="50%">PLACEHOLDER TEXT</textPath>
                         </text>
                     </svg>
                 </div>
@@ -537,8 +612,8 @@
                         <defs>
                             <path id="circle-path" d="M 250 200 a 150 150 0 1 0 300 0 a 150 150 0 1 0 -300 0" />
                         </defs>
-                        <text class="svg-text-base" fill="black">
-                            <textPath id="svg-text-12" href="#circle-path" startOffset="0">PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT</textPath>
+                        <text class="svg-text-base" fill="black" text-anchor="middle">
+                            <textPath id="svg-text-12" href="#circle-path" startOffset="50%">PLACEHOLDER TEXT PLACEHOLDER TEXT PLACEHOLDER TEXT</textPath>
                         </text>
                     </svg>
                 </div>
@@ -574,7 +649,7 @@
                             <label for="vText" class="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">Vertical Text (View from side)</label>
                             <input type="text" id="vText" class="modern-input" value="SECURITY DEPT" />
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
                             <div>
                                 <label for="tilt-bg-color" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Background Color</label>
                                 <div class="flex gap-2">
@@ -884,19 +959,28 @@
                 if (!input || input.dataset.transparentBound === 'true') return;
 
                 const row = input.parentElement;
-                if (!row) return;
+                const field = row?.parentElement;
+                const label = field?.querySelector('label');
+                const picker = field?.querySelector('input[type="color"]');
+                if (!row || !field) return;
+
+                field.classList.add('color-control');
+                row.classList.add('color-control-row');
+                label?.classList.add('color-control-label');
+                picker?.classList.add('color-swatch');
+                input.classList.add('color-text-input');
 
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.textContent = 'Transparent';
-                button.className = 'px-3 py-2 rounded-lg border border-slate-200 bg-white text-xs font-bold uppercase tracking-wide text-slate-600 hover:border-indigo-300 hover:text-indigo-700 transition-colors shrink-0';
+                button.className = 'color-transparent-btn';
                 button.addEventListener('click', () => {
                     input.value = 'transparent';
                     input.dispatchEvent(new Event('input', { bubbles: true }));
                     input.dispatchEvent(new Event('change', { bubbles: true }));
                 });
 
-                row.appendChild(button);
+                field.appendChild(button);
                 input.dataset.transparentBound = 'true';
             });
         }
@@ -912,9 +996,11 @@
             const lineIllusionLine = normalizeCssColor(document.getElementById('line-illusion-line-color')?.value, '#000000');
             const lineIllusionText = normalizeCssColor(document.getElementById('line-illusion-text-color')?.value, '#000000');
             const lineIllusionBg = normalizeCssColor(document.getElementById('line-illusion-bg-color')?.value, '#ffffff');
+            const lineIllusionTextBg = normalizeCssColor(document.getElementById('line-illusion-text-bg-color')?.value, '#ffffff');
             setAttributes(['line-illusion-pattern-line-1'], 'stroke', lineIllusionLine);
             setAttributes(['line-illusion-pattern-line-2'], 'stroke', lineIllusionText);
-            setAttributes(['line-illusion-pattern-bg-1', 'line-illusion-pattern-bg-2', 'line-illusion-bg-rect'], 'fill', lineIllusionBg);
+            setAttributes(['line-illusion-pattern-bg-1', 'line-illusion-bg-rect'], 'fill', lineIllusionBg);
+            setAttributes(['line-illusion-pattern-bg-2'], 'fill', lineIllusionTextBg);
 
             const guillocheLine = normalizeCssColor(document.getElementById('guilloche-line-color')?.value, '#aaaaaa');
             const guillocheText = normalizeCssColor(document.getElementById('guilloche-text-color')?.value, '#000000');
@@ -975,19 +1061,22 @@
            
             if (textId === 'svg-text-11') {
                 const textPath = svgText;
-                textPath.setAttribute('textLength', '700');
+                textPath.setAttribute('startOffset', '50%');
+                textPath.setAttribute('textLength', '620');
                 textPath.setAttribute('lengthAdjust', 'spacingAndGlyphs');
-                textPath.setAttribute('font-size', '120px');
+                textPath.setAttribute('font-size', '92px');
                 return;
             }
             if (textId === 'svg-text-12') {
                 svgText.textContent = (newText + ' ').repeat(5).trim();
-                svgText.setAttribute('font-size', '60px');
+                svgText.setAttribute('startOffset', '50%');
+                svgText.setAttribute('font-size', '52px');
                 svgText.setAttribute('lengthAdjust', 'spacing');
                 return;
             }
            
-            const maxTextWidth = 780;
+            let maxTextWidth = 780;
+            if (textId === 'svg-text-13') maxTextWidth = 520;
             svgText.setAttribute("font-size", BASE_FONT_SIZE + 'px');
             requestAnimationFrame(() => {
                 let currentWidth = 0;
@@ -1235,6 +1324,7 @@
                 ['line-illusion-line-color', 'line-illusion-line-color-picker'],
                 ['line-illusion-text-color', 'line-illusion-text-color-picker'],
                 ['line-illusion-bg-color', 'line-illusion-bg-color-picker'],
+                ['line-illusion-text-bg-color', 'line-illusion-text-bg-color-picker'],
                 ['guilloche-line-color', 'guilloche-line-color-picker'],
                 ['guilloche-text-color', 'guilloche-text-color-picker'],
                 ['guilloche-bg-color', 'guilloche-bg-color-picker'],
@@ -1255,6 +1345,7 @@
                 'line-illusion-line-color',
                 'line-illusion-text-color',
                 'line-illusion-bg-color',
+                'line-illusion-text-bg-color',
                 'guilloche-line-color',
                 'guilloche-text-color',
                 'guilloche-bg-color',
