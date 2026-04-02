@@ -859,6 +859,8 @@
                 if (isHexColor(color)) {
                     picker.value = color;
                 }
+                picker.style.opacity = color.toLowerCase() === 'transparent' ? '0.45' : '1';
+                picker.title = color.toLowerCase() === 'transparent' ? 'Transparent is active' : 'Pick a solid color';
             };
 
             picker.addEventListener('input', () => {
@@ -874,6 +876,29 @@
                 onChange();
             });
             syncPicker();
+        }
+
+        function addTransparentButtons(controlIds, onChange) {
+            controlIds.forEach((controlId) => {
+                const input = document.getElementById(controlId);
+                if (!input || input.dataset.transparentBound === 'true') return;
+
+                const row = input.parentElement;
+                if (!row) return;
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = 'Transparent';
+                button.className = 'px-3 py-2 rounded-lg border border-slate-200 bg-white text-xs font-bold uppercase tracking-wide text-slate-600 hover:border-indigo-300 hover:text-indigo-700 transition-colors shrink-0';
+                button.addEventListener('click', () => {
+                    input.value = 'transparent';
+                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                });
+
+                row.appendChild(button);
+                input.dataset.transparentBound = 'true';
+            });
         }
 
         function setAttributes(ids, attribute, value) {
@@ -1226,6 +1251,26 @@
                 ['tilt-h-color', 'tilt-h-color-picker'],
                 ['tilt-v-color', 'tilt-v-color-picker']
             ].forEach(([inputId, pickerId]) => bindColorControl(inputId, pickerId, renderIllusionColors));
+            addTransparentButtons([
+                'line-illusion-line-color',
+                'line-illusion-text-color',
+                'line-illusion-bg-color',
+                'guilloche-line-color',
+                'guilloche-text-color',
+                'guilloche-bg-color',
+                'negative-space-line-color',
+                'negative-space-text-color',
+                'negative-space-bg-color',
+                'embossed-text-color',
+                'embossed-bg-color',
+                'halftone-text-color',
+                'halftone-bg-color',
+                'microtext-text-color',
+                'microtext-bg-color',
+                'tilt-bg-color',
+                'tilt-h-color',
+                'tilt-v-color'
+            ], renderIllusionColors);
             densitySlider.addEventListener('input', (e) => densityValue.textContent = e.target.value);
             bgColor.addEventListener('input', (e) => {
                 bgColorLabel.textContent = e.target.value.toUpperCase();
